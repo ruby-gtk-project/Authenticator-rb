@@ -1,0 +1,72 @@
+/* Ported from upstream's data/style.css.
+ *
+ * GTK 4 changed two things this sheet relied on: type selectors are the
+ * widget's CSS name ("image"), not its C type name ("GtkImage"), and margins
+ * on a widget set from CSS no longer affect its allocation, so the layout
+ * margins upstream set here are set on the widgets instead — see
+ * AccountsWidget#accounts_container and AccountConfig#clamp. What is left is
+ * what CSS still owns: the row framing and the type scale.
+ */
+
+.accounts-list {
+  background-color: @theme_bg_color;
+}
+
+.account-row,
+.settings-box {
+  padding: 6px;
+  border: 1px solid mix(@theme_base_color, @theme_fg_color, 0.3);
+  background-color: mix(@theme_base_color, @theme_bg_color, 0.3);
+  margin: 6px;
+}
+
+.account-row:selected image {
+  color: mix(@theme_base_color, @theme_fg_color, 0.3);
+}
+
+.account-row-checkbtn {
+  padding-left: 6px;
+}
+
+.provider-lbl,
+.gpg-key-lbl {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 3px 6px;
+}
+
+.application-name {
+  font-size: 14px;
+  color: @theme_fg_color;
+  font-style: italic;
+}
+
+.account-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.username {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.token-label {
+  font-size: 14px;
+}
+
+.counter-label {
+  font-size: 12px;
+}
+
+.settings-box-main-label {
+  font-size: 14px;
+  padding: 3px 6px;
+}
+
+.settings-box-secondary-label {
+  font-size: 12px;
+  font-style: italic;
+  color: mix(@theme_base_color, @theme_fg_color, 0.6);
+  padding: 3px 6px;
+}
