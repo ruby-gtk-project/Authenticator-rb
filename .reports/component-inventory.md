@@ -13,18 +13,21 @@ Survey facts that shape everything below:
   `Gtk.EntryCompletion`, `Gtk.FileChooserNative#run`, `Gdk.Screen` CSS,
   window-position restore and `Gtk.SearchBar#handle_event` are all gone in
   GTK4. See **Blockers**.
-- **The port is still the scaffold.** `lib/` holds exactly three files:
-  `lib/authenticator.rb`, `lib/authenticator/application.rb` (an
-  `Adw::StatusPage` saying "The Ruby port has not been written yet.") and
-  `lib/authenticator/rb/version.rb`. **No user-facing component exists yet.**
+- **The port now covers most of the app.** `lib/` holds 31 component and model
+  files (3,423 lines) plus `lib/authenticator.rb` and
+  `lib/authenticator/rb/version.rb`. What is left is one coherent slice: the
+  whole GPG/OpenPGP path, QR scanning, and the shell search provider.
 - Naming follows the pilot (`gnome-contacts-rb`): components are flat
   `lib/<thing>.rb`, only the application class sits under
   `lib/authenticator/`.
 
 Totals: **24 user-facing components** across 10 upstream widget files, plus 11
 supporting model files, 1 stylesheet, 1 GSettings schema, 1 GResource manifest,
-1 provider-logo data file and a 14-language `po/` catalogue (58 msgids). One
-exists in the port (the application class, as a placeholder); 23 do not.
+1 provider-logo data file and a 14-language `po/` catalogue (58 msgids).
+**22 of the 24 components exist in the port**; the two missing are
+`GPGRestoreWindow` and `FingprintPGPWindow`. Of the supporting files, the GPG,
+QR-reader and screenshot models, the shell search provider and the whole `po/`
+catalogue are still unported.
 
 ---
 
@@ -46,9 +49,10 @@ Behaviour on activate: adds the resource path to the icon theme, takes the
 singleton `Window`, sets the menu on the header bar, connects `delete-event`
 to quit, `show_all` + `present`. Quit clears the clipboard first (security).
 
-→ `lib/authenticator/application.rb` — **exists** (placeholder only: window +
-toolbar view + header bar + status page; no actions, no menu, no CSS, no
-dark-mode wiring).
+→ `lib/application.rb` — **exists** (5 of 7 actions, the menu, the stylesheet
+loader and the dark-theme wiring; `app.import_pgp_json` and
+`app.export_pgp_json` are deliberately unregistered until the GPG model
+lands).
 
 ## Authenticator/application.py (`__generate_menu`) — the primary menu
 
@@ -66,7 +70,7 @@ Section 1 holds the two submenus; section 2 holds the three main items. In
 GTK3 it is shown through `Gtk.Popover.new_from_model` on the header bar's
 settings button with `width_request = 200`.
 
-→ `lib/primary_menu.rb` — **missing** (in the port this becomes an
+→ `lib/primary_menu.rb` — **exists** (in the port this becomes an
 `Adw::HeaderBar` + `Gtk::MenuButton` with a `Gio::Menu` model).
 
 ## Authenticator/widgets/window.py — the main window
@@ -91,7 +95,7 @@ States: **empty** (`Database#count == 0` → `empty-accounts-list` page +
 `HeaderBarState.EMPTY`), **normal**, **select**.
 Window state persisted via GSettings `window-position` and `is-maximized`.
 
-→ `lib/window.rb` — **missing**.
+→ `lib/window.rb` — **exists**.
 
 ## Authenticator/widgets/headerbar.py — the header bar and its three states
 
@@ -110,7 +114,7 @@ is the component's whole behaviour — EMPTY shows add + settings only; SELECT
 shows search + cancel, adds `selection-mode`, hides close button; NORMAL shows
 all four.
 
-→ `lib/header_bar.rb` — **missing** (`HeaderBarBtn`/`HeaderBarButton`/
+→ `lib/header_bar.rb` — **exists** (`HeaderBarBtn`/`HeaderBarButton`/
 `HeaderBarToggleButton` fold into this file; GTK4 header bars set the title
 widget rather than a title string, and the popover becomes a `Gtk::MenuButton`).
 
@@ -125,7 +129,7 @@ Filter: case-insensitive substring over `row.account.username` and
 `row.account.provider`, applied to **every** `AccountsList` in
 `AccountsWidget#accounts_lists` (a repeater over providers).
 
-→ `lib/search_bar.rb` — **missing** (`handle_event` is gone in GTK4 —
+→ `lib/search_bar.rb` — **exists** (`handle_event` is gone in GTK4 —
 `set_key_capture_widget(window)` instead).
 
 ## Authenticator/widgets/actions_bar.py — the selection-mode action bar
@@ -135,7 +139,7 @@ Filter: case-insensitive substring over `row.account.username` and
 | `Gtk.ActionBar` | 1 | — | — | singleton; starts hidden (`visible = false`, `no_show_all = true`) |
 | `Gtk.Button` | 1 | — | `clicked` → `AccountsWidget#delete_selected` | `Delete`, insensitive until ≥1 row is selected |
 
-→ `lib/actions_bar.rb` — **missing**.
+→ `lib/actions_bar.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/list.py — AccountsWidget: the accounts view
 
@@ -150,7 +154,7 @@ Filter: case-insensitive substring over `row.account.username` and
 case-insensitively by provider on every append. Empty provider groups are
 collected in `_to_delete` and pruned after a delete or a provider change.
 
-→ `lib/accounts_widget.rb` — **missing**.
+→ `lib/accounts_widget.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/list.py — ProviderWidget: one provider group
 
@@ -161,7 +165,7 @@ collected in `_to_delete` and pruned after a delete or a provider change.
 | `Gtk.Label` | 1 | `provider-lbl` | — | provider name, `halign START` |
 | `Gtk.Image` | 1 | — | — | pixbuf from `load_pixbuf_from_provider(provider)` (48px) |
 
-→ `lib/provider_widget.rb` — **missing**.
+→ `lib/provider_widget.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/list.py — AccountsList: rows for one provider
 
@@ -173,7 +177,7 @@ collected in `_to_delete` and pruned after a delete or a provider change.
 row's check button; `delete_selected` removes each checked account
 (`account.remove()`) and returns to NORMAL.
 
-→ `lib/accounts_list.rb` — **missing**.
+→ `lib/accounts_list.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/list.py — EmptyAccountsList: the empty state
 
@@ -183,7 +187,7 @@ row's check button; `delete_selected` removes each checked account
 | `Gtk.Image` | 1 | — | — | `dialog-information-symbolic.symbolic` at `IconSize.DIALOG` |
 | `Gtk.Label` | 1 | — | — | `There are no accounts yet…` |
 
-→ `lib/empty_accounts_list.rb` — **missing** (an `Adw::StatusPage` is the
+→ `lib/empty_accounts_list.rb` — **exists** (an `Adw::StatusPage` is the
 GTK4-era shape).
 
 ## Authenticator/widgets/accounts/row.py — AccountRow: one account
@@ -206,7 +210,7 @@ GTK4-era shape).
 Note the stylesheet defines `.account-name` and `.counter-label`, which no
 source applies — dead CSS. The row uses `.username` and `.token-label`.
 
-→ `lib/account_row.rb` — **missing**.
+→ `lib/account_row.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/add.py — AddAccountWindow
 
@@ -222,7 +226,7 @@ Keyboard: `Escape` closes; `Ctrl` (+`MOD2`) + `q` triggers the QR scan.
 On add: creates the `Account`, registers it with `AccountsManager`, appends it
 to `AccountsWidget`, closes.
 
-→ `lib/add_account_window.rb` — **missing**.
+→ `lib/add_account_window.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/add.py — AccountConfig: the account form
 
@@ -240,7 +244,7 @@ Provider list is loaded from the GResource `data.json` (name → logo), sorted
 case-insensitively. Validation emits `changed` with the AND of name, provider
 and token validity.
 
-→ `lib/account_config.rb` — **missing**.
+→ `lib/account_config.rb` — **exists**.
 
 ## Authenticator/widgets/accounts/edit.py — EditAccountWindow
 
@@ -255,7 +259,7 @@ and token validity.
 On save: emits `updated`, and when the provider changed asks
 `AccountsWidget#update_provider` to move the row to another provider group.
 
-→ `lib/edit_account_window.rb` — **missing**.
+→ `lib/edit_account_window.rb` — **exists**.
 
 ## Authenticator/widgets/settings.py — SettingsWindow: preferences
 
@@ -275,7 +279,7 @@ whose confirmation is the notification above, clearing `Database`, `Keyring`,
 `AccountsManager` and `AccountsWidget`); *GPG keys location* showing the
 `gpg-location` setting (a `ClickableSettingsBox` opening a folder chooser).
 
-→ `lib/settings_window.rb` — **missing** (`Adw::PreferencesWindow`/`Dialog`
+→ `lib/settings_window.rb` — **exists** (`Adw::PreferencesWindow`/`Dialog`
 with three pages is the GTK4-era shape; the undo notification becomes an
 `Adw::Toast`).
 
@@ -289,7 +293,7 @@ with three pages is the GTK4-era shape; the undo notification becomes an
 | `Gtk.Label` (secondary) | 1 | `settings-box-secondary-label` | — | `halign START` |
 | `Gtk.Box` (vertical) | 2 | — | — | labels, switch |
 
-→ `lib/switch_settings_box.rb` — **missing** (an `Adw::SwitchRow` in the port).
+→ `lib/switch_settings_box.rb` — **exists** (an `Adw::SwitchRow` in the port).
 
 ## Authenticator/widgets/settings.py — ClickableSettingsBox
 
@@ -303,7 +307,7 @@ with three pages is the GTK4-era shape; the undo notification becomes an
 Used three times: clear-database row, GPG-location row, and every GPG key row
 in the fingerprint window.
 
-→ `lib/clickable_settings_box.rb` — **missing** (`Gtk::EventBox` does not
+→ `lib/clickable_settings_box.rb` — **exists** (`Gtk::EventBox` does not
 exist in GTK4 — `Adw::ActionRow` activatable, or a `Gtk::GestureClick`).
 
 ## Authenticator/widgets/settings.py — SettingsBoxWithEntry
@@ -316,7 +320,7 @@ exist in GTK4 — `Adw::ActionRow` activatable, or a `Gtk::GestureClick`).
 
 Used by `PasswordWindow` (×3) and `GPGRestoreWindow` (×1).
 
-→ `lib/settings_box_with_entry.rb` — **missing** (an `Adw::EntryRow` /
+→ `lib/settings_box_with_entry.rb` — **exists** (an `Adw::EntryRow` /
 `Adw::PasswordEntryRow`).
 
 ## Authenticator/widgets/settings.py — PasswordWindow: the backup password
@@ -333,7 +337,7 @@ old password. **Note: nothing in upstream constructs `PasswordWindow`** — it i
 reachable only from `Settings#backup_password`, which no row exposes. Port it
 for parity, and record that it is dead UI upstream.
 
-→ `lib/password_window.rb` — **missing**.
+→ `lib/password_window.rb` — **exists**.
 
 ## Authenticator/widgets/about.py.in — AboutDialog
 
@@ -341,7 +345,7 @@ for parity, and record that it is dead UI upstream.
 |---|---:|---|---|---|
 | `Gtk.AboutDialog` | 1 | — | — | modal; authors `Bilal Elmoussaoui`, artists `Alexandros Felekidis`, GPL-3.0, logo icon name, program name `Authenticator`, `translator-credits`, version from `@VERSION@`, comments `Two-factor authentication code generator.`, website the GitHub repo |
 
-→ `lib/about_dialog.rb` — **missing** (`Adw::AboutDialog`; `@VERSION@` comes
+→ `lib/about_dialog.rb` — **exists** (`Adw::AboutDialog`; `@VERSION@` comes
 from `Authenticator::Rb::VERSION`).
 
 ## Authenticator/widgets/utils.py — the file choosers
@@ -354,7 +358,7 @@ from `Authenticator::Rb::VERSION`).
 Four shared entry points (`import_json`, `export_json`, `import_pgp_json`,
 `export_pgp_json`) plus `open_directory` — one function body, five components.
 
-→ `lib/file_choosers.rb` — **missing** (`Gtk::FileDialog` with async callbacks
+→ `lib/file_choosers.rb` — **exists** (`Gtk::FileDialog` with async callbacks
 in GTK4; there is no blocking `run`).
 
 ## Authenticator/widgets/backup/gnupg.py — GPGRestoreWindow
@@ -390,7 +394,7 @@ name, looks it up in the icon theme, and falls back to the app icon, scaling
 with `BILINEAR` when the theme returns the wrong size. `can_use_qrscanner()`
 gates the QR button on `XDG_CURRENT_DESKTOP == gnome`.
 
-→ `lib/provider_image.rb` — **missing** (GTK4 images take `Gio::Icon`/paintables;
+→ `lib/provider_image.rb` — **exists** (GTK4 images take `Gio::Icon`/paintables;
 `GdkPixbuf` scaling should become a `Gtk::IconTheme` lookup at a given size).
 
 ---
@@ -399,27 +403,31 @@ gates the QR button on `XDG_CURRENT_DESKTOP == gnome`.
 
 | Upstream | → port | Kind | Present |
 |---|---|---|---|
-| `Authenticator/models/settings.py` + `data/…gschema.xml` | `lib/settings.rb` | settings | no |
-| `Authenticator/models/account.py` | `lib/account.rb` | model | no |
-| `Authenticator/models/accounts_manager.py` | `lib/accounts_manager.rb` | model | no |
-| `Authenticator/models/database.py` | `lib/database.rb` | model | no |
-| `Authenticator/models/keyring.py` | `lib/keyring.rb` | model | no |
-| `Authenticator/models/otp.py` | `lib/otp.rb` | model | no |
-| `Authenticator/models/clipboard.py` | `lib/clipboard.rb` | model | no |
-| `Authenticator/models/backup.py` | `lib/backup.rb` | model | no |
+| `Authenticator/models/settings.py` + `data/…gschema.xml` | `lib/settings.rb` | settings | yes |
+| `Authenticator/models/account.py` | `lib/account.rb` | model | yes |
+| `Authenticator/models/accounts_manager.py` | `lib/accounts_manager.rb` | model | yes |
+| `Authenticator/models/database.py` | `lib/database.rb` | model | yes |
+| `Authenticator/models/keyring.py` | `lib/keyring.rb` | model | yes |
+| `Authenticator/models/otp.py` | `lib/otp.rb` | model | yes |
+| `Authenticator/models/clipboard.py` | `lib/clipboard.rb` | model | yes |
+| `Authenticator/models/backup.py` | `lib/backup.rb` | model | yes |
 | `Authenticator/models/gnupg.py` | `lib/gpg.rb` | model | no |
 | `Authenticator/models/qr_reader.py` | `lib/qr_reader.rb` | model | no |
 | `Authenticator/models/screenshot.py` | `lib/screenshot.rb` | model | no |
-| `Authenticator/models/logger.py` | `lib/logger.rb` | model | no |
+| `Authenticator/models/logger.py` | `lib/logger.rb` | model | yes |
 | `search-provider/authenticator-search-provider.py.in` | `lib/shell_search_provider.rb` | search provider | no |
-| `data/style.css` | `data/style.css` + loader in `application.rb` | stylesheet | no |
-| `data/data.json` | `data/data.json` | provider data | no |
-| `data/…gresource.xml` + `data/icons/**` | `data/icons/**` loaded directly | assets | no |
+| `data/style.css` | `data/style.css` + loader in `application.rb` | stylesheet | yes |
+| `data/data.json` | `data/data.json` | provider data | yes |
+| `data/…gresource.xml` + `data/icons/**` | `data/icons/**` loaded directly | assets | yes |
 | `po/` (14 languages, 58 msgids) | `po/` | i18n | no |
 
-**GSettings keys** (all four unported): `window-position` (`ai`, `[0,0]`),
-`night-mode` (`b`, false), `is-maximized` (`b`, false), `gpg-location`
-(`s`, `~/.gnupg/`).
+**GSettings keys**: `window-position` (`ai`, `[0,0]`) — **declared, dormant**:
+GTK4 cannot restore a window position, so `lib/window.rb` keeps the key and
+ignores it; `night-mode` (`b`, false) — **ported**; `is-maximized`
+(`b`, false) — **ported**; `gpg-location` (`s`, `~/.gnupg/`) — **ported**
+(the row reads and writes it; nothing consumes it until the GPG model lands).
+The port adds one key upstream's schema lacks, `backup-password`, because it
+wires up the `PasswordWindow` upstream never instantiates.
 
 **Stylesheet classes** (12 defined): `accounts-widget`, `accounts-container`,
 `accounts-list`, `account-row`, `account-row-checkbtn`, `settings-box`,
