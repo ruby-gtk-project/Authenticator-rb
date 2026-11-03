@@ -205,7 +205,7 @@ app.app.signal_connect("activate") do
 
   check(
     "every menu action is registered",
-    [true, true, true, true, true],
+    [true] * 7,
     Authenticator::Application::ACTIONS.map { |name| !app.app.lookup_action(name).nil? },
   )
   app.app.lookup_action("settings").activate(nil)

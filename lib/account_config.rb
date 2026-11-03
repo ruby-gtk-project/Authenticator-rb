@@ -7,6 +7,8 @@ require "adwaita"
 require_relative "logger"
 require_relative "otp"
 require_relative "provider_image"
+require_relative "qr_reader"
+require_relative "screenshot"
 
 module Authenticator
   # AccountConfig is the account form shared by the add and edit windows: a
@@ -25,9 +27,11 @@ module Authenticator
   # the port keeps the completion and drops the dropdown: the same list, the
   # same free-form text, one widget instead of two.
   #
-  # Upstream also offers a QR-code scanner here. That needs the zbar bindings
-  # and the GNOME Shell screenshot interface, neither of which this port has
-  # yet, so the button and its handler arrive with those models.
+  # `scan_qr` is upstream's: drag out the QR code on screen, read the token
+  # out of it and type it into the token field. Upstream reports a bad scan
+  # with a Gd::Notification pushed into this box; libgd is gone in GTK 4, so
+  # the box sits inside an Adwaita::ToastOverlay and the same message arrives
+  # as a toast.
   class AccountConfig
     # Where the vendored provider list lives, relative to this file.
     DATA_PATH = File.expand_path("../data/data.json", __dir__)
@@ -36,6 +40,9 @@ module Authenticator
     NAME_COLUMN = 0
     LOGO_COLUMN = 1
 
+    # Upstream's notification timeout, in seconds.
+    NOTIFICATION_TIMEOUT = 5
+
     def initialize(edit: false, account: nil, on_changed: nil)
       @edit = edit
       @account = account
@@ -43,40 +50,75 @@ module Authenticator
     end
 
     def build
-      @build ||= container.tap do |box|
-        box.append(clamp)
+      @build ||= toast_overlay.tap do |overlay|
+        overlay.child = container
 
-        clamp.tap do |c|
-          c.child = form
+        container.tap do |box|
+          box.append(clamp)
 
-          form.tap do |f|
-            f.append(logo_image)
-            f.append(provider_entry)
-            f.append(username_entry)
+          clamp.tap do |c|
+            c.child = form
 
-            provider_entry.tap do |entry|
-              entry.completion = provider_completion
-              entry.signal_connect("changed") { on_provider_changed }
-            end
+            form.tap do |f|
+              f.append(logo_image)
+              f.append(provider_entry)
+              f.append(username_entry)
 
-            username_entry.tap do |entry|
-              entry.signal_connect("changed") { validate }
-            end
+              provider_entry.tap do |entry|
+                entry.completion = provider_completion
+                entry.signal_connect("changed") { on_provider_changed }
+              end
 
-            @edit.then do |editing|
-              unless editing
-                f.append(token_entry)
+              username_entry.tap do |entry|
+                entry.signal_connect("changed") { validate }
+              end
 
-                token_entry.tap do |entry|
-                  entry.signal_connect("changed") { validate }
+              @edit.then do |editing|
+                unless editing
+                  f.append(token_entry)
+
+                  token_entry.tap do |entry|
+                    entry.signal_connect("changed") { validate }
+                  end
                 end
               end
             end
           end
-        end
 
-        validate
+          validate
+        end
       end
+    end
+
+    # Upstream's scan_qr: let the user drag a rectangle round the QR code,
+    # read it, and fill the token field in with what was in it. A cancelled
+    # drag does nothing, as upstream's does; a code that is not a usable
+    # token says so and leaves the field alone.
+    def scan_qr
+      Screenshot.area.then do |filename|
+        if filename
+          QrReader.new(filename).then do |reader|
+            read_scan(reader, reader.read)
+          end
+        end
+      end
+    end
+
+    # Whether there is anything to scan with: both a shell that can select an
+    # area and a decoder to read the image. Upstream asks the same question as
+    # `Application.USE_QRSCANNER and can_use_qrscanner()`, the second half of
+    # which is a plain check that the desktop is GNOME; asking the session bus
+    # whether the screenshot interface is actually there is the same question
+    # answered by the thing that has to work.
+    def self.can_scan? = QrReader.available? && Screenshot.available?
+
+    # Upstream's __send_notification, as an Adwaita toast.
+    def notify(message)
+      toast_overlay.add_toast(
+        Adwaita::Toast.new(message).tap do |toast|
+          toast.timeout = NOTIFICATION_TIMEOUT
+        end,
+      )
     end
 
     # Upstream's `account` property: what the window reads when the user
@@ -91,6 +133,7 @@ module Authenticator
       end
     end
 
+    def toast_overlay = @toast_overlay ||= Adwaita::ToastOverlay.new
     def container = @container ||= Gtk::Box.new(:vertical, 0)
 
     def clamp
@@ -162,6 +205,20 @@ module Authenticator
     end
 
     private
+
+      # Upstream's scan_qr tail: a readable, valid token goes into the field
+      # and a bad one is reported. Upstream reports a missing zbar here too;
+      # the port's scan button is absent without one, so there is nothing to
+      # press and nothing to report.
+      def read_scan(reader, secret)
+        reader.valid?.then do |usable|
+          if usable
+            token_entry.text = secret.to_s
+          else
+            notify("Invalid QR code")
+          end
+        end
+      end
 
       # Upstream's _on_provider_changed: the logo follows the provider. When
       # the typed name is one of the known providers it uses that provider's

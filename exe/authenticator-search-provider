@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# The GNOME Shell search provider, which the session bus starts on demand
+# through data/search-provider/*.service. Ported from the __main__ block of
+# search-provider/authenticator-search-provider.py.in: own the names, export
+# the object, and stay up until the bus is done with it.
+
+require "shell_search_provider"
+
+Authenticator::ShellSearchProvider.new.run

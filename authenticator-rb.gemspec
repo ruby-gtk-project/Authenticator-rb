@@ -93,7 +93,7 @@ Gem::Specification.new do |spec|
   ]
   spec.bindir = "exe"
   # Listed files are the relative paths from bindir above.
-  spec.executables = ["authenticator"]
+  spec.executables = ["authenticator", "authenticator-search-provider"]
   spec.require_paths = ["lib"]
 
   # NOTE: It is preferable to list development dependencies in the gemspec due to increased

@@ -24,10 +24,11 @@ Survey facts that shape everything below:
 Totals: **24 user-facing components** across 10 upstream widget files, plus 11
 supporting model files, 1 stylesheet, 1 GSettings schema, 1 GResource manifest,
 1 provider-logo data file and a 14-language `po/` catalogue (58 msgids).
-**22 of the 24 components exist in the port**; the two missing are
-`GPGRestoreWindow` and `FingprintPGPWindow`. Of the supporting files, the GPG,
-QR-reader and screenshot models, the shell search provider and the whole `po/`
-catalogue are still unported.
+**All 24 components exist in the port**. Of the supporting files, only the
+14-language `po/` catalogue is still unported: the GPG, QR-reader and
+screenshot models and the shell search provider all landed, the last of them
+with its own `exe/authenticator-search-provider` and the two files
+(`.ini`, `.service`) the Shell and the session bus find it through.
 
 ---
 
@@ -372,7 +373,11 @@ in GTK4; there is no blocking `run`).
 | `SettingsBoxWithEntry` | 1 | — | — | `Paraphrase`, password-style |
 | `Gd.Notification` + `Gtk.Box` + `Gtk.Label` | 1 | — | — | error state: `There was an error during the import of the encrypted file.` |
 
-→ `lib/gpg_restore_window.rb` — **missing**.
+→ `lib/gpg_restore_window.rb` — **exists**. The Gd notification is an
+`Adwaita::Toast` over an `Adwaita::ToastOverlay` (libgd is gone in GTK 4), and
+the entry sits in an `Adwaita::PreferencesGroup` because `Adwaita::EntryRow`
+needs a list box around it. The decrypted plaintext is removed as soon as it
+has been imported rather than left in the cache directory.
 
 ## Authenticator/widgets/backup/gnupg.py — FingprintPGPWindow
 
@@ -384,7 +389,13 @@ in GTK4; there is no blocking `run`).
 | `Gtk.Label` | 2 | `gpg-key-lbl` | — | section headings `Public keys`, `Private keys` |
 | `ClickableSettingsBox` | N | `settings-box` | `button-press-event` → emits `selected` with the fingerprint | **repeater** — one per GPG key, uid as the title and the fingerprint as the subtitle |
 
-→ `lib/gpg_fingerprint_window.rb` — **missing**.
+→ `lib/gpg_fingerprint_window.rb` — **exists**. The two label-plus-rows
+sections are two `Adwaita::PreferencesGroup`s with titles, the `selected`
+signal is an `on_selected` callback, and the rows listen for
+`Adwaita::ActionRow`'s `activated` rather than `button-press-event`, so the
+keyboard reaches them. `use_markup` is off on those rows: a GPG uid carries
+its owner's address in angle brackets, which Pango markup would otherwise
+swallow.
 
 ## Authenticator/utils.py — provider logo loading
 
@@ -411,11 +422,11 @@ gates the QR button on `XDG_CURRENT_DESKTOP == gnome`.
 | `Authenticator/models/otp.py` | `lib/otp.rb` | model | yes |
 | `Authenticator/models/clipboard.py` | `lib/clipboard.rb` | model | yes |
 | `Authenticator/models/backup.py` | `lib/backup.rb` | model | yes |
-| `Authenticator/models/gnupg.py` | `lib/gpg.rb` | model | no |
-| `Authenticator/models/qr_reader.py` | `lib/qr_reader.rb` | model | no |
-| `Authenticator/models/screenshot.py` | `lib/screenshot.rb` | model | no |
+| `Authenticator/models/gnupg.py` | `lib/gpg.rb` | model | yes |
+| `Authenticator/models/qr_reader.py` | `lib/qr_reader.rb` | model | yes |
+| `Authenticator/models/screenshot.py` | `lib/screenshot.rb` | model | yes |
 | `Authenticator/models/logger.py` | `lib/logger.rb` | model | yes |
-| `search-provider/authenticator-search-provider.py.in` | `lib/shell_search_provider.rb` | search provider | no |
+| `search-provider/authenticator-search-provider.py.in` | `lib/shell_search_provider.rb` | search provider | yes |
 | `data/style.css` | `data/style.css` + loader in `application.rb` | stylesheet | yes |
 | `data/data.json` | `data/data.json` | provider data | yes |
 | `data/…gresource.xml` + `data/icons/**` | `data/icons/**` loaded directly | assets | yes |
@@ -467,7 +478,15 @@ rewritten against Adwaita named colours.
    (`pyotp` upstream), zbar (QR reading), `python-gnupg` (GPG backup/restore),
    and the `org.gnome.Shell.Screenshot` D-Bus interface (area screenshot for
    QR scanning). Confirm each against `flake.nix`/`gemset.nix` before porting
-   the component that needs it.
+   the component that needs it. **Resolved**: there is no gem for any of the
+   first four, so libsecret and sqlite3 became files of the same shape (see
+   `lib/keyring.rb`, `lib/database.rb`), the TOTP is thirty lines of OpenSSL
+   HMAC in `lib/otp.rb`, and zbar and GPG are driven as the commands they are
+   — `zbarimg` and `gpg`, both added to the dev shell and to the packaged app's
+   PATH, which is exactly what pyzbar and python-gnupg do underneath. The
+   screenshot interface needs no gem at all; `lib/screenshot.rb` calls it down
+   a `Gio::DBusConnection`, because `Gio::DBusProxy.new_for_bus` returns nil in
+   the Ruby bindings.
 9. **`AccountsManager` is a Python `Thread` emitting a signal every second.**
    The port needs `GLib::Timeout.add_seconds` on the main loop instead; a Ruby
    thread touching widgets will not be safe.

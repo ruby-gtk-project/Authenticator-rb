@@ -106,9 +106,13 @@
           gemdir = ./nix;
         };
 
-        # The launcher is whatever the gemspec installs into exe/. Reading the
-        # directory keeps this flake generic: no name to keep in step by hand.
-        launcher = builtins.head (builtins.attrNames (builtins.readDir ./exe));
+        # Everything the gemspec installs into exe/, each of which gets its own
+        # wrapper. Reading the directory keeps this flake generic: no name to
+        # keep in step by hand. The shortest name is the app itself — the GNOME
+        # Shell search provider is `<app>-search-provider` — and that is the
+        # one mainProgram names.
+        launchers = builtins.attrNames (builtins.readDir ./exe);
+        launcher = builtins.head (builtins.sort (a: b: builtins.stringLength a < builtins.stringLength b) launchers);
 
         # Optional directories: a port that has not grown translations or data
         # assets yet simply has none.
@@ -141,9 +145,25 @@
             for d in ${pkgs.lib.escapeShellArgs optionalDirs}; do
               cp -r "$d" $out/share/Authenticator/
             done
-            # exe/ sits next to lib/ so the launcher's `require "Authenticator"`
+            # exe/ sits next to lib/ so each launcher's `require "authenticator"`
             # resolves against the copied tree.
-            install -Dm755 exe/${launcher} $out/share/Authenticator/exe/${launcher}
+            for e in ${pkgs.lib.escapeShellArgs launchers}; do
+              install -Dm755 "exe/$e" "$out/share/Authenticator/exe/$e"
+            done
+
+            # The GNOME Shell search provider is found through two files: the
+            # .ini that tells the Shell which bus name to talk to, and the
+            # D-Bus service file that tells the bus how to start it. Only the
+            # latter needs a path, which is why it is the only template.
+            if [ -d data/search-provider ]; then
+              install -Dm644 data/search-provider/*.ini \
+                -t $out/share/gnome-shell/search-providers
+              mkdir -p $out/share/dbus-1/services
+              for f in data/search-provider/*.service.in; do
+                sed "s|@bindir@|$out/bin|g" "$f" \
+                  > "$out/share/dbus-1/services/$(basename "$f" .in)"
+              done
+            fi
 
             # Compile any GSettings schema the port ships.
             if [ -d data/schemas ]; then
@@ -155,16 +175,21 @@
             # -rbundler/setup puts the bundled gems on the load path, and
             # GI_TYPELIB_PATH keeps GObject-Introspection from re-registering
             # types the cairo gem's C extension has already registered.
-            makeWrapper ${gems.wrappedRuby}/bin/ruby $out/bin/${launcher} \
+            for e in ${pkgs.lib.escapeShellArgs launchers}; do
+            makeWrapper ${gems.wrappedRuby}/bin/ruby $out/bin/"$e" \
               --add-flags "-rbundler/setup" \
               --add-flags "-I$out/share/Authenticator/lib" \
-              --add-flags "$out/share/Authenticator/exe/${launcher}" \
+              --add-flags "$out/share/Authenticator/exe/$e" \
               --set GI_TYPELIB_PATH "${typelibPath}" \
+              --prefix PATH : "$out/bin" \
+              --prefix PATH : "${pkgs.gnupg}/bin" \
+              --prefix PATH : "${pkgs.zbar}/bin" \
               --prefix XDG_DATA_DIRS : "$out/share" \
               --prefix XDG_DATA_DIRS : "$out/share/gsettings-schemas/Authenticator-0.1.0" \
               --prefix XDG_DATA_DIRS : "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}" \
               --prefix XDG_DATA_DIRS : "${pkgs.gtk4}/share/gsettings-schemas/${pkgs.gtk4.name}" \
               --prefix XDG_DATA_DIRS : "${pkgs.adwaita-icon-theme}/share"
+            done
 
             runHook postInstall
           '';
@@ -201,6 +226,17 @@
             pkgs.xvfb-run
             pkgs.gsettings-desktop-schemas
             pkgs.adwaita-icon-theme
+            # The GPG model shells out to `gpg`, the way python-gnupg does
+            # upstream, so the binary has to be on PATH for the OpenPGP
+            # backup and restore to work.
+            pkgs.gnupg
+            # The QR reader shells out to `zbarimg`; upstream reaches zbar
+            # through pyzbar, which binds the same library.
+            pkgs.zbar
+            # Only the drive script needs this: it writes a QR code for the
+            # reader to read, so the scan path can be checked rather than
+            # asserted.
+            pkgs.qrencode
           ] ++ gtkStack;
 
           # Icons, GSettings schemas and the GTK portal all resolve through

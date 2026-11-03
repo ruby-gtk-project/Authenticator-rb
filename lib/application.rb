@@ -7,6 +7,8 @@ require_relative "accounts_manager"
 require_relative "backup"
 require_relative "clipboard"
 require_relative "file_choosers"
+require_relative "gpg_fingerprint_window"
+require_relative "gpg_restore_window"
 require_relative "logger"
 require_relative "primary_menu"
 require_relative "provider_image"
@@ -24,18 +26,26 @@ module Authenticator
   # same two from data/ in the checkout, so the app runs from a clone without
   # a build step.
   #
-  # The `import_pgp_json` and `export_pgp_json` actions are not registered:
-  # they need the GPG model, which is not ported yet. Registering them with
-  # nothing behind them would put two live entries in the menu that do
-  # nothing, so they arrive together with the model.
+  # Upstream's USE_QRSCANNER class attribute, which its QRReader switches off
+  # when the zbar import fails, is not reproduced: the port's QrReader and
+  # Screenshot each answer `available?` for themselves, and the add-account
+  # window asks them, so there is no global flag to keep in step.
   class Application
     APP_ID = "com.github.bilelmoussaoui.Authenticator"
 
     # Where the vendored stylesheet lives, relative to this file.
     STYLE_PATH = File.expand_path("../data/style.css", __dir__)
 
-    # Upstream's __setup_actions, minus the two OpenPGP entries.
-    ACTIONS = %w[about quit settings import_json export_json].freeze
+    # Upstream's __setup_actions.
+    ACTIONS = %w[
+      about
+      quit
+      settings
+      import_json
+      export_json
+      import_pgp_json
+      export_pgp_json
+    ].freeze
 
     def build
       app.tap do |a|
@@ -131,6 +141,30 @@ module Authenticator
       def on_export_json
         FileChoosers.export_json(main_window.window) do |filename|
           BackupJson.export_file(filename)
+        end
+      end
+
+      # Upstream's __on_import_pgp_json: pick the encrypted file, then let the
+      # restore window ask for its passphrase and do the importing.
+      def on_import_pgp_json
+        FileChoosers.import_pgp_json(main_window.window) do |filename|
+          GpgRestoreWindow.new(
+            main_window.window,
+            filename,
+            on_imported: ->(account) { main_window.on_account_added(account) },
+            on_finished: -> { main_window.update_view },
+          ).present
+        end
+      end
+
+      # Upstream's __on_export_pgp_json: pick where the backup goes, then let
+      # the fingerprint window say which key it is encrypted to.
+      def on_export_pgp_json
+        FileChoosers.export_pgp_json(main_window.window) do |filename|
+          GpgFingerprintWindow.new(
+            main_window.window,
+            on_selected: ->(fingerprint) { BackupPgpJson.export_file(filename, fingerprint) },
+          ).present
         end
       end
   end

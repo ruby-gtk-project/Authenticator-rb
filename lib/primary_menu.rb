@@ -10,10 +10,7 @@ module Authenticator
   # Settings, About and Quit.
   #
   # Upstream's submenus each list two formats, plain-text JSON and
-  # OpenPGP-encrypted JSON. The OpenPGP entries are not here because the GPG
-  # model they drive is not ported yet — a menu item that activates an action
-  # nobody registered is a dead entry in the menu, so the entries arrive with
-  # the model.
+  # OpenPGP-encrypted JSON, in that order.
   class PrimaryMenu
     def build
       @build ||= menu.tap do |root|
@@ -26,10 +23,12 @@ module Authenticator
 
           import_menu.tap do |import|
             import.append("from a plain-text JSON file", "app.import_json")
+            import.append("from an OpenPGP-encrypted JSON file", "app.import_pgp_json")
           end
 
           export_menu.tap do |export|
             export.append("in a plain-text JSON file", "app.export_json")
+            export.append("in an OpenPGP-encrypted JSON file", "app.export_pgp_json")
           end
         end
 

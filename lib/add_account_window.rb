@@ -17,9 +17,11 @@ module Authenticator
   # port hands it to the `on_added` callback and lets the window that opened
   # this one place it, so the dialog does not reach across the app.
   #
-  # Upstream's QR-scan button, and the Ctrl+Q accelerator that triggers it, are
-  # not here: they need the screenshot and QR-reader models, which are not
-  # ported yet.
+  # Upstream's QR-scan button, and the Ctrl+Q accelerator that triggers it,
+  # are both here. The button only goes into the header bar when there is
+  # something to scan with — a shell that can select an area and a decoder to
+  # read the image — which is upstream's `USE_QRSCANNER and
+  # can_use_qrscanner()` test asked of the things that have to work.
   class AddAccountWindow
     def initialize(parent, on_added: nil)
       @parent = parent
@@ -46,12 +48,22 @@ module Authenticator
             add_button.tap do |btn|
               btn.signal_connect("clicked") { on_add }
             end
+
+            AccountConfig.can_scan?.then do |scannable|
+              if scannable
+                bar.pack_end(scan_button)
+
+                scan_button.tap do |btn|
+                  btn.signal_connect("clicked") { on_scan }
+                end
+              end
+            end
           end
         end
 
         key_controller.tap do |controller|
-          controller.signal_connect("key-pressed") do |_, keyval, _, _|
-            on_key_pressed(keyval)
+          controller.signal_connect("key-pressed") do |_, keyval, _, state|
+            on_key_pressed(keyval, state)
           end
         end
         win.add_controller(key_controller)
@@ -79,6 +91,15 @@ module Authenticator
     end
 
     def close_button = @close_button ||= Gtk::Button.new(label: "Close")
+
+    # Upstream's scan_btn, a HeaderBarButton over the `qrscanner-symbolic`
+    # icon the vendored theme ships.
+    def scan_button
+      @scan_button ||= Gtk::Button.new.tap do |btn|
+        btn.icon_name = "qrscanner-symbolic"
+        btn.tooltip_text = "Scan QR code"
+      end
+    end
 
     def add_button
       @add_button ||= Gtk::Button.new(label: "Add").tap do |btn|
@@ -110,13 +131,36 @@ module Authenticator
         end
       end
 
-      def on_key_pressed(keyval)
+      # Upstream's _on_scan, which the button and the accelerator share.
+      def on_scan
+        account_config.scan_qr
+      end
+
+      # Upstream's _on_key_press: Escape closes the window and Ctrl+Q starts a
+      # scan. Upstream tests the modifier state for CONTROL_MASK | MOD2_MASK,
+      # which only matches while Num Lock happens to be on; GTK 4 hands the
+      # controller the modifiers directly, so asking for the control bit is
+      # both the intent and reliable.
+      def on_key_pressed(keyval, state)
         (keyval == Gdk::Keyval::KEY_Escape).then do |escape|
           if escape
             window.close
           end
-          escape
+          scan_requested?(keyval, state).then do |scan|
+            if scan
+              on_scan
+            end
+            escape || scan
+          end
         end
+      end
+
+      # The modifier state arrives as a Gdk::ModifierType from the controller,
+      # but the bindings hand plain integers through in some places, so the
+      # control bit is tested numerically and both read the same.
+      def scan_requested?(keyval, state)
+        keyval == Gdk::Keyval::KEY_q &&
+          !(state.to_i & Gdk::ModifierType::CONTROL_MASK.to_i).zero?
       end
   end
 end

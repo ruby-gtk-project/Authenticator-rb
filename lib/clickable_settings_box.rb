@@ -11,6 +11,12 @@ module Authenticator
   # Gtk::EventBox, and Adwaita::ActionRow is activatable in its own right, so
   # the row's `activated` signal is what upstream's button press was — and
   # unlike a button press it also fires from the keyboard.
+  #
+  # Adwaita::PreferencesRow parses its title as Pango markup by default, which
+  # upstream's plain Gtk::Label does not. A GPG user id contains its owner's
+  # address in angle brackets, so left on, markup turns one of those titles
+  # into a parse error and an empty row; `use_markup` off is what keeps every
+  # title literal.
   class ClickableSettingsBox
     def initialize(label, sub_label = nil, on_activated: nil)
       @label = label
@@ -32,8 +38,10 @@ module Authenticator
 
     def action_row
       @action_row ||= Adwaita::ActionRow.new.tap do |row|
+        row.use_markup = false
         row.title = @label
         row.subtitle = @sub_label.to_s
+        row.subtitle_selectable = true
         row.activatable = true
       end
     end
