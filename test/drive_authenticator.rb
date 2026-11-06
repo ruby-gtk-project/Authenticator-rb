@@ -102,6 +102,22 @@ app.app.signal_connect("activate") do
     widget.accounts_lists.flat_map(&:rows).map { |row| row.pin_label.label.length }.uniq,
   )
 
+  widget.accounts_lists.flat_map(&:rows).first.then do |row|
+    copied = []
+    Authenticator::Clipboard.define_singleton_method(:set) { |string| copied << string }
+    row.copy_button.signal_emit("clicked")
+    check("the copy button copied the pin to the clipboard", [row.account.pin], copied)
+    Authenticator::Clipboard.singleton_class.send(:remove_method, :set)
+  end
+
+  edited_via_button = []
+  widget.accounts_lists.flat_map(&:rows).first.then do |row|
+    original_on_edit = row.instance_variable_get(:@on_edit)
+    row.instance_variable_set(:@on_edit, ->(r) { edited_via_button << r; original_on_edit&.call(r) })
+    row.edit_button.signal_emit("clicked")
+  end
+  check("the edit button fired its callback", 1, edited_via_button.size)
+
   window.send(:delete_selected)
   check("the ticked account is gone", 2, Authenticator::Database.default.count)
   check("its emptied group went with it", 1, widget.accounts_lists.size)
@@ -174,6 +190,17 @@ app.app.signal_connect("activate") do
     )
     settings_window.dark_theme_row.build.active = false
 
+    check(
+      "the backup page lists the GPG location and backup password rows",
+      ["GPG keys location", "Backup password"],
+      [settings_window.gpg_location_row.action_row.title, settings_window.backup_password_row.action_row.title],
+    )
+    check(
+      "the clear-database row is on the behaviour page",
+      "Clear the database",
+      settings_window.clear_database_row.action_row.title,
+    )
+
     Authenticator::PasswordWindow.new(settings_window.window).tap do |password_window|
       password_window.build
       password_window.password_row.text = "correct horse"
@@ -215,6 +242,26 @@ app.app.signal_connect("activate") do
     Gtk::Window.list_toplevels.any? { |toplevel| toplevel.is_a?(Adwaita::PreferencesWindow) },
   )
 
+  app.app.lookup_action("about").activate(nil)
+  check(
+    "the about action opens an AboutWindow",
+    true,
+    Gtk::Window.list_toplevels.any? { |toplevel| toplevel.is_a?(Adwaita::AboutWindow) },
+  )
+  Gtk::Window.list_toplevels.find { |toplevel| toplevel.is_a?(Adwaita::AboutWindow) }.then do |about|
+    check("it is titled Authenticator", "Authenticator", about.application_name)
+    check("and carries the port's version", Authenticator::Rb::VERSION, about.version)
+    about.close
+  end
+
+  @cleared = false
+  Authenticator::SettingsWindow.new(window.window, on_cleared: -> { @cleared = true }).tap do |settings_window|
+    settings_window.build
+    settings_window.send(:clear_database)
+  end
+  check("clearing the database emptied the store", 0, Authenticator::Database.default.count)
+  check("and told its caller", true, @cleared)
+
   Authenticator::AccountsManager.default.kill
   app.app.quit
 end
@@ -226,6 +273,7 @@ CHECKS.reject { |_description, expected, actual| expected == actual }.then do |f
   puts
   if failures.empty?
     puts "#{CHECKS.size} checks passed"
+    puts "DRIVE OK"
   else
     failures.each do |description, expected, actual|
       warn "FAILED #{description}: expected #{expected.inspect}, got #{actual.inspect}"
