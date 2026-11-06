@@ -1,0 +1,342 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-09-10 10:11+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/authentic"
+"ator/translation/nb_NO/>\n"
+"Language: nb_NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.2-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "Authenticator"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "Allan Nordhøy <epost@anotheragency.no>"
+
+#: ../lib/about_dialog.rb:40
+msgid "Two-factor authentication code generator."
+msgstr "Kodegenerator for to-faktorbekreftelse."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr "Tilbyder"
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "Kontonavn"
+
+#: ../lib/account_config.rb:176
+msgid "Secret token"
+msgstr "Hemmelig symbol"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Ugyldig QR-kode"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "Kunne ikke generere hemmelig kode"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "Kopier"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr "Rediger"
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "Slett"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Legg til ny konto"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "Lukk"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "Skann QR-kode"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Legg til"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr "Lagre"
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr "Rediger {} - {}"
+
+#: ../lib/empty_accounts_list.rb:23
+msgid "There are no accounts yet…"
+msgstr "Ingen kontoer enda…"
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Søk"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Utvelgelsesmodus"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Innstillinger"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "Klikk på elementene for å velge dem"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "Om"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Avslutt"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Nattmodus"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Kodegenerator for to-faktorbekreftelse"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr "Enkelt program som genererer to-faktorbekreftelseskoder, laget for GNOME."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:10
+#~ msgid "Features:"
+#~ msgstr "Funksjoner:"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:12
+#~ msgid "QR code scanner"
+#~ msgstr "QR-kodeskanner"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:13
+#~ msgid "Beautiful UI"
+#~ msgstr "Vakkert grensesnitt"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:14
+#~ msgid "Huge database of (290+) websites/applications"
+#~ msgstr "Stor database med (290+) nettsider/programmer"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:42
+#, fuzzy
+#~ msgid "Revamped main window to more closely follow the GNOME HIG"
+#~ msgstr "Omorganisering av hovedvinduet for bedre overensstemmelse med GNOME HIG"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:43
+#~ msgid "Revamped add a new account window to make it easier to use"
+#~ msgstr "Omorganisering av vindu for tillegg av konto for enklere bruk"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:44
+#, fuzzy
+#~ msgid ""
+#~ "Possibility to add an account from a provider not listed in the shipped databa"
+#~ "se"
+#~ msgstr ""
+#~ "Mulighet for å legge til en konto fra en tilbyder som ikke er opplistet i inne"
+#~ "bygd database"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:45
+#~ msgid "Possibilty to edit an account"
+#~ msgstr "Mulighet til å redigere en konto"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:46
+#, fuzzy
+#~ msgid "One Time Password now visible by default"
+#~ msgstr "Engangspassord er nå synlige som forvalg"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:53
+#~ msgid "Fix python-dbus by using GDbus instead"
+#~ msgstr "Fiks python-dbus ved å bruke GDbus istedenfor"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:60
+#~ msgid "Fix the QRScanner on GNOME Shell"
+#~ msgstr "Fiks for QR-skanneren i GNOME-skallet"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:61
+#~ msgid "Add a new entry for the account's username"
+#~ msgstr "Tillegg av ny oppføring for kontoens brukernavn"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:62
+#~ msgid "Updated database of supported accounts"
+#~ msgstr "Database for støttede kontoer oppdatert"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:69
+#~ msgid "HOTFIX: App not running in DE other than GNOME"
+#~ msgstr "RASKFISK: Programmet kjørte ikke i andre grensesnitt enn GNOME"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "Nytt navn: Authenticator"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:77
+#~ msgid "Cleaner code base"
+#~ msgstr "Renere kodebase"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:78
+#~ msgid "Faster startup"
+#~ msgstr "Raskere oppstart"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
+#~ msgid "Remove unneeded features"
+#~ msgstr "Fjerning av unødvendige funksjoner"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:80
+#~ msgid "Switch to pyzbar instead of zbarlight"
+#~ msgstr "Bytte til pyzbar istedenfor zbarlight"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:81
+#~ msgid "Flatpak package"
+#~ msgstr "Flatpak-pakke"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:88
+#~ msgid "Bilal Elmoussaoui"
+#~ msgstr "Bilal Elmoussaoui"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#~ msgid "Two-factor authentication"
+#~ msgstr "To-faktorbekreftelse"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
+#~ msgid "Gnome;GTK;Verification;"
+#~ msgstr "Gnome;GTK;Verifisering;Bekreftelse;"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Start i feilrettingsmodus"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "Versjonsnummer for Authenticator"
+
+#~ msgid "Next"
+#~ msgstr "Neste"
+#~ msgid "Undo"
+#~ msgstr "Angre"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "Kodegenerator for to-faktorbekreftelse"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "Kodegenerator for to-faktorbekreftelse"
+#~ msgid "TwoFactorAuth"
+#~ msgstr "To-faktorbekreftelse"
+#~ msgid "Shortcuts"
+#~ msgstr "Snarveier"
+#~ msgid "Code \"%s\" copied to clipboard"
+#~ msgstr "Koden \"%s\" ble kopiert til utklippstavlen"
+#~ msgid "Remove the account"
+#~ msgstr "Fjern kontoen"
+#~ msgid "Copy the generated code"
+#~ msgstr "Kopier den genererte koden"
+#~ msgid "Edit the account"
+#~ msgstr "Rediger kontoen"
+#~ msgid "Save the new account name"
+#~ msgstr "Lagre det nye kontonavnet"
+#~ msgid "Expires in %s seconds"
+#~ msgstr "Utløper om %s sekunder"
+#~ msgid "Error during the generation of code"
+#~ msgstr "Feil under generering av kode"
+#~ msgid "Do you really want to remove \"%s\"?"
+#~ msgstr "Ønsker du virkelig å fjerne \"%s\"?"
+#~ msgid "\"%s\" was removed"
+#~ msgstr "\"%s\" ble fjernet"
+#~ msgid "Selected area is not a valid QR code"
+#~ msgstr "Valgt område er ikke en gyldig QR-kode"
+#~ msgid "Select an application"
+#~ msgstr "Velg et program"
+#~ msgid "Apply"
+#~ msgstr "Legg til"
+#~ msgid "Change password"
+#~ msgstr "Endre passord"
+#~ msgid "Old password"
+#~ msgstr "Gammelt passord"
+#~ msgid "New password"
+#~ msgstr "Nytt passord"
+#~ msgid "Repeat new password"
+#~ msgstr "Gjenta nytt passord"
+#~ msgid "Lock the Application"
+#~ msgstr "Lås programmet"
+#~ msgid "Hide notification"
+#~ msgstr "Skjul merknad"
+#~ msgid "Enter your password"
+#~ msgstr "Skriv inn passordet ditt"
+#~ msgid "Unlock"
+#~ msgstr "Lås opp"
+#~ msgid "Behavior"
+#~ msgstr "Oppførsel"
+#~ msgid "Account"
+#~ msgstr "Konto"
+#~ msgid "Password protection"
+#~ msgstr "Passordbeskyttelse"
+#~ msgid "Auto-lock the application (m):"
+#~ msgstr "Automatisk låsning av programmet (m):"
+#~ msgid "Gnome TwoFactorAuth"
+#~ msgstr "Gnome to-faktorbekreftelse"
+#~ msgid "About Gnome TwoFactorAuth"
+#~ msgstr "Om Gnome to-faktorbekreftelse"
+#~ msgid "Show about dialog"
+#~ msgstr "Vis \"Om\"-dialogvindu"

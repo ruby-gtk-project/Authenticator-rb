@@ -24,11 +24,29 @@ Survey facts that shape everything below:
 Totals: **24 user-facing components** across 10 upstream widget files, plus 11
 supporting model files, 1 stylesheet, 1 GSettings schema, 1 GResource manifest,
 1 provider-logo data file and a 14-language `po/` catalogue (58 msgids).
-**All 24 components exist in the port**. Of the supporting files, only the
-14-language `po/` catalogue is still unported: the GPG, QR-reader and
-screenshot models and the shell search provider all landed, the last of them
-with its own `exe/authenticator-search-provider` and the two files
-(`.ini`, `.service`) the Shell and the session bus find it through.
+**All 24 components exist in the port.** The GPG, QR-reader and screenshot
+models and the shell search provider all landed, the last of them with its own
+`exe/authenticator-search-provider` and the two files (`.ini`, `.service`) the
+Shell and the session bus find it through.
+
+The 14-language `po/` catalogue has landed too: upstream's `po/*.po`,
+`LINGUAS` and `Authenticator.pot` moved over byte for byte, `po/POTFILES.in`
+was rewritten to the Ruby files that carry the markers, and the 29 upstream
+msgids reachable from code (`application.py`, `about.py.in`,
+`widgets/accounts/{add,edit,list,row}.py`, `actions_bar.py`, `headerbar.py`)
+are now `_()`/marked in their Ruby equivalents — `lib/application.rb`,
+`lib/about_dialog.rb`, `lib/primary_menu.rb`, `lib/add_account_window.rb`,
+`lib/edit_account_window.rb`, `lib/account_config.rb`, `lib/account_row.rb`,
+`lib/accounts_widget.rb`, `lib/empty_accounts_list.rb`, `lib/actions_bar.rb`
+and `lib/header_bar.rb` — with the domain bound once on `lib/i18n.rb`.
+`rake gettext:po:update`/`gettext:mo:update` (hand-written against
+`rxgettext`/`rmsgmerge`/`rmsgfmt`, since the gem's own `Task` class assumes a
+`po/<lang>/<domain>.po` layout upstream's flat one is not) regenerate the
+catalogue and compile the 14 `.mo` files. The remaining 29 msgids — the
+appdata changelog and `.desktop` entries, and the `authenticator.py.in` CLI
+flags — stay a gap: the port has no `data/*.appdata.xml.in` or
+`.desktop.in`, and `exe/authenticator` takes no CLI flags yet, so there is no
+Ruby call site to carry them.
 
 ---
 

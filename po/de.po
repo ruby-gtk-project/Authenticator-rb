@@ -1,0 +1,266 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-09-11 17:34+0000\n"
+"Last-Translator: Johannes Keyser <johanneskeyser@posteo.de>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/authenticator/trans"
+"lation/de/>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.2-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+#, fuzzy
+msgid "Authenticator"
+msgstr "Zweifaktor-Authentifizierung"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr ""
+
+#: ../lib/about_dialog.rb:40
+#, fuzzy
+msgid "Two-factor authentication code generator."
+msgstr "Codegenerator für Zweifaktor-Authentifizierung"
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr "Anbieter"
+
+#: ../lib/account_config.rb:169
+#, fuzzy
+msgid "Account name"
+msgstr "Kontoname"
+
+#: ../lib/account_config.rb:176
+#, fuzzy
+msgid "Secret token"
+msgstr "Geheimer Code"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Ungültiger QR Code"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "Der geheime Code konnte nicht erzeugt werden"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "kopieren"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr ""
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr ""
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Neues Konto anlegen"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "schließen"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "Scanne QR Code"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Hinzufügen"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr ""
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr "Bearbeiten {} - {}"
+
+#: ../lib/empty_accounts_list.rb:23
+#, fuzzy
+msgid "There are no accounts yet…"
+msgstr "Derzeit gibt es kein Konto"
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Suche"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Auswahlmodus"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Abbruch"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr ""
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "Über"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Beenden"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Nachtmodus"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#, fuzzy
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Codegenerator für Zweifaktor-Authentifizierung"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#, fuzzy
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr ""
+#~ "Einfache Anwendung die Zweifaktor-Authentifizierungscode erzeugt, erstellt für"
+#~ " Gnome"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#, fuzzy
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "Zweifaktor-Authentifizierung"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
+#, fuzzy
+#~ msgid "Remove unneeded features"
+#~ msgstr "gewählte Konten löschen"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#, fuzzy
+#~ msgid "Two-factor authentication"
+#~ msgstr "Zweifaktor-Authentifizierung"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Starte im Fehlersuch-Modus"
+
+#: authenticator.py.in:51
+#, fuzzy
+#~ msgid "Authenticator version number"
+#~ msgstr "Gnome ZweiFaktorAuth Version Nummer"
+
+#~ msgid "Next"
+#~ msgstr "weiter"
+#~ msgid "Back"
+#~ msgstr "zurück"
+#~ msgid "Undo"
+#~ msgstr "rückgängig machen"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "Codegenerator für Zweifaktor-Authentifizierung"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "Zweifaktor-Authentifizierungcodegenerator"
+#~ msgid "TwoFactorAuth"
+#~ msgstr "ZweiFaktorAuth"
+#~ msgid "Shortcuts"
+#~ msgstr "Tastenkürzel"
+#~ msgid "Code \"%s\" copied to clipboard"
+#~ msgstr "Code '%s' ist in die Zwischenablage kopiert"
+#~ msgid "Remove the account"
+#~ msgstr "Konto löschen"
+#~ msgid "Copy the generated code"
+#~ msgstr "Kopiere den erzeugten Code"
+#~ msgid "Edit the account"
+#~ msgstr "Bearbeite das Konto"
+#~ msgid "Save the new account name"
+#~ msgstr "Speichere den neuen Kontonamen"
+#~ msgid "Expires in %s seconds"
+#~ msgstr "Verfällt in '%s' Sekunden"
+#~ msgid "Error during the generation of code"
+#~ msgstr "Fehler beim erzeugen des Codes"
+#~ msgid "Do you really want to remove \"%s\"?"
+#~ msgstr "Soll \"%s\" wirklich gelöscht werden ?"
+#~ msgid "\"%s\" was removed"
+#~ msgstr "\"%s\" wurde gelöscht"
+#~ msgid "Selected area is not a valid QR code"
+#~ msgstr "Die gewählte Fläche ist kein gültiger QR Code"
+#~ msgid "Select an application"
+#~ msgstr "Wähle eine Anwendung"
+#~ msgid "Apply"
+#~ msgstr "Anwenden"
+#~ msgid "Change password"
+#~ msgstr "Passwort ändern"
+#~ msgid "Old password"
+#~ msgstr "Altes Passwort"
+#~ msgid "New password"
+#~ msgstr "Neues Passwort"
+#~ msgid "Repeat new password"
+#~ msgstr "Neues Passwort wiederholen"
+#~ msgid "Lock the Application"
+#~ msgstr "Anwendung sperren"
+#~ msgid "Hide notification"
+#~ msgstr "Mitteilung verstecken"
+#~ msgid "Enter your password"
+#~ msgstr "gebe dein Passwort ein"
+#~ msgid "Unlock"
+#~ msgstr "Entsperren"
+#~ msgid "Behavior"
+#~ msgstr "Verhalten"
+#~ msgid "Account"
+#~ msgstr "Konto"
+#~ msgid "Password protection"
+#~ msgstr "Passwortschutz"
+#~ msgid "Auto-lock the application (m):"
+#~ msgstr "Auto-Sperren der Anwendung (m):"
+#~ msgid "Gnome TwoFactorAuth"
+#~ msgstr "Gnome ZweiFaktorAuth"
+#~ msgid "About Gnome TwoFactorAuth"
+#~ msgstr "Über Gnome ZweiFaktorAuth"
+#~ msgid "Show about dialog"
+#~ msgstr "Zeige den Über-Dialog"

@@ -1,0 +1,369 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-09-11 17:34+0000\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/authenticator/transl"
+"ation/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.2-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "Authenticator"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "Nathan Follens, Heimen Stoffels"
+
+#: ../lib/about_dialog.rb:40
+msgid "Two-factor authentication code generator."
+msgstr "Code-generator voor authenticatie in twee stappen."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr "Dienst"
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "Accountnaam"
+
+#: ../lib/account_config.rb:176
+msgid "Secret token"
+msgstr "Geheime toegangssleutel"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Ongeldige QR-code"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "Aanmaken van geheime code mislukt"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "Kopiëren"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr "Bewerken"
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr "Het eenmalige wachtwoord vervalt over {} seconden"
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "Verwijderen"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Nieuw account toevoegen"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "Sluiten"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "QR-code scannen"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Toevoegen"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr "Opslaan"
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr "{} - {} bewerken"
+
+#: ../lib/empty_accounts_list.rb:23
+msgid "There are no accounts yet…"
+msgstr "Je hebt nog geen accounts toegevoegd…"
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Zoeken"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Selectiemodus"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Instellingen"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Annuleren"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "Klik op items om ze te selecteren"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "Over"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Afsluiten"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Nachtmodus"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Code-generator voor authenticatie in twee stappen"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr ""
+#~ "Eenvoudige applicatie voor het genereren van codes voor authenticatie in twee "
+#~ "stappen, gemaakt voor GNOME."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:10
+#~ msgid "Features:"
+#~ msgstr "Functies:"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:12
+#~ msgid "QR code scanner"
+#~ msgstr "QR-codescanner"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:13
+#~ msgid "Beautiful UI"
+#~ msgstr "Prachtige vormgeving"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:14
+#~ msgid "Huge database of (290+) websites/applications"
+#~ msgstr "Enorme databank met (meer dan 290) websites/applicaties"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:34
+#~ msgid "GNOME Shell Search provider"
+#~ msgstr "GNOME Shell zoekdienst"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:35
+#~ msgid "Codes expire simultaneously #91"
+#~ msgstr "Codes vervallen tegelijk #91"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:42
+#~ msgid "Revamped main window to more closely follow the GNOME HIG"
+#~ msgstr "Hoofdvenster opnieuw ontworpen om meer te voldoen aan de GNOME HIG"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:43
+#~ msgid "Revamped add a new account window to make it easier to use"
+#~ msgstr "Nieuw account-venster opnieuw ontworpen zodat het eenvoudig is geworden"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:44
+#~ msgid ""
+#~ "Possibility to add an account from a provider not listed in the shipped databa"
+#~ "se"
+#~ msgstr ""
+#~ "Mogelijkheid om een account toe te voegen van een dienst die niet in de databa"
+#~ "nk voorkomt"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:45
+#~ msgid "Possibilty to edit an account"
+#~ msgstr "Mogelijkheid om een account te bewerken"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:46
+#~ msgid "One Time Password now visible by default"
+#~ msgstr "Eenmalig wachtwoord is nu standaard zichtbaar"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:53
+#~ msgid "Fix python-dbus by using GDbus instead"
+#~ msgstr "python-dbus-probleem opgelost door GDbus te gebruiken"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:60
+#~ msgid "Fix the QRScanner on GNOME Shell"
+#~ msgstr "QR-codescanner gerepareerd bij gebruik in GNOME Shell"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:61
+#~ msgid "Add a new entry for the account's username"
+#~ msgstr "Voeg een nieuw item toe voor de gebruikersnaam"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:62
+#~ msgid "Updated database of supported accounts"
+#~ msgstr "Databank met ondersteunde accounts bijgewerkt"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:69
+#~ msgid "HOTFIX: App not running in DE other than GNOME"
+#~ msgstr "BELANGRIJK: de app draait nu ook in andere werkomgevingen dan GNOME"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "Projectnaam gewijzigd in Authenticator"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:77
+#~ msgid "Cleaner code base"
+#~ msgstr "Eenvoudigere broncode"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:78
+#~ msgid "Faster startup"
+#~ msgstr "Snellere opstart"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
+#~ msgid "Remove unneeded features"
+#~ msgstr "Onnodige functies verwijderd"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:80
+#~ msgid "Switch to pyzbar instead of zbarlight"
+#~ msgstr "Overgeschakeld van zbarlight naar pyzbar"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:81
+#~ msgid "Flatpak package"
+#~ msgstr "Flatpak-pakket"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:88
+#~ msgid "Bilal Elmoussaoui"
+#~ msgstr "Bilal Elmoussaoui"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#~ msgid "Two-factor authentication"
+#~ msgstr "Authenticatie in twee stappen"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
+#~ msgid "Gnome;GTK;Verification;"
+#~ msgstr "Gnome;GTK;Verification;Verificatie;"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Starten in debugmodus"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "Versienummer van Authenticator"
+
+#~ msgid "Next"
+#~ msgstr "Volgende"
+#~ msgid "Back"
+#~ msgstr "Terug"
+#~ msgid "Undo"
+#~ msgstr "Ongedaan maken"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "Code-generator voor authenticatie in twee stappen"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "Generator voor tweefactorauthenticatiecodes"
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Algemeen"
+#~ msgctxt "shortcut window"
+#~ msgid "Search"
+#~ msgstr "Zoeken"
+#~ msgctxt "shortcut window"
+#~ msgid "Add a new account"
+#~ msgstr "Nieuwe account toevoegen"
+#~ msgctxt "shortcut window"
+#~ msgid "Selection mode"
+#~ msgstr "Selectiemodus"
+#~ msgctxt "shortcut window"
+#~ msgid "Lock the application"
+#~ msgstr "Toepassing vergrendelen"
+#~ msgctxt "shortcut window"
+#~ msgid "Account list"
+#~ msgstr "Accountlijst"
+#~ msgctxt "shortcut window"
+#~ msgid "Select next/previous account"
+#~ msgstr "Volgende/vorige account selecteren"
+#~ msgctxt "shortcut window"
+#~ msgid "Add Account"
+#~ msgstr "Account toevoegen"
+#~ msgid ""
+#~ "This program comes with absolutely no warranty. See the <a href=\"http://"
+#~ "www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License, version 3 "
+#~ "or later</a> for details."
+#~ msgstr ""
+#~ "Dit programma komt zonder enige vorm van garantie. Zie de <a href="
+#~ "\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License, "
+#~ "versie 3 of later</a> voor meer informatie."
+#~ msgid "Github"
+#~ msgstr "GitHub"
+#~ msgid "Lock the Application"
+#~ msgstr "Toepassing vergrendelen"
+#~ msgid "Apply"
+#~ msgstr "Toepassen"
+#~ msgid "Change password"
+#~ msgstr "Wachtwoord veranderen"
+#~ msgid "Old password"
+#~ msgstr "Oud wachtwoord"
+#~ msgid "New password"
+#~ msgstr "Nieuw wachtwoord"
+#~ msgid "Repeat new password"
+#~ msgstr "Herhaal nieuw wachtwoord"
+#~ msgid "Select an application"
+#~ msgstr "Kies een toepassing"
+#~ msgid "Enter your password"
+#~ msgstr "Voer je wachtwoord in"
+#~ msgid "Unlock"
+#~ msgstr "Ontgrendelen"
+#~ msgid "Remove the account"
+#~ msgstr "Account verwijderen"
+#~ msgid "Copy the generated code"
+#~ msgstr "Aangemaakte code kopiëren"
+#~ msgid "Edit the account"
+#~ msgstr "Account bewerken"
+#~ msgid "Save the new account name"
+#~ msgstr "Nieuwe accountnaam opslaan"
+#~ msgid "Expires in %s seconds"
+#~ msgstr "Verloopt over %s seconden"
+#~ msgid "Error during the generation of code"
+#~ msgstr "Fout tijdens aanmaken van code"
+#~ msgid "Do you really want to remove \"%s\"?"
+#~ msgstr "Wil je \"%s\" echt verwijderen?"
+#~ msgid "Behavior"
+#~ msgstr "Gedrag"
+#~ msgid "Account"
+#~ msgstr "Account"
+#~ msgid "Password protection"
+#~ msgstr "Wachtwoordbescherming"
+#~ msgid "Auto-lock the application (m):"
+#~ msgstr "Vergrendel de toepassing automatisch (m):"
+#~ msgid "Shortcuts"
+#~ msgstr "Sneltoetsen"

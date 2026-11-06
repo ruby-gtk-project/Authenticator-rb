@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 module Authenticator
   # ActionsBar is the bar that appears under the accounts list in selection
@@ -11,6 +12,8 @@ module Authenticator
   # GTK 4 dropped `show_all` and with it `no_show_all`, so hiding is just
   # `visible = false`.
   class ActionsBar
+    include GetText
+
     def initialize(on_delete: nil)
       @on_delete = on_delete
     end
@@ -44,7 +47,7 @@ module Authenticator
     end
 
     def delete_button
-      @delete_button ||= Gtk::Button.new(label: "Delete").tap do |btn|
+      @delete_button ||= Gtk::Button.new(label: _("Delete")).tap do |btn|
         btn.sensitive = false
         btn.add_css_class("destructive-action")
       end

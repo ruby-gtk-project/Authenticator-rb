@@ -1,0 +1,289 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-05-14 15:02+0000\n"
+"Last-Translator: ditokp <ditokpl@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/authenticator/t"
+"ranslation/id/>\n"
+"Language: id\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.0-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "AutentiksiDuaFaktor"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "kredit-penerjemah"
+
+#: ../lib/about_dialog.rb:40
+#, fuzzy
+msgid "Two-factor authentication code generator."
+msgstr "Pembuat kode autentikasi dua faktor."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr ""
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "Nama Akun"
+
+#: ../lib/account_config.rb:176
+#, fuzzy
+msgid "Secret token"
+msgstr "Token Rahasia"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Kode QR tidak valid"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "Tidak dapat menghasilkan kode rahasia"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "Salin"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr ""
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "Hapus"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Tambah akun baru"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "Tutup"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "Pindai kode QR"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Tambah"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr ""
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr ""
+
+#: ../lib/empty_accounts_list.rb:23
+#, fuzzy
+msgid "There are no accounts yet…"
+msgstr "Tidak ada akun saat ini..."
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Cari"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Mode seleksi"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Pengaturan"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Batal"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "Klik pada item untuk menyeleksinya"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "Tentang"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Keluar"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Mode Malam"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#, fuzzy
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Pembuat kode autentikasi dua faktor."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#, fuzzy
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr ""
+#~ "Aplikasi sederhana untuk menghasilkan kode autentifikasi 2 faktor, dibuat untu"
+#~ "k Gnome"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#, fuzzy
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "Tentang Authenticator"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
+#, fuzzy
+#~ msgid "Remove unneeded features"
+#~ msgstr "Hapus akun terpilih"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#, fuzzy
+#~ msgid "Two-factor authentication"
+#~ msgstr "Autentikasi Dua Faktor"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
+#~ msgid "Gnome;GTK;Verification;"
+#~ msgstr "Gnome;GTK;Verifikasi;"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Mulai dengan mode debud"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "Nomor versi Authenticator"
+
+#~ msgid "Next"
+#~ msgstr "Selanjutnya"
+#~ msgid "Back"
+#~ msgstr "Kembali"
+#~ msgid "Undo"
+#~ msgstr "Undo"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "Pembuat kode Autentikasi Dua Faktor"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "Pembuat kode Autentikasi Dua Faktor"
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Umum"
+#~ msgctxt "shortcut window"
+#~ msgid "Search"
+#~ msgstr "Cari"
+#~ msgctxt "shortcut window"
+#~ msgid "Add a new account"
+#~ msgstr "Tambah akun baru"
+#~ msgctxt "shortcut window"
+#~ msgid "Selection mode"
+#~ msgstr "Mode seleksi"
+#~ msgctxt "shortcut window"
+#~ msgid "Lock the application"
+#~ msgstr "Kunci aplikasi"
+#~ msgctxt "shortcut window"
+#~ msgid "Account list"
+#~ msgstr "Daftar akun"
+#~ msgctxt "shortcut window"
+#~ msgid "Select next/previous account"
+#~ msgstr "Pilih akun selanjutnya/sebelumnya"
+#~ msgctxt "shortcut window"
+#~ msgid "Add Account"
+#~ msgstr "Tambah Akun"
+#~ msgid ""
+#~ "This program comes with absolutely no warranty. See the <a href=\"http://"
+#~ "www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License, version 3 "
+#~ "or later</a> for details."
+#~ msgstr ""
+#~ "Tidak ada jaminan apapun dalam program ini. Lihat <a href=\"http://www."
+#~ "gnu.org/licenses/gpl-3.0.html\">GNU General Public License, vesi 3 ke "
+#~ "atas</a> untuk lebih jelasnya."
+#~ msgid "Github"
+#~ msgstr "Github"
+#~ msgid "Lock the Application"
+#~ msgstr "Kunci Aplikasi"
+#~ msgid "Apply"
+#~ msgstr "Terapkan"
+#~ msgid "Change password"
+#~ msgstr "Ganti kata sandi"
+#~ msgid "Old password"
+#~ msgstr "Kata sandi lama"
+#~ msgid "New password"
+#~ msgstr "Kata sandi baru"
+#~ msgid "Repeat new password"
+#~ msgstr "Ulangan kata sandi baru"
+#~ msgid "Select an application"
+#~ msgstr "Pilih aplikasi"
+#~ msgid "Enter your password"
+#~ msgstr "Masukkan kata sandi anda"
+#~ msgid "Unlock"
+#~ msgstr "Buka Kunci"
+#~ msgid "Remove the account"
+#~ msgstr "Hapus akun"
+#~ msgid "Copy the generated code"
+#~ msgstr "Salin kode yang dihasilkan"
+#~ msgid "Edit the account"
+#~ msgstr "Sunting akun"
+#~ msgid "Save the new account name"
+#~ msgstr "Simpan nama akun baru"
+#~ msgid "Expires in %s seconds"
+#~ msgstr "Kadaluarsa dalam %s detik"
+#~ msgid "Error during the generation of code"
+#~ msgstr "Galat ketika menghasilkan kode"
+#~ msgid "Do you really want to remove \"%s\"?"
+#~ msgstr "Kamu benar-benar ingin menghapus \"%s\"?"
+#~ msgid "Behavior"
+#~ msgstr "Kebiasaan"
+#~ msgid "Account"
+#~ msgstr "Akun"
+#~ msgid "Password protection"
+#~ msgstr "Proteksi kata sandi"
+#~ msgid "Auto-lock the application (m):"
+#~ msgstr "Kunci-otomatis aplikasi (m):"
+#~ msgid "Shortcuts"
+#~ msgstr "Jalan pintas"

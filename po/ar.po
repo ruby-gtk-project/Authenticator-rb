@@ -1,0 +1,203 @@
+# Arabic translations for Authenticator package.
+# Copyright (C) 2018 THE Authenticator'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Authenticator package.
+# Automatically generated, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Authenticator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-08-21 09:34+0000\n"
+"Last-Translator: ButterflyOfFire <ButterflyOfFire@protonmail.com>\n"
+"Language-Team: Arabic <https://hosted.weblate.org/projects/authenticator/trans"
+"lation/ar/>\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && "
+"n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.2-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "الموثق"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "translator-credits"
+
+#: ../lib/about_dialog.rb:40
+#, fuzzy
+msgid "Two-factor authentication code generator."
+msgstr "كود توليد التوثيق الثنائي."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr ""
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "اسم الحساب"
+
+#: ../lib/account_config.rb:176
+#, fuzzy
+msgid "Secret token"
+msgstr "الرمز السري"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "رمز QR خاطئ"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "لم يتم توليد المفتاح السري"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "نسخ"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr ""
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "حذف"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "اضافة حساب جديد"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "اغلاق"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "امسح كود QR"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "اضافة"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr ""
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr ""
+
+#: ../lib/empty_accounts_list.rb:23
+#, fuzzy
+msgid "There are no accounts yet…"
+msgstr "ليس هناك حساب بعد …"
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "بحث"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "وضع الاختيار"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "الاعدادات"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "الغاء"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "اضغط على العتاصر ليتم اختيارهم"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "عن"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "خروج"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "الوضع الليلي"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#, fuzzy
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "كود توليد التوثيق الثنائي."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#, fuzzy
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr "برنامج بسيط يولد كود توثيق ثنائي، صمم لنظام Gnome"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#, fuzzy
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "عن الموثق"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#, fuzzy
+#~ msgid "Two-factor authentication"
+#~ msgstr "التوثيق الثنائي"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "البدء في وضع التصحيح"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "رقم نسخة الموثق"
+
+#~ msgid "Next"
+#~ msgstr "التالي"
+#~ msgid "Back"
+#~ msgstr "رجوع"
+#~ msgid "Undo"
+#~ msgstr "تراجع"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "كود توليد التوثيق الثنائي"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "كود توليد التوثيق الثنائي"

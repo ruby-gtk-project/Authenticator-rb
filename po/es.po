@@ -1,0 +1,281 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Authenticator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Authenticator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-09-10 11:35+0000\n"
+"Last-Translator: advocatux <advocatux@airpost.net>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/authenticator/tran"
+"slation/es/>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.2-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "Authenticator"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "Créditos de traducción"
+
+#: ../lib/about_dialog.rb:40
+msgid "Two-factor authentication code generator."
+msgstr "Generador de código de autenticación de doble factor."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr "Proveedor"
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "Nombre de la cuenta"
+
+#: ../lib/account_config.rb:176
+msgid "Secret token"
+msgstr "«Token» secreto"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Código QR no válido"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "No se pudo generar el código secreto"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "Copiar"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr "Editar"
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "Borrar"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Añadir una cuenta nueva"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "Cerrar"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "Escanear código QR"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Añadir"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr "Guardar"
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr "Editar {} - {}"
+
+#: ../lib/empty_accounts_list.rb:23
+msgid "There are no accounts yet…"
+msgstr "No hay ninguna cuenta aún…"
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Buscar"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Modo de selección"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Configuración"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "Pulse en los elementos para seleccionarlos"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "Acerca de"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Salir"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Modo nocturno"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Generador de código de autenticación de doble factor"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr ""
+#~ "Aplicación sencilla para generar código de autenticación de doble factor, crea"
+#~ "do para GNOME."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:10
+#~ msgid "Features:"
+#~ msgstr "Características:"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:12
+#~ msgid "QR code scanner"
+#~ msgstr "Escáner de código QR"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:13
+#~ msgid "Beautiful UI"
+#~ msgstr "Excelente interfaz de usuario"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:14
+#~ msgid "Huge database of (290+) websites/applications"
+#~ msgstr "Enorme (+290) base de datos de sitios web y aplicaciones"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:42
+#, fuzzy
+#~ msgid "Revamped main window to more closely follow the GNOME HIG"
+#~ msgstr ""
+#~ "Reformada la ventana principal para seguir las directrices sobre la interfaz h"
+#~ "umana («HIG») de GNOME"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:43
+#~ msgid "Revamped add a new account window to make it easier to use"
+#~ msgstr "Reformada la ventana para añadir una cuenta nueva y hacer su uso más sencillo"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:44
+#, fuzzy
+#~ msgid ""
+#~ "Possibility to add an account from a provider not listed in the shipped databa"
+#~ "se"
+#~ msgstr ""
+#~ "Posibilidad de añadir una cuenta de un proveedor que no esté incluido en la ba"
+#~ "se de datos por defecto"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:45
+#~ msgid "Possibilty to edit an account"
+#~ msgstr "Posibilidad de editar una cuenta"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:46
+#, fuzzy
+#~ msgid "One Time Password now visible by default"
+#~ msgstr "Las contraseñas de un solo uso son ahora visibles por defecto"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:53
+#~ msgid "Fix python-dbus by using GDbus instead"
+#~ msgstr "Arreglado el problema de «python-dbus» al usar «GDbus» ahora"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:60
+#~ msgid "Fix the QRScanner on GNOME Shell"
+#~ msgstr "Arreglado QRScanner cuando se usa en la «shell» de GNOME"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:61
+#~ msgid "Add a new entry for the account's username"
+#~ msgstr "Añadir una nueva entrada para el nombre de usuario de la cuenta"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:62
+#~ msgid "Updated database of supported accounts"
+#~ msgstr "Actualizada la base de datos de cuentas soportadas"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:69
+#~ msgid "HOTFIX: App not running in DE other than GNOME"
+#~ msgstr ""
+#~ "ARREGLO RÁPIDO: la aplicación no funcionaba en otro entorno de escritorio dist"
+#~ "into a GNOME"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "Renombrado el proyecto a «Authenticator»"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:77
+#~ msgid "Cleaner code base"
+#~ msgstr "Una base de código más limpio"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:78
+#~ msgid "Faster startup"
+#~ msgstr "Arranque más rápido"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
+#~ msgid "Remove unneeded features"
+#~ msgstr "Eliminadas las características innecesarias"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:80
+#~ msgid "Switch to pyzbar instead of zbarlight"
+#~ msgstr "Cambiado a «pyzbar» en vez de «zbarlight»"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:81
+#~ msgid "Flatpak package"
+#~ msgstr "Paquete Flatpak"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:88
+#~ msgid "Bilal Elmoussaoui"
+#~ msgstr "Bilal Elmoussaoui"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#~ msgid "Two-factor authentication"
+#~ msgstr "Autenticación de doble factor"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
+#~ msgid "Gnome;GTK;Verification;"
+#~ msgstr "Gnome;GTK;Autenticación;"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Iniciar en el modo de depuración"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "Número de versión de «Authenticator»"

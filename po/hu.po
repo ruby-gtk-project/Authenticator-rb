@@ -1,0 +1,289 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-03-22 19:06+0000\n"
+"Last-Translator: Balázs Úr <urbalazs@gmail.com>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/authenticator/tr"
+"anslation/hu/>\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 2.20-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "Hitelesítő"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "Úr Balázs <urbalazs@gmail.com>, 2018."
+
+#: ../lib/about_dialog.rb:40
+#, fuzzy
+msgid "Two-factor authentication code generator."
+msgstr "Kétlépcsős hitelesítő kódok előállítója."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr ""
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "Fiók neve"
+
+#: ../lib/account_config.rb:176
+#, fuzzy
+msgid "Secret token"
+msgstr "Titkos jelsor"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Érvénytelen QR-kód"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "Nem sikerült előállítani a titkos kódot"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "Másolás"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr ""
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "Törlés"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Új fiók hozzáadása"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "Bezárás"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "QR-kód beolvasása"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Hozzáadás"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr ""
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr ""
+
+#: ../lib/empty_accounts_list.rb:23
+#, fuzzy
+msgid "There are no accounts yet…"
+msgstr "Még nincsenek fiókok…"
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Keresés"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Kijelölés mód"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Beállítások"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Mégse"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "Kattintson az elemekre a kijelölésükhöz"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "Névjegy"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Kilépés"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Éjszakai mód"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#, fuzzy
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Kétlépcsős hitelesítő kódok előállítója."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#, fuzzy
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr ""
+#~ "Egyszerű alkalmazása a GNOME asztali környezethez, amely kétlépcsős hitelesítő"
+#~ " kódot állít elő"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#, fuzzy
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "A Hitelesítő névjegye"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
+#, fuzzy
+#~ msgid "Remove unneeded features"
+#~ msgstr "Kijelölt fiókok eltávolítása"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#, fuzzy
+#~ msgid "Two-factor authentication"
+#~ msgstr "Kétlépcsős hitelesítés"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
+#~ msgid "Gnome;GTK;Verification;"
+#~ msgstr "GNOME;GTK;Ellenőrzés;"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Indítás hibakeresési módban"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "Hitelesítő verziószáma"
+
+#~ msgid "Next"
+#~ msgstr "Következő"
+#~ msgid "Back"
+#~ msgstr "Vissza"
+#~ msgid "Undo"
+#~ msgstr "Visszavonás"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "Kétlépcsős hitelesítő kód előállító"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "Kétlépcsős hitelesítő kód előállító"
+#~ msgctxt "shortcut window"
+#~ msgid "General"
+#~ msgstr "Általános"
+#~ msgctxt "shortcut window"
+#~ msgid "Search"
+#~ msgstr "Keresés"
+#~ msgctxt "shortcut window"
+#~ msgid "Add a new account"
+#~ msgstr "Új fiók hozzáadása"
+#~ msgctxt "shortcut window"
+#~ msgid "Selection mode"
+#~ msgstr "Kijelölés mód"
+#~ msgctxt "shortcut window"
+#~ msgid "Lock the application"
+#~ msgstr "Az alkalmazás zárolása"
+#~ msgctxt "shortcut window"
+#~ msgid "Account list"
+#~ msgstr "Fióklista"
+#~ msgctxt "shortcut window"
+#~ msgid "Select next/previous account"
+#~ msgstr "Következő vagy előző fiók kiválasztása"
+#~ msgctxt "shortcut window"
+#~ msgid "Add Account"
+#~ msgstr "Fiók hozzáadása"
+#~ msgid ""
+#~ "This program comes with absolutely no warranty. See the <a href=\"http://"
+#~ "www.gnu.org/licenses/gpl-3.0.html\">GNU General Public License, version 3 "
+#~ "or later</a> for details."
+#~ msgstr ""
+#~ "Ez a program mindenféle garancia nélkül érkezik. A részletekért nézze meg "
+#~ "a <a href=\"http://www.gnu.org/licenses/gpl-3.0.html\">GNU General Public "
+#~ "License 3. vagy újabb verzióját</a>."
+#~ msgid "Github"
+#~ msgstr "GitHub"
+#~ msgid "Lock the Application"
+#~ msgstr "Az alkalmazás zárolása"
+#~ msgid "Apply"
+#~ msgstr "Alkalmaz"
+#~ msgid "Change password"
+#~ msgstr "Jelszó módosítása"
+#~ msgid "Old password"
+#~ msgstr "Régi jelszó"
+#~ msgid "New password"
+#~ msgstr "Új jelszó"
+#~ msgid "Repeat new password"
+#~ msgstr "Új jelszó ismétlése"
+#~ msgid "Select an application"
+#~ msgstr "Alkalmazás kiválasztása"
+#~ msgid "Enter your password"
+#~ msgstr "Adja meg a jelszavát"
+#~ msgid "Unlock"
+#~ msgstr "Feloldás"
+#~ msgid "Remove the account"
+#~ msgstr "A fiók eltávolítása"
+#~ msgid "Copy the generated code"
+#~ msgstr "Az előállított kód másolása"
+#~ msgid "Edit the account"
+#~ msgstr "A fiók szerkesztése"
+#~ msgid "Save the new account name"
+#~ msgstr "Az új fióknév mentése"
+#~ msgid "Expires in %s seconds"
+#~ msgstr "Lejár %s másodperc múlva"
+#~ msgid "Error during the generation of code"
+#~ msgstr "Hiba kód előállítása közben"
+#~ msgid "Do you really want to remove \"%s\"?"
+#~ msgstr "Valóban el szeretné távolítani a következőt: „%s”?"
+#~ msgid "Behavior"
+#~ msgstr "Viselkedés"
+#~ msgid "Account"
+#~ msgstr "Fiók"
+#~ msgid "Password protection"
+#~ msgstr "Jelszavas védelem"
+#~ msgid "Auto-lock the application (m):"
+#~ msgstr "Az alkalmazás automatikus zárolása (m):"
+#~ msgid "Shortcuts"
+#~ msgstr "Gyorsbillentyűk"

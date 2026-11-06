@@ -1,0 +1,209 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Authenticator package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Authenticator\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"PO-Revision-Date: 2018-03-25 14:53+0000\n"
+"Last-Translator: Slobodan Terzić <githzerai06@gmail.com>\n"
+"Language-Team: Serbian <https://hosted.weblate.org/projects/authenticator/tran"
+"slation/sr/>\n"
+"Language: sr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4"
+" && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.20-dev\n"
+
+#: ../lib/about_dialog.rb:33 ../lib/application.rb:81
+msgid "Authenticator"
+msgstr "Аутентификатор"
+
+#: ../lib/about_dialog.rb:38
+msgid "translator-credits"
+msgstr "Слободан Терзић <githzerai06@gmail.com>"
+
+#: ../lib/about_dialog.rb:40
+#, fuzzy
+msgid "Two-factor authentication code generator."
+msgstr "Стваралац кодова за двофакторну аутентификацију."
+
+#: ../lib/account_config.rb:162
+msgid "Provider"
+msgstr ""
+
+#: ../lib/account_config.rb:169
+msgid "Account name"
+msgstr "Име налога"
+
+#: ../lib/account_config.rb:176
+#, fuzzy
+msgid "Secret token"
+msgstr "Тајни токен"
+
+#: ../lib/account_config.rb:221
+msgid "Invalid QR code"
+msgstr "Неисправан КуР код"
+
+#: ../lib/account_row.rb:164
+msgid "Couldn't generate the secret code"
+msgstr "Не могу да направим тајни код"
+
+#: ../lib/account_row.rb:180
+msgid "Copy"
+msgstr "Умножи"
+
+#: ../lib/account_row.rb:187
+msgid "Edit"
+msgstr ""
+
+#: ../lib/accounts_widget.rb:112
+msgid "The One-Time Passwords expires in {} seconds"
+msgstr ""
+
+#: ../lib/actions_bar.rb:50
+msgid "Delete"
+msgstr "Обриши"
+
+#: ../lib/add_account_window.rb:82 ../lib/header_bar.rb:81
+msgid "Add a new account"
+msgstr "Додај нови налог"
+
+#: ../lib/add_account_window.rb:96 ../lib/edit_account_window.rb:80
+msgid "Close"
+msgstr "Затвори"
+
+#: ../lib/add_account_window.rb:103
+msgid "Scan QR code"
+msgstr "Скенирај КуР код"
+
+#: ../lib/add_account_window.rb:108
+msgid "Add"
+msgstr "Додај"
+
+#: ../lib/edit_account_window.rb:83
+msgid "Save"
+msgstr ""
+
+#: ../lib/edit_account_window.rb:103
+msgid "Edit {} - {}"
+msgstr ""
+
+#: ../lib/empty_accounts_list.rb:23
+#, fuzzy
+msgid "There are no accounts yet…"
+msgstr "Још увек нема налога..."
+
+#: ../lib/header_bar.rb:88
+msgid "Search"
+msgstr "Претражи"
+
+#: ../lib/header_bar.rb:94
+msgid "Selection mode"
+msgstr "Режим избора"
+
+#: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+msgid "Settings"
+msgstr "Подешавања"
+
+#: ../lib/header_bar.rb:106
+msgid "Cancel"
+msgstr "Откажи"
+
+#: ../lib/header_bar.rb:112
+msgid "Click on items to select them"
+msgstr "Кликните на ставке да их изаберете"
+
+#: ../lib/primary_menu.rb:24
+msgid "Restore"
+msgstr ""
+
+#: ../lib/primary_menu.rb:25
+msgid "Backup"
+msgstr ""
+
+#: ../lib/primary_menu.rb:28
+msgid "from a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:29
+msgid "from an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:33
+msgid "in a plain-text JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:34
+msgid "in an OpenPGP-encrypted JSON file"
+msgstr ""
+
+#: ../lib/primary_menu.rb:40
+msgid "About"
+msgstr "О програму"
+
+#: ../lib/primary_menu.rb:41
+msgid "Quit"
+msgstr "Напусти"
+
+#. Night mode action
+#: Authenticator/application.py:81
+#~ msgid "Night Mode"
+#~ msgstr "Ноћни режим"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
+#, fuzzy
+#~ msgid "Two-factor authentication code generator"
+#~ msgstr "Стваралац кодова за двофакторну аутентификацију."
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
+#, fuzzy
+#~ msgid ""
+#~ "Simple application that generates a two-factor authentication code, created fo"
+#~ "r GNOME."
+#~ msgstr ""
+#~ "Једноставан програм који ствара код за двофакторну аутентификацију, направљен "
+#~ "за Гном"
+
+#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
+#, fuzzy
+#~ msgid "Rename project to Authenticator"
+#~ msgstr "О Аутентификатору"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
+#, fuzzy
+#~ msgid "Two-factor authentication"
+#~ msgstr "Двофакторна аутентификација"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
+#~ msgid "Gnome;GTK;Verification;"
+#~ msgstr "Gnome;GTK;Verification;Овера;"
+
+#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
+#~ msgid "com.github.bilelmoussaoui.Authenticator"
+#~ msgstr "com.github.bilelmoussaoui.Authenticator"
+
+#: authenticator.py.in:49
+#~ msgid "Start in debug mode"
+#~ msgstr "Покрени у режиму за исправљање грешака"
+
+#: authenticator.py.in:51
+#~ msgid "Authenticator version number"
+#~ msgstr "Верзија Аутентификатора"
+
+#~ msgid "Next"
+#~ msgstr "Следеће"
+#~ msgid "Back"
+#~ msgstr "Назад"
+#~ msgid "Undo"
+#~ msgstr "Опозови"
+#~ msgid "Two Factor Authentication code generator"
+#~ msgstr "Стваралац кода за двофакторну аутентификацију"
+#~ msgid "Two-Factor Authentication code generator"
+#~ msgstr "Стваралац кода за двофакторну аутентификацију"

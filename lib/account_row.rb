@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 module Authenticator
   # AccountRow is one account in the list: its username, its current code, a
@@ -16,6 +17,8 @@ module Authenticator
   # singleton; the port takes an `on_edit` callback, so the row does not need
   # to know what a window is and the window stays the thing that owns dialogs.
   class AccountRow
+    include GetText
+
     attr_reader :account
 
     def initialize(account, on_selected: nil, on_edit: nil)
@@ -158,7 +161,7 @@ module Authenticator
             lbl.label = pin
           else
             lbl.label = "??????"
-            lbl.tooltip_text = "Couldn't generate the secret code"
+            lbl.tooltip_text = _("Couldn't generate the secret code")
           end
         end
       end
@@ -174,14 +177,14 @@ module Authenticator
 
     def copy_button
       @copy_button ||= Gtk::Button.new(icon_name: "edit-copy-symbolic").tap do |btn|
-        btn.tooltip_text = "Copy"
+        btn.tooltip_text = _("Copy")
         btn.add_css_class("flat")
       end
     end
 
     def edit_button
       @edit_button ||= Gtk::Button.new(icon_name: "document-edit-symbolic").tap do |btn|
-        btn.tooltip_text = "Edit"
+        btn.tooltip_text = _("Edit")
         btn.add_css_class("flat")
       end
     end

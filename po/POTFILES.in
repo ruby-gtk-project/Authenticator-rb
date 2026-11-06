@@ -1,0 +1,11 @@
+lib/about_dialog.rb
+lib/account_config.rb
+lib/account_row.rb
+lib/accounts_widget.rb
+lib/actions_bar.rb
+lib/add_account_window.rb
+lib/application.rb
+lib/edit_account_window.rb
+lib/empty_accounts_list.rb
+lib/header_bar.rb
+lib/primary_menu.rb

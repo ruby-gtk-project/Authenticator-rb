@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "about_dialog"
 require_relative "accounts_manager"
@@ -31,6 +32,8 @@ module Authenticator
   # Screenshot each answer `available?` for themselves, and the add-account
   # window asks them, so there is no global flag to keep in step.
   class Application
+    include GetText
+
     APP_ID = "com.github.bilelmoussaoui.Authenticator"
 
     # Where the vendored stylesheet lives, relative to this file.
@@ -75,7 +78,7 @@ module Authenticator
     def app
       @app ||= Gtk::Application.new(APP_ID, :default_flags).tap do
         Adwaita.init
-        GLib.application_name = "Authenticator"
+        GLib.application_name = _("Authenticator")
         GLib.prgname = "Authenticator"
       end
     end

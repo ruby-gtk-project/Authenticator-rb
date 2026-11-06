@@ -3,6 +3,7 @@
 require "json"
 
 require "adwaita"
+require "gettext"
 
 require_relative "logger"
 require_relative "otp"
@@ -33,6 +34,8 @@ module Authenticator
   # the box sits inside an Adwaita::ToastOverlay and the same message arrives
   # as a toast.
   class AccountConfig
+    include GetText
+
     # Where the vendored provider list lives, relative to this file.
     DATA_PATH = File.expand_path("../data/data.json", __dir__)
 
@@ -156,21 +159,21 @@ module Authenticator
 
     def provider_entry
       @provider_entry ||= Gtk::Entry.new.tap do |entry|
-        entry.placeholder_text = "Provider"
+        entry.placeholder_text = _("Provider")
         entry.text = @account&.provider.to_s
       end
     end
 
     def username_entry
       @username_entry ||= Gtk::Entry.new.tap do |entry|
-        entry.placeholder_text = "Account name"
+        entry.placeholder_text = _("Account name")
         entry.text = @account&.username.to_s
       end
     end
 
     def token_entry
       @token_entry ||= Gtk::Entry.new.tap do |entry|
-        entry.placeholder_text = "Secret token"
+        entry.placeholder_text = _("Secret token")
         entry.visibility = false
       end
     end
@@ -215,7 +218,7 @@ module Authenticator
           if usable
             token_entry.text = secret.to_s
           else
-            notify("Invalid QR code")
+            notify(_("Invalid QR code"))
           end
         end
       end

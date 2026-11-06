@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "accounts_list"
 require_relative "accounts_manager"
@@ -20,6 +21,8 @@ module Authenticator
   # groups in order instead, which says the same thing in one pass and does
   # not depend on where each group currently sits.
   class AccountsWidget
+    include GetText
+
     def initialize(on_changed: nil, on_selected_rows_changed: nil, on_edit: nil)
       @on_changed = on_changed
       @on_selected_rows_changed = on_selected_rows_changed
@@ -106,7 +109,7 @@ module Authenticator
     def on_counter_updated(counter)
       otp_progress_bar.fraction = counter.to_f / AccountsManager.default.counter_max
       otp_progress_bar.tooltip_text =
-        "The One-Time Passwords expires in #{counter} seconds"
+        _("The One-Time Passwords expires in {} seconds").sub("{}", counter.to_s)
     end
 
     def container

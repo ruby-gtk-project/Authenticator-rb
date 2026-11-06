@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "account"
 require_relative "account_config"
@@ -23,6 +24,8 @@ module Authenticator
   # read the image — which is upstream's `USE_QRSCANNER and
   # can_use_qrscanner()` test asked of the things that have to work.
   class AddAccountWindow
+    include GetText
+
     def initialize(parent, on_added: nil)
       @parent = parent
       @on_added = on_added
@@ -76,7 +79,7 @@ module Authenticator
 
     def window
       @window ||= Adwaita::Window.new.tap do |win|
-        win.title = "Add a new account"
+        win.title = _("Add a new account")
         win.modal = true
         win.set_default_size(400, 600)
       end
@@ -90,19 +93,19 @@ module Authenticator
       end
     end
 
-    def close_button = @close_button ||= Gtk::Button.new(label: "Close")
+    def close_button = @close_button ||= Gtk::Button.new(label: _("Close"))
 
     # Upstream's scan_btn, a HeaderBarButton over the `qrscanner-symbolic`
     # icon the vendored theme ships.
     def scan_button
       @scan_button ||= Gtk::Button.new.tap do |btn|
         btn.icon_name = "qrscanner-symbolic"
-        btn.tooltip_text = "Scan QR code"
+        btn.tooltip_text = _("Scan QR code")
       end
     end
 
     def add_button
-      @add_button ||= Gtk::Button.new(label: "Add").tap do |btn|
+      @add_button ||= Gtk::Button.new(label: _("Add")).tap do |btn|
         btn.sensitive = false
         btn.add_css_class("suggested-action")
       end

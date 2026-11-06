@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "account_config"
 
@@ -15,6 +16,8 @@ module Authenticator
   # the `on_provider_changed` callback — the window that opened this one knows
   # the widget, so it does the moving.
   class EditAccountWindow
+    include GetText
+
     def initialize(parent, account, on_updated: nil, on_provider_changed: nil)
       @parent = parent
       @account = account
@@ -60,7 +63,7 @@ module Authenticator
 
     def window
       @window ||= Adwaita::Window.new.tap do |win|
-        win.title = "Edit #{@account.username} - #{@account.provider}"
+        win.title = edit_window_title
         win.modal = true
         win.set_default_size(400, 600)
       end
@@ -74,10 +77,10 @@ module Authenticator
       end
     end
 
-    def close_button = @close_button ||= Gtk::Button.new(label: "Close")
+    def close_button = @close_button ||= Gtk::Button.new(label: _("Close"))
 
     def save_button
-      @save_button ||= Gtk::Button.new(label: "Save").tap do |btn|
+      @save_button ||= Gtk::Button.new(label: _("Save")).tap do |btn|
         btn.add_css_class("suggested-action")
       end
     end
@@ -91,6 +94,14 @@ module Authenticator
     end
 
     def key_controller = @key_controller ||= Gtk::EventControllerKey.new
+
+    # Upstream's title is `_("Edit {} - {}").format(username, provider)`; the
+    # msgid's two literal "{}" placeholders are filled left to right, since
+    # Ruby's `format` does not understand Python's brace style and the msgid
+    # itself has to stay byte-identical for the donated translations to match.
+    def edit_window_title
+      _("Edit {} - {}").sub("{}", @account.username).sub("{}", @account.provider)
+    end
 
     private
 

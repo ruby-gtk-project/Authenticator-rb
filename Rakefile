@@ -160,6 +160,84 @@ if kettle_jem_selftest_unavailable_note
   end
 end
 
+### TRANSLATION TASKS
+# Upstream ships a flat `po/<lang>.po` layout (meson's `i18n.gettext`
+# convention), not the `po/<lang>/<domain>.po` layout
+# `GetText::Tools::Task` assumes, so the three gettext steps are driven by
+# hand through the gem's own `rxgettext`/`rmsgmerge`/`rmsgfmt` executables
+# instead of that task class. po/*.po themselves are never hand-edited — they
+# are upstream's donated translations, carried over unchanged; only
+# `rmsgmerge`, through `gettext:po:update`, ever touches them.
+GETTEXT_DOMAIN = "Authenticator"
+GETTEXT_PO_DIR = "po"
+GETTEXT_MO_DIR = "locale"
+GETTEXT_POT = File.join(GETTEXT_PO_DIR, "#{GETTEXT_DOMAIN}.pot")
+GETTEXT_SOURCES = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*")
+GETTEXT_LINGUAS_FILE = File.join(GETTEXT_PO_DIR, "LINGUAS")
+
+# Assigned inside each branch, never from the if's value, per the house
+# style's Local/NoConditionalAssignment cop.
+if File.exist?(GETTEXT_LINGUAS_FILE)
+  GETTEXT_LOCALES = File.read(GETTEXT_LINGUAS_FILE).lines.map { |l| l.sub(/#.*/, "") }.join(" ").split
+else
+  GETTEXT_LOCALES = []
+end
+
+namespace :gettext do
+  namespace :pot do
+    desc "Create #{GETTEXT_POT}"
+    task :create do
+      sh(
+        "rxgettext",
+        "--package-name",
+        GETTEXT_DOMAIN,
+        "--add-comments=TRANSLATORS",
+        "-o",
+        GETTEXT_POT,
+        *GETTEXT_SOURCES,
+      )
+    end
+  end
+
+  namespace :po do
+    desc "Update *.po (re-extract #{GETTEXT_POT} and merge it into every po/*.po)"
+    task update: "gettext:pot:create" do
+      GETTEXT_LOCALES.each do |locale|
+        po_file = File.join(GETTEXT_PO_DIR, "#{locale}.po")
+        if File.exist?(po_file)
+          sh(
+            "rmsgmerge",
+            "--update",
+            po_file,
+            GETTEXT_POT,
+          )
+        end
+      end
+    end
+  end
+
+  namespace :mo do
+    desc "Update locale/<lang>/LC_MESSAGES/#{GETTEXT_DOMAIN}.mo for every language in LINGUAS"
+    task :update do
+      GETTEXT_LOCALES.each do |locale|
+        po_file = File.join(GETTEXT_PO_DIR, "#{locale}.po")
+        unless File.exist?(po_file)
+          next
+        end
+
+        mo_dir = File.join(GETTEXT_MO_DIR, locale, "LC_MESSAGES")
+        mkdir_p(mo_dir)
+        sh(
+          "rmsgfmt",
+          "-o",
+          File.join(mo_dir, "#{GETTEXT_DOMAIN}.mo"),
+          po_file,
+        )
+      end
+    end
+  end
+end
+
 ### RELEASE TASKS
 # Setup stone_checksums
 begin

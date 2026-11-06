@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 module Authenticator
   # HeaderBar is the window's title bar, and the state machine behind which of
@@ -21,6 +22,8 @@ module Authenticator
   # together, because `show_all` would otherwise bring a hidden widget back;
   # GTK 4 dropped `show_all`, so `visible` alone is the whole story.
   class HeaderBar
+    include GetText
+
     EMPTY = :empty
     NORMAL = :normal
     SELECT = :select
@@ -75,38 +78,38 @@ module Authenticator
 
     def add_button
       @add_button ||= Gtk::Button.new(icon_name: "list-add-symbolic").tap do |btn|
-        btn.tooltip_text = "Add a new account"
+        btn.tooltip_text = _("Add a new account")
       end
     end
 
     def search_button
       @search_button ||= Gtk::ToggleButton.new.tap do |btn|
         btn.icon_name = "system-search-symbolic"
-        btn.tooltip_text = "Search"
+        btn.tooltip_text = _("Search")
       end
     end
 
     def select_button
       @select_button ||= Gtk::Button.new(icon_name: "object-select-symbolic").tap do |btn|
-        btn.tooltip_text = "Selection mode"
+        btn.tooltip_text = _("Selection mode")
       end
     end
 
     def menu_button
       @menu_button ||= Gtk::MenuButton.new.tap do |btn|
         btn.icon_name = "open-menu-symbolic"
-        btn.tooltip_text = "Settings"
+        btn.tooltip_text = _("Settings")
       end
     end
 
     def cancel_button
-      @cancel_button ||= Gtk::Button.new(label: "Cancel").tap do |btn|
+      @cancel_button ||= Gtk::Button.new(label: _("Cancel")).tap do |btn|
         btn.visible = false
       end
     end
 
     def select_title
-      @select_title ||= Adwaita::WindowTitle.new("Click on items to select them", "")
+      @select_title ||= Adwaita::WindowTitle.new(_("Click on items to select them"), "")
     end
 
     private
