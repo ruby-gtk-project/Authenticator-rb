@@ -3,11 +3,11 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` |
-| Port | `ruby` @ `5517c46` (re-run after `5517c46`, `7a96bc2`, `29fe4ba`, `da96fed` landed on top of the `a1a4062` snapshot the previous version of this report was written against) |
+| Port | `ruby` @ `75684c0` (re-run after `5517c46`, `be7632f`, `75684c0` landed on top of the `a1a4062` snapshot the original version of this report was written against) |
 | Domain | `Authenticator` |
 | Upstream messages (source census, not the stale `.pot`) | **66** distinct `(msgctxt, msgid)` keys |
-| Ported (marked, byte-identical, in the port's source) | **53** |
-| Gaps | **13** |
+| Ported (marked, byte-identical, in the port's source) | **61** (53 at the original census + 6 appdata strings + 2 CLI strings, both closed by `75684c0` — see "Update" and the correction below) |
+| Gaps | **5** (4 GSettings-schema summaries, 1 zbar-absent notification — see "The 13 real gaps" below; 8 of the original 13 are now closed) |
 | Upstream languages | 14 `.po` files (`ar, da, de, es, fr, hu, id, nb_NO, nl, nl_BE, pl, sr, sr@latin, sv`) |
 | Languages shipped by the port | 14 (file list identical, `diff` clean) |
 
@@ -144,8 +144,26 @@ both description strings through the gettext call site.
 `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` and
 `data/com.github.bilelmoussaoui.Authenticator.desktop.in` are now present,
 byte-identical to `origin/master`'s copies (same treatment as `data.json`
-and the provider icons) — closing Finding 3. This leaves 11 missing msgids
-(the 13 minus the 2 CLI strings just closed), all in
-`lib/settings_window.rb`, `lib/gpg_fingerprint_window.rb`,
-`lib/gpg_restore_window.rb` and `lib/password_window.rb` per Finding 2
-above — not touched this round.
+and the provider icons) — closing the 6 appdata-string gaps above. Combined
+with the 2 CLI strings closed just above, **8 of the original 13 gaps are
+closed**, leaving **5**: the 4 GSettings-schema summaries (§ above,
+substituted away with `lib/settings.rb`'s JSON file) and the 1
+zbar-absent-notification string (§ above, never driven).
+
+## Correction — the "11 unmarked msgids in settings/GPG windows" line was never true
+
+A prior draft of `.reports/component-parity.md` claimed the remaining gaps
+were 11 unmarked msgids in `lib/settings_window.rb`,
+`lib/gpg_fingerprint_window.rb`, `lib/gpg_restore_window.rb` and
+`lib/password_window.rb`, and an earlier version of this paragraph repeated
+that figure. Re-reading those four files against `origin/master`'s
+`Authenticator/widgets/settings.py` / `backup/gnupg.py` at HEAD (`75684c0`)
+finds every one of their upstream msgids already marked and byte-identical,
+including `_("Backup Password")` with the capital P this report previously
+flagged as "reworded" — it is not; `da96fed` fixed both the marker and the
+wording before either "Parity reports" commit (`ce44808`, `aafd81b`) was
+written. That commit landed chronologically before the claim was committed,
+so the claim was stale at the moment it was written, not merely overtaken
+later. See `.reports/component-parity.md`'s own correction for the full
+list of confirmed call sites. The true remaining total is **5 gaps**, listed
+above, not 11, and not in those four files.

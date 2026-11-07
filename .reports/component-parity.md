@@ -3,10 +3,10 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` |
-| Port | `ruby` @ `5517c46` (re-audited; this file's own header was last bumped at `a1a4062`, three commits behind HEAD — see "Update 2" below) |
-| Units with full four-axis parity confirmed | 22 / 24 (file-choosers and clickable-row Finding 1 closed, text-axis Finding 2 closed for every row with a call site) |
-| Units with a widget/CSS/behaviour match but an open text-axis or CLI-help gap | 2 (the CLI entry point's `--debug`/`--version` help strings; see Update 2) |
-| Components outside the 24-unit widget count that are still wholly unported | 1 (`data/*.appdata.xml.in` — no AppStream metainfo file exists anywhere in the port) |
+| Port | `ruby` @ `75684c0` (re-audited at current HEAD; Findings 3-5 confirmed closed, Finding 2's "11 unmarked" claim found stale and corrected below) |
+| Units with full four-axis parity confirmed | 25 / 25 widget units, modulo the 5 open translation-parity gaps below (none of which touch a widget this ledger tracks — see the correction) |
+| Components outside the widget count that were unported and are now closed | 1 (`data/*.appdata.xml.in` + `.desktop.in` — both now present, byte-identical to upstream) |
+| Still open | 5 translation-parity gaps (4 GSettings summaries, 1 zbar-absent string, neither reachable from a widget the port builds) and the never-independently-run `rake gettext:po:update`/`mo:update` |
 
 ## Method
 
@@ -184,9 +184,52 @@ closed. This round closes the remaining three:
   xvfb-run -a ruby exe/authenticator --version` prints to stderr, exit
   status 1.
 
-Still open and out of this round's scope: the remaining 11 unmarked msgids
-in `lib/settings_window.rb` / `lib/gpg_fingerprint_window.rb` /
-`lib/gpg_restore_window.rb` / `lib/password_window.rb` (Finding 2's
-no-call-site rows) and the `rake gettext:po:update`/`mo:update` re-run that
-has never been independently verified. Both drive scripts re-run live at
-this commit: 64 + 51 = 115 checks, 0 failed, `DRIVE OK` both times.
+## Correction — Finding 2's "11 unmarked msgids" claim was already false when written
+
+This round re-read `lib/settings_window.rb`, `lib/gpg_fingerprint_window.rb`,
+`lib/gpg_restore_window.rb` and `lib/password_window.rb` directly against
+`origin/master`'s `Authenticator/widgets/settings.py` and
+`Authenticator/widgets/backup/gnupg.py`, rather than trusting this file's own
+prior "Update 2" line. **Every upstream msgid in those four files has a
+marked, byte-identical call site in the port today**: `_("Settings")`,
+`_("Appearance")`, `_("Behaviour")`, `_("Backup")`, `_("Dark theme")`,
+`_("Use a dark theme, if possible")`, `_("Clear the database")`,
+`_("Erase existing accounts")`, `_("GPG keys location")`,
+`_("The existing accounts will be erased in 5 seconds")`, `_("Undo")`,
+`_("Backup Password")` (capital P, matching upstream exactly — the earlier
+"reworded as well as unmarked" claim was also stale), `_("Save")`,
+`_("Old Password")`, `_("Password")`, `_("Repeat Password")`,
+`_("GPG fingerprint")`, `_("Public keys")`, `_("Private keys")`,
+`_("GPG paraphrase")`, `_("Import")`, `_("Paraphrase")`, and
+`_("There was an error during the import of the encrypted file.")`.
+
+`da96fed` ("Translate the GPG/settings/password windows and drive the file
+choosers") landed this translation work **before** `ce44808`'s "Parity
+reports" commit and well before `aafd81b`, the commit this file's own "Update
+2" was written against. The "11 unmarked msgids... not touched this round"
+line in both this file and `.reports/translation-parity.md` was never true at
+the commit it claims to describe — it was carried forward from an earlier
+draft (Finding 2's original pass, against `a1a4062`, before `da96fed`
+existed) and never re-checked against the tree before being committed. That
+is exactly the failure this round's audit is supposed to catch: a report
+making a stale claim nobody re-verified by reading the file, which is a
+second-hand assertion dressed as a finding.
+
+The one real, still-unmarked string in these four files is
+`lib/settings_window.rb:144`, `"Encrypt the password-protected backups"` —
+but it is **not a gap**: `backup_password_row` and the `PasswordWindow` it
+opens have no upstream counterpart at all (upstream's `SettingsWindow` never
+builds this row — confirmed by reading `Authenticator/widgets/settings.py`
+lines 227-245 in full; `PasswordWindow` is dead code upstream per
+`lib/password_window.rb`'s own header comment). An unmarked string with no
+upstream msgid to match is a missed i18n opportunity on a port-invented
+string, not a translation-parity gap — there is no upstream key for it to be
+measured against.
+
+**Corrected still-open total**: the 5 real gaps `translation-parity.md`
+already lists after its own appdata/CLI closures (4 GSettings-schema
+summaries, substituted away with `lib/settings.rb`'s JSON file; 1 zbar-absent
+notification string, never driven) — not 11, and not in these four files.
+Also still open: the `rake gettext:po:update`/`mo:update` re-run, never
+independently verified in any round. Both drive scripts re-run live at HEAD
+(`75684c0`): 64 + 51 = 115 checks, 0 failed, `DRIVE OK` both times.

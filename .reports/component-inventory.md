@@ -294,8 +294,8 @@ easy to drop silently in a port since it is not a plain dialog.
 
 | Upstream file | Port | Kind | Exists |
 |---|---|---|---|
-| `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` | — (packaging metadata, no `lib/` mapping) | AppStream metadata | n/a — not a `lib/` component |
-| `data/com.github.bilelmoussaoui.Authenticator.desktop.in` | — | desktop launcher entry | n/a |
+| `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` | `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` (packaging metadata, no `lib/` mapping — none is needed, upstream's copy is installed as-is) | AppStream metadata | **yes** — ported by `75684c0`, byte-identical to upstream (`diff` clean). This row previously read "n/a — not a `lib/` component," written before the file existed and never corrected after it landed; see `.reports/accountability-ensurance.md` |
+| `data/com.github.bilelmoussaoui.Authenticator.desktop.in` | `data/com.github.bilelmoussaoui.Authenticator.desktop.in` | desktop launcher entry | **yes** — ported by `75684c0`, byte-identical to upstream (`diff` clean) |
 | `data/style.css` | consumed by `lib/application.rb`'s CSS loader | stylesheet (class names referenced above) | yes (loader present; confirm all classes from the tables above exist in the port's CSS/resource) |
 | `data/data.json` (provider name→logo map) | `lib/provider_image.rb` / `lib/account_config.rb` | data table | yes |
 | `po/*.po` (14 locales) + `po/Authenticator.pot` | `locale/` | translation catalogues | present as `locale/` dir — verify catalogue count/coverage in a dedicated translation-parity pass |

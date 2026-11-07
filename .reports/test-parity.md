@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` |
-| Port | `ruby` @ `5517c46` (re-run; `da96fed` landed the file-choosers drive coverage described below as still-missing in the version of this report written at `a1a4062`) |
+| Port | `ruby` @ `75684c0` (re-run; `da96fed` landed the file-choosers drive coverage described below as still-missing in the version of this report written at `a1a4062`; `75684c0` ported the AppStream/desktop files and fixed `exe/authenticator`'s CLI-help marking and `--version` exit behaviour, closing one of the two "nothing executes this" findings below) |
 | Upstream tests | 0 |
 | Ported | 0 |
 | Gaps | 0 |
@@ -69,7 +69,7 @@ fire the real `app.import_json`/`export_json`/`import_pgp_json`/
 signal — confirmed by reading `test/drive_authenticator.rb:205-290`, not
 just by the file's own commit message. This is now closed.
 
-## Two components the gate's "115 checks, 34 components" figure still does not reach
+## One component the gate's "115 checks, 25 components" figure still does not reach
 
 1. **The zbar-absent path.** `test/drive_backup_and_search.rb` asserts
    `"zbarimg is on PATH" → true` as a *precondition* before every QR check
@@ -77,20 +77,23 @@ just by the file's own commit message. This is now closed.
    verifies `AccountConfig.can_scan?` goes false / the scan button is never
    built. The branch exists in `lib/qr_reader.rb` and `lib/add_account_window.rb`
    and is read as correct, but it has never been executed by anything in
-   this repo. See `.reports/component-parity.md` Finding 5's sibling note
+   this repo. See `.reports/component-parity.md`'s sibling note
    and `.reports/translation-parity.md`'s zbar-notification gap.
-2. **`exe/authenticator` itself, as a process.** Both drive scripts call
-   into the port's Ruby classes in-process; neither ever shells out to
-   `ruby exe/authenticator --version` or `--debug` and checks stdout,
-   stderr or the exit code. `.reports/component-parity.md` Finding 5
-   documents a real, confirmed-by-reading divergence from upstream here
-   (exit 0/stdout vs. upstream's exit 1/stderr) that no check — ported or
-   otherwise — would have caught, because no check invokes the entry point
-   as upstream's own test (if it had one) would have to.
 
 Per this round's instruction, a component no check exercises is unverified,
-not done — both stay open findings here even though the code they guard
-reads correctly.
+not done — this stays an open finding even though the code it guards reads
+correctly.
+
+A second component this section previously listed —
+`exe/authenticator`, invoked as a process rather than through the port's
+Ruby classes in-process — is **closed** as a behavioural finding:
+`75684c0` fixed the `--version`/stderr/exit-1 divergence from upstream
+(confirmed live this round: `nix develop --command xvfb-run -a ruby
+exe/authenticator --version` writes to stderr and exits 1). The process
+itself is still never shelled out to and checked by either drive script,
+so a future regression there would again go uncaught by anything in this
+repo — recorded here as a standing process gap, distinct from the now-fixed
+behaviour it previously masked.
 
 ## Rules this ledger follows
 
