@@ -1,6 +1,31 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+# Ported from authenticator.py.in. Upstream is a meson-generated launcher
+# that patches in build-time paths (@PYTHON_DIR@, @LOCALE_DIR@, @LIB_DIR@,
+# @DATA_DIR@, @VERSION@) before parsing argparse's two flags and handing off
+# to Authenticator.Application. The port runs straight from the checkout, so
+# there are no paths to patch in; what upstream's CLI actually does for a
+# caller — accept --debug/-d, accept --version/-v and exit without opening a
+# window, otherwise run the app — is what this file reproduces.
+
+require "optparse"
+
+require "authenticator/rb"
 require "authenticator"
 
-Authenticator::Application.new.build.run
+options = { debug: false, version: false }
+
+OptionParser.new do |parser|
+  parser.program_name = "Authenticator"
+  parser.on("-d", "--debug", "Start in debug mode") { options[:debug] = true }
+  parser.on("-v", "--version", "Authenticator version number") { options[:version] = true }
+end.parse!(ARGV)
+
+Authenticator::Logger.level = options[:debug] ? :debug : :error
+
+if options[:version]
+  puts("Version : #{Authenticator::Rb::VERSION}")
+else
+  exit(Authenticator::Application.new.build.run(ARGV))
+end
