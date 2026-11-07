@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Serbian (Authenticator)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"POT-Creation-Date: 2026-11-07 02:28+0000\n"
 "PO-Revision-Date: 2018-03-24 20:59+0000\n"
 "Last-Translator: Slobodan Terzić <githzerai06@gmail.com>\n"
 "Language-Team: Serbian (latin) <https://hosted.weblate.org/projects/authentica"
@@ -27,6 +27,10 @@ msgstr "Slobodan Terzić <githzerai06@gmail.com>"
 #, fuzzy
 msgid "Two-factor authentication code generator."
 msgstr "Stvaralac kodova za dvofaktornu autentifikaciju."
+
+#: ../lib/account.rb:61
+msgid "Default"
+msgstr ""
 
 #: ../lib/account_config.rb:162
 msgid "Provider"
@@ -81,7 +85,7 @@ msgstr "Skeniraj QR kod"
 msgid "Add"
 msgstr "Dodaj"
 
-#: ../lib/edit_account_window.rb:83
+#: ../lib/edit_account_window.rb:83 ../lib/password_window.rb:86
 msgid "Save"
 msgstr ""
 
@@ -94,6 +98,42 @@ msgstr ""
 msgid "There are no accounts yet…"
 msgstr "Još uvek nema naloga..."
 
+#: ../lib/file_choosers.rb:31 ../lib/file_choosers.rb:40
+msgid "JSON files"
+msgstr ""
+
+#: ../lib/file_choosers.rb:50 ../lib/file_choosers.rb:59
+msgid "Encrypted GPG files"
+msgstr ""
+
+#: ../lib/gpg_fingerprint_window.rb:67
+msgid "GPG fingerprint"
+msgstr ""
+
+#: ../lib/gpg_fingerprint_window.rb:79
+msgid "Public keys"
+msgstr ""
+
+#: ../lib/gpg_fingerprint_window.rb:85
+msgid "Private keys"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:83
+msgid "GPG paraphrase"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:96
+msgid "Import"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:102
+msgid "Paraphrase"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:127
+msgid "There was an error during the import of the encrypted file."
+msgstr ""
+
 #: ../lib/header_bar.rb:88
 msgid "Search"
 msgstr "Pretraži"
@@ -103,6 +143,7 @@ msgid "Selection mode"
 msgstr "Režim izbora"
 
 #: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+#: ../lib/settings_window.rb:81
 msgid "Settings"
 msgstr "Podešavanja"
 
@@ -114,11 +155,28 @@ msgstr "Otkaži"
 msgid "Click on items to select them"
 msgstr "Kliknite na stavke da ih izaberete"
 
+#: ../lib/password_window.rb:68 ../lib/password_window.rb:81
+#: ../lib/settings_window.rb:143
+msgid "Backup Password"
+msgstr ""
+
+#: ../lib/password_window.rb:94
+msgid "Old Password"
+msgstr ""
+
+#: ../lib/password_window.rb:102
+msgid "Password"
+msgstr ""
+
+#: ../lib/password_window.rb:110
+msgid "Repeat Password"
+msgstr ""
+
 #: ../lib/primary_menu.rb:24
 msgid "Restore"
 msgstr ""
 
-#: ../lib/primary_menu.rb:25
+#: ../lib/primary_menu.rb:25 ../lib/settings_window.rb:106
 msgid "Backup"
 msgstr ""
 
@@ -146,52 +204,64 @@ msgstr "O programu"
 msgid "Quit"
 msgstr "Napusti"
 
-#. Night mode action
-#: Authenticator/application.py:81
+#: ../lib/settings_window.rb:90
+msgid "Appearance"
+msgstr ""
+
+#: ../lib/settings_window.rb:98
+msgid "Behaviour"
+msgstr ""
+
+#: ../lib/settings_window.rb:118
+msgid "Dark theme"
+msgstr ""
+
+#: ../lib/settings_window.rb:119
+msgid "Use a dark theme, if possible"
+msgstr ""
+
+#: ../lib/settings_window.rb:127
+msgid "Clear the database"
+msgstr ""
+
+#: ../lib/settings_window.rb:128
+msgid "Erase existing accounts"
+msgstr ""
+
+#: ../lib/settings_window.rb:135
+msgid "GPG keys location"
+msgstr ""
+
+#: ../lib/settings_window.rb:179
+msgid "The existing accounts will be erased in 5 seconds"
+msgstr ""
+
+#: ../lib/settings_window.rb:181
+msgid "Undo"
+msgstr ""
+
 #~ msgid "Night Mode"
 #~ msgstr "Noćni režim"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
-#, fuzzy
 #~ msgid "Two-factor authentication code generator"
 #~ msgstr "Stvaralac kodova za dvofaktornu autentifikaciju."
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
-#, fuzzy
 #~ msgid ""
 #~ "Simple application that generates a two-factor authentication code, created fo"
 #~ "r GNOME."
 #~ msgstr ""
 #~ "Jednostavan program koji stvara kod za dvofaktornu autentifikaciju, napravljen"
 #~ " za Gnom"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
-#, fuzzy
 #~ msgid "Rename project to Authenticator"
 #~ msgstr "O Autentifikatoru"
-
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
-#, fuzzy
 #~ msgid "Two-factor authentication"
 #~ msgstr "Dvofaktorna autentifikacija"
-
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
 #~ msgid "Gnome;GTK;Verification;"
 #~ msgstr "Gnome;GTK;Verification;Overa;"
-
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
 #~ msgid "com.github.bilelmoussaoui.Authenticator"
 #~ msgstr "com.github.bilelmoussaoui.Authenticator"
-
-#: authenticator.py.in:49
 #~ msgid "Start in debug mode"
 #~ msgstr "Pokreni u režimu za ispravljanje grešaka"
-
-#: authenticator.py.in:51
 #~ msgid "Authenticator version number"
 #~ msgstr "Verzija Autentifikatora"
-
 #~ msgid "Next"
 #~ msgstr "Sledeće"
 #~ msgid "Back"

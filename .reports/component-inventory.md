@@ -68,10 +68,14 @@ Behaviour on activate: adds the resource path to the icon theme, takes the
 singleton `Window`, sets the menu on the header bar, connects `delete-event`
 to quit, `show_all` + `present`. Quit clears the clipboard first (security).
 
-→ `lib/application.rb` — **exists** (5 of 7 actions, the menu, the stylesheet
+→ `lib/application.rb` — **exists** (7 of 7 actions, the menu, the stylesheet
 loader and the dark-theme wiring; `app.import_pgp_json` and
-`app.export_pgp_json` are deliberately unregistered until the GPG model
-lands).
+`app.export_pgp_json` are registered today — both are listed in the
+`ACTIONS` array at `lib/application.rb:49-50` and dispatch to
+`on_import_pgp_json`/`on_export_pgp_json`. This corrects an earlier version
+of this report, written before the GPG model landed, that called them
+"deliberately unregistered until the GPG model lands"; the GPG model landed
+two commits later and the claim was never updated).
 
 ## Authenticator/application.py (`__generate_menu`) — the primary menu
 

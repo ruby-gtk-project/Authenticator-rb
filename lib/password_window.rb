@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "settings"
 require_relative "settings_box_with_entry"
@@ -17,6 +18,8 @@ module Authenticator
   # entirely. The port wires it to a row on the settings window's Backup page
   # and declares the key in Settings, which is what makes it reachable.
   class PasswordWindow
+    include GetText
+
     def initialize(parent, on_saved: nil)
       @parent = parent
       @on_saved = on_saved
@@ -62,7 +65,7 @@ module Authenticator
 
     def window
       @window ||= Adwaita::Window.new.tap do |win|
-        win.title = "Backup Password"
+        win.title = _("Backup Password")
         win.modal = true
         win.resizable = false
         win.set_default_size(500, 400)
@@ -75,12 +78,12 @@ module Authenticator
 
     def password_group
       @password_group ||= Adwaita::PreferencesGroup.new.tap do |group|
-        group.title = "Backup Password"
+        group.title = _("Backup Password")
       end
     end
 
     def apply_button
-      @apply_button ||= Gtk::Button.new(label: "Save").tap do |btn|
+      @apply_button ||= Gtk::Button.new(label: _("Save")).tap do |btn|
         btn.sensitive = false
         btn.add_css_class("suggested-action")
       end
@@ -88,7 +91,7 @@ module Authenticator
 
     def old_password_row
       @old_password_row ||= SettingsBoxWithEntry.new(
-        "Old Password",
+        _("Old Password"),
         password:   true,
         on_changed: ->(_text) { validate },
       )
@@ -96,7 +99,7 @@ module Authenticator
 
     def password_row
       @password_row ||= SettingsBoxWithEntry.new(
-        "Password",
+        _("Password"),
         password:   true,
         on_changed: ->(_text) { validate },
       )
@@ -104,7 +107,7 @@ module Authenticator
 
     def repeat_password_row
       @repeat_password_row ||= SettingsBoxWithEntry.new(
-        "Repeat Password",
+        _("Repeat Password"),
         password:   true,
         on_changed: ->(_text) { validate },
       )

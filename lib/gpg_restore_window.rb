@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "backup"
 require_relative "gpg"
@@ -24,6 +25,8 @@ module Authenticator
   # instead, so the accounts land through the `on_imported` callback the window
   # that opened this one passes in.
   class GpgRestoreWindow
+    include GetText
+
     # Upstream's notification timeout, in seconds.
     NOTIFICATION_TIMEOUT = 5
 
@@ -77,7 +80,7 @@ module Authenticator
 
     def window
       @window ||= Adwaita::Window.new.tap do |win|
-        win.title = "GPG paraphrase"
+        win.title = _("GPG paraphrase")
         win.modal = true
         win.set_default_size(400, 200)
       end
@@ -90,13 +93,13 @@ module Authenticator
     def group = @group ||= Adwaita::PreferencesGroup.new
 
     def import_button
-      @import_button ||= Gtk::Button.new(label: "Import").tap do |btn|
+      @import_button ||= Gtk::Button.new(label: _("Import")).tap do |btn|
         btn.add_css_class("suggested-action")
       end
     end
 
     def paraphrase_widget
-      @paraphrase_widget ||= SettingsBoxWithEntry.new("Paraphrase", password: true)
+      @paraphrase_widget ||= SettingsBoxWithEntry.new(_("Paraphrase"), password: true)
     end
 
     # Upstream's __send_notification, as an Adwaita toast.
@@ -121,7 +124,7 @@ module Authenticator
               if status.ok
                 import(target)
               else
-                notify("There was an error during the import of the encrypted file.")
+                notify(_("There was an error during the import of the encrypted file."))
               end
             end
           end

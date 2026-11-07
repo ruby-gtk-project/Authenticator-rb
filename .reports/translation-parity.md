@@ -137,3 +137,37 @@ never written down anywhere before this audit, and it sits in four files
 the test suite. Component parity and translation parity really are
 separate claims here: these four windows work, look right, and are
 completely untranslatable.
+
+## Update — the 28 call-site rows above are now closed
+
+As of the commit after this audit, all 28 rows in the table above that had
+a port call site (everything marked "bare literal", "two gaps", or
+reworded) are wrapped in `_()` behind `include GetText`/`extend GetText` in
+`lib/settings_window.rb`, `lib/password_window.rb`,
+`lib/gpg_fingerprint_window.rb`, `lib/gpg_restore_window.rb`,
+`lib/file_choosers.rb` and `lib/account.rb`, transcribing upstream's msgid
+byte-for-byte — including row #14/#15's `"Backup Password"`, which the port
+had reworded to `"Backup password"` and now carries the capital P. `rake
+gettext:po:update` was re-run, which regenerated `po/Authenticator.pot` (56
+msgids, up from 33) and merged it into all 14 `po/*.po` files. Both drive
+scripts (`test/drive_authenticator.rb`, `test/drive_backup_and_search.rb`)
+were re-run afterward and still report `DRIVE OK`, including an updated
+assertion in `drive_authenticator.rb` for the corrected `"Backup Password"`
+casing.
+
+Re-running `msgid-census.sh` against the port's `lib/` and `exe/` after this
+change (same tool this report's original census used, restricted to the
+`Authenticator`-domain upstream files — `Authenticator/**/*.py`,
+`authenticator.py.in`, and the three `com.github.bilelmoussaoui.Authenticator`
+data files — to exclude the unrelated `binary` app that shares this
+checkout's `data/` and `po/` directories) now gives **53/66 ported, 13
+gap**, down from 36. The 13 remaining are exactly the rows with no Ruby call
+site at all: the 12 `.desktop.in`/`appdata.xml.in`/`.gschema.xml` strings
+already disclosed in `.reports/component-identification.md` (including the
+GSettings schema's own `"Night mode"` summary string, which is the inherited
+`.pot`'s stale `"Night Mode"` row's sibling, not the same key), plus row #28,
+`"zbar library is not found. QRCode scanner will be disabled"`, which has no
+port call site because the port's QR scanner has no such runtime-missing
+code path. Nothing in the port can `_()`-wrap a string with no call site, so
+these 13 remain this report's honestly-disclosed gap, not a defect of this
+round's change.

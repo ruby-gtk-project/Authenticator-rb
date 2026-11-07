@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "logger"
 
@@ -17,6 +18,8 @@ module Authenticator
   # instead, and calls it with the chosen path. A dismissed dialog calls
   # nothing, which is upstream's `return None`.
   class FileChoosers
+    extend GetText
+
     JSON_MIME = "application/json"
     PGP_MIME = "application/pgp-encrypted"
 
@@ -25,7 +28,7 @@ module Authenticator
         open(
           parent,
           JSON_MIME,
-          "JSON files",
+          _("JSON files"),
           &on_chosen
         )
       end
@@ -34,7 +37,7 @@ module Authenticator
         save(
           parent,
           JSON_MIME,
-          "JSON files",
+          _("JSON files"),
           "authenticator.json",
           &on_chosen
         )
@@ -44,7 +47,7 @@ module Authenticator
         open(
           parent,
           PGP_MIME,
-          "Encrypted GPG files",
+          _("Encrypted GPG files"),
           &on_chosen
         )
       end
@@ -53,7 +56,7 @@ module Authenticator
         save(
           parent,
           PGP_MIME,
-          "Encrypted GPG files",
+          _("Encrypted GPG files"),
           "authenticator.json.asc",
           &on_chosen
         )

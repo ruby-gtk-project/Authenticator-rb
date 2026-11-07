@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 21:48+0000\n"
+"POT-Creation-Date: 2026-11-07 02:28+0000\n"
 "PO-Revision-Date: 2018-09-10 10:11+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/authentic"
@@ -30,6 +30,10 @@ msgstr "Allan Nordhøy <epost@anotheragency.no>"
 #: ../lib/about_dialog.rb:40
 msgid "Two-factor authentication code generator."
 msgstr "Kodegenerator for to-faktorbekreftelse."
+
+#: ../lib/account.rb:61
+msgid "Default"
+msgstr ""
 
 #: ../lib/account_config.rb:162
 msgid "Provider"
@@ -83,7 +87,7 @@ msgstr "Skann QR-kode"
 msgid "Add"
 msgstr "Legg til"
 
-#: ../lib/edit_account_window.rb:83
+#: ../lib/edit_account_window.rb:83 ../lib/password_window.rb:86
 msgid "Save"
 msgstr "Lagre"
 
@@ -95,6 +99,42 @@ msgstr "Rediger {} - {}"
 msgid "There are no accounts yet…"
 msgstr "Ingen kontoer enda…"
 
+#: ../lib/file_choosers.rb:31 ../lib/file_choosers.rb:40
+msgid "JSON files"
+msgstr ""
+
+#: ../lib/file_choosers.rb:50 ../lib/file_choosers.rb:59
+msgid "Encrypted GPG files"
+msgstr ""
+
+#: ../lib/gpg_fingerprint_window.rb:67
+msgid "GPG fingerprint"
+msgstr ""
+
+#: ../lib/gpg_fingerprint_window.rb:79
+msgid "Public keys"
+msgstr ""
+
+#: ../lib/gpg_fingerprint_window.rb:85
+msgid "Private keys"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:83
+msgid "GPG paraphrase"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:96
+msgid "Import"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:102
+msgid "Paraphrase"
+msgstr ""
+
+#: ../lib/gpg_restore_window.rb:127
+msgid "There was an error during the import of the encrypted file."
+msgstr ""
+
 #: ../lib/header_bar.rb:88
 msgid "Search"
 msgstr "Søk"
@@ -104,6 +144,7 @@ msgid "Selection mode"
 msgstr "Utvelgelsesmodus"
 
 #: ../lib/header_bar.rb:101 ../lib/primary_menu.rb:39
+#: ../lib/settings_window.rb:81
 msgid "Settings"
 msgstr "Innstillinger"
 
@@ -115,11 +156,28 @@ msgstr "Avbryt"
 msgid "Click on items to select them"
 msgstr "Klikk på elementene for å velge dem"
 
+#: ../lib/password_window.rb:68 ../lib/password_window.rb:81
+#: ../lib/settings_window.rb:143
+msgid "Backup Password"
+msgstr ""
+
+#: ../lib/password_window.rb:94
+msgid "Old Password"
+msgstr ""
+
+#: ../lib/password_window.rb:102
+msgid "Password"
+msgstr ""
+
+#: ../lib/password_window.rb:110
+msgid "Repeat Password"
+msgstr ""
+
 #: ../lib/primary_menu.rb:24
 msgid "Restore"
 msgstr ""
 
-#: ../lib/primary_menu.rb:25
+#: ../lib/primary_menu.rb:25 ../lib/settings_window.rb:106
 msgid "Backup"
 msgstr ""
 
@@ -147,133 +205,106 @@ msgstr "Om"
 msgid "Quit"
 msgstr "Avslutt"
 
-#. Night mode action
-#: Authenticator/application.py:81
+#: ../lib/settings_window.rb:90
+msgid "Appearance"
+msgstr ""
+
+#: ../lib/settings_window.rb:98
+msgid "Behaviour"
+msgstr ""
+
+#: ../lib/settings_window.rb:118
+msgid "Dark theme"
+msgstr ""
+
+#: ../lib/settings_window.rb:119
+msgid "Use a dark theme, if possible"
+msgstr ""
+
+#: ../lib/settings_window.rb:127
+msgid "Clear the database"
+msgstr ""
+
+#: ../lib/settings_window.rb:128
+msgid "Erase existing accounts"
+msgstr ""
+
+#: ../lib/settings_window.rb:135
+msgid "GPG keys location"
+msgstr ""
+
+#: ../lib/settings_window.rb:179
+msgid "The existing accounts will be erased in 5 seconds"
+msgstr ""
+
+#: ../lib/settings_window.rb:181
+msgid "Undo"
+msgstr ""
+
 #~ msgid "Night Mode"
 #~ msgstr "Nattmodus"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:7
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:5
 #~ msgid "Two-factor authentication code generator"
 #~ msgstr "Kodegenerator for to-faktorbekreftelse"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:9
 #~ msgid ""
 #~ "Simple application that generates a two-factor authentication code, created fo"
 #~ "r GNOME."
 #~ msgstr "Enkelt program som genererer to-faktorbekreftelseskoder, laget for GNOME."
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:10
 #~ msgid "Features:"
 #~ msgstr "Funksjoner:"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:12
 #~ msgid "QR code scanner"
 #~ msgstr "QR-kodeskanner"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:13
 #~ msgid "Beautiful UI"
 #~ msgstr "Vakkert grensesnitt"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:14
 #~ msgid "Huge database of (290+) websites/applications"
 #~ msgstr "Stor database med (290+) nettsider/programmer"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:42
-#, fuzzy
 #~ msgid "Revamped main window to more closely follow the GNOME HIG"
 #~ msgstr "Omorganisering av hovedvinduet for bedre overensstemmelse med GNOME HIG"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:43
 #~ msgid "Revamped add a new account window to make it easier to use"
 #~ msgstr "Omorganisering av vindu for tillegg av konto for enklere bruk"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:44
-#, fuzzy
 #~ msgid ""
 #~ "Possibility to add an account from a provider not listed in the shipped databa"
 #~ "se"
 #~ msgstr ""
 #~ "Mulighet for å legge til en konto fra en tilbyder som ikke er opplistet i inne"
 #~ "bygd database"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:45
 #~ msgid "Possibilty to edit an account"
 #~ msgstr "Mulighet til å redigere en konto"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:46
-#, fuzzy
 #~ msgid "One Time Password now visible by default"
 #~ msgstr "Engangspassord er nå synlige som forvalg"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:53
 #~ msgid "Fix python-dbus by using GDbus instead"
 #~ msgstr "Fiks python-dbus ved å bruke GDbus istedenfor"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:60
 #~ msgid "Fix the QRScanner on GNOME Shell"
 #~ msgstr "Fiks for QR-skanneren i GNOME-skallet"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:61
 #~ msgid "Add a new entry for the account's username"
 #~ msgstr "Tillegg av ny oppføring for kontoens brukernavn"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:62
 #~ msgid "Updated database of supported accounts"
 #~ msgstr "Database for støttede kontoer oppdatert"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:69
 #~ msgid "HOTFIX: App not running in DE other than GNOME"
 #~ msgstr "RASKFISK: Programmet kjørte ikke i andre grensesnitt enn GNOME"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:76
 #~ msgid "Rename project to Authenticator"
 #~ msgstr "Nytt navn: Authenticator"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:77
 #~ msgid "Cleaner code base"
 #~ msgstr "Renere kodebase"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:78
 #~ msgid "Faster startup"
 #~ msgstr "Raskere oppstart"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:79
 #~ msgid "Remove unneeded features"
 #~ msgstr "Fjerning av unødvendige funksjoner"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:80
 #~ msgid "Switch to pyzbar instead of zbarlight"
 #~ msgstr "Bytte til pyzbar istedenfor zbarlight"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:81
 #~ msgid "Flatpak package"
 #~ msgstr "Flatpak-pakke"
-
-#: data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in:88
 #~ msgid "Bilal Elmoussaoui"
 #~ msgstr "Bilal Elmoussaoui"
-
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:4
 #~ msgid "Two-factor authentication"
 #~ msgstr "To-faktorbekreftelse"
-
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:10
 #~ msgid "Gnome;GTK;Verification;"
 #~ msgstr "Gnome;GTK;Verifisering;Bekreftelse;"
-
-#: data/com.github.bilelmoussaoui.Authenticator.desktop.in:11
 #~ msgid "com.github.bilelmoussaoui.Authenticator"
 #~ msgstr "com.github.bilelmoussaoui.Authenticator"
-
-#: authenticator.py.in:49
 #~ msgid "Start in debug mode"
 #~ msgstr "Start i feilrettingsmodus"
-
-#: authenticator.py.in:51
 #~ msgid "Authenticator version number"
 #~ msgstr "Versjonsnummer for Authenticator"
-
 #~ msgid "Next"
 #~ msgstr "Neste"
 #~ msgid "Undo"

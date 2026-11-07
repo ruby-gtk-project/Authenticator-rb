@@ -19,6 +19,9 @@ ENV["XDG_DATA_HOME"] = File.join(ROOT, "data")
 
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 require "authenticator"
+require_relative "support/fake_file_dialog"
+
+FakeFileDialog.install!
 
 CHECKS = []
 
@@ -192,7 +195,7 @@ app.app.signal_connect("activate") do
 
     check(
       "the backup page lists the GPG location and backup password rows",
-      ["GPG keys location", "Backup password"],
+      ["GPG keys location", "Backup Password"],
       [settings_window.gpg_location_row.action_row.title, settings_window.backup_password_row.action_row.title],
     )
     check(
@@ -200,6 +203,25 @@ app.app.signal_connect("activate") do
       "Clear the database",
       settings_window.clear_database_row.action_row.title,
     )
+
+    # Fires the row's actual `activated` signal (not a direct call to the
+    # backend) so FileChoosers.open_directory, and the row rewriting its own
+    # subtitle, both run for real.
+    File.join(ROOT, "gpg-keys").then do |chosen_dir|
+      FileUtils.mkdir_p(chosen_dir)
+      FakeFileDialog.next_path = chosen_dir
+      settings_window.gpg_location_row.build.signal_emit("activated")
+      check(
+        "activating the GPG location row wrote the chosen folder to Settings",
+        chosen_dir,
+        Authenticator::Settings.default.gpg_location,
+      )
+      check(
+        "and rewrote the row's subtitle",
+        chosen_dir,
+        settings_window.gpg_location_row.action_row.subtitle,
+      )
+    end
 
     Authenticator::PasswordWindow.new(settings_window.window).tap do |password_window|
       password_window.build
@@ -252,6 +274,53 @@ app.app.signal_connect("activate") do
     check("it is titled Authenticator", "Authenticator", about.application_name)
     check("and carries the port's version", Authenticator::Rb::VERSION, about.version)
     about.close
+  end
+
+  # Drives each FileChoosers dialog through the real menu action that opens
+  # it — app.import_json / app.export_json / app.import_pgp_json /
+  # app.export_pgp_json — rather than calling BackupJson/Gpg directly, with
+  # only the native portal round trip stood in for by FakeFileDialog.
+
+  File.join(ROOT, "export-via-action.json").then do |path|
+    FakeFileDialog.next_path = path
+    app.app.lookup_action("export_json").activate(nil)
+    check("the export-json dialog used the JSON filter", "JSON files", FakeFileDialog.last_filter_name)
+    check("and the chosen-path callback wrote the file", 3, JSON.parse(File.read(path)).size)
+  end
+
+  File.join(ROOT, "export-via-action.json").then do |path|
+    FakeFileDialog.next_path = path
+    app.app.lookup_action("import_json").activate(nil)
+    check("the import-json dialog used the JSON filter", "JSON files", FakeFileDialog.last_filter_name)
+    check(
+      "and the chosen-path callback read the file without duplicating accounts",
+      3,
+      Authenticator::Database.default.count,
+    )
+  end
+
+  File.join(ROOT, "export-via-action.json.asc").then do |path|
+    FakeFileDialog.next_path = path
+    app.app.lookup_action("export_pgp_json").activate(nil)
+    check("the export-pgp-json dialog used the GPG filter", "Encrypted GPG files", FakeFileDialog.last_filter_name)
+    check(
+      "and the chosen-path callback opened the fingerprint window",
+      true,
+      Gtk::Window.list_toplevels.any? { |toplevel| toplevel.is_a?(Adwaita::Window) && toplevel.title == "GPG fingerprint" },
+    )
+    Gtk::Window.list_toplevels.select { |toplevel| toplevel.is_a?(Adwaita::Window) && toplevel.title == "GPG fingerprint" }.each(&:close)
+  end
+
+  File.join(ROOT, "export-via-action.json.asc").then do |path|
+    FakeFileDialog.next_path = path
+    app.app.lookup_action("import_pgp_json").activate(nil)
+    check("the import-pgp-json dialog used the GPG filter", "Encrypted GPG files", FakeFileDialog.last_filter_name)
+    check(
+      "and the chosen-path callback opened the GPG restore window",
+      true,
+      Gtk::Window.list_toplevels.any? { |toplevel| toplevel.is_a?(Adwaita::Window) && toplevel.title == "GPG paraphrase" },
+    )
+    Gtk::Window.list_toplevels.select { |toplevel| toplevel.is_a?(Adwaita::Window) && toplevel.title == "GPG paraphrase" }.each(&:close)
   end
 
   @cleared = false

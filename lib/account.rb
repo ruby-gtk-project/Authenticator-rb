@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "digest"
+require "gettext"
 
 require_relative "clipboard"
 require_relative "database"
@@ -20,6 +21,8 @@ module Authenticator
   # property or a Gio::ListModel, so a registered type would buy nothing and
   # cost the type_register dance.
   class Account
+    extend GetText
+
     attr_reader :id, :username, :secret_id, :otp
     attr_accessor :provider
 
@@ -55,7 +58,7 @@ module Authenticator
       def create_from_json(json_obj)
         Array(json_obj["tags"]).first.to_s.strip.then do |tag|
           if tag.empty?
-            create(json_obj["label"], "Default", json_obj["secret"])
+            create(json_obj["label"], _("Default"), json_obj["secret"])
           else
             create(json_obj["label"], tag, json_obj["secret"])
           end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "accounts_manager"
 require_relative "clickable_settings_box"
@@ -26,6 +27,8 @@ module Authenticator
   # same five seconds, the same Undo — and it is the window that shows it
   # rather than a widget pushed into the page.
   class SettingsWindow
+    include GetText
+
     # Upstream's five seconds of grace before the accounts go.
     CLEAR_TIMEOUT = 5
 
@@ -75,7 +78,7 @@ module Authenticator
 
     def window
       @window ||= Adwaita::PreferencesWindow.new.tap do |win|
-        win.title = "Settings"
+        win.title = _("Settings")
         win.modal = true
         win.search_enabled = false
         win.set_default_size(600, 600)
@@ -84,7 +87,7 @@ module Authenticator
 
     def appearance_page
       @appearance_page ||= Adwaita::PreferencesPage.new.tap do |page|
-        page.title = "Appearance"
+        page.title = _("Appearance")
         page.name = "appearance"
         page.icon_name = "applications-graphics-symbolic"
       end
@@ -92,7 +95,7 @@ module Authenticator
 
     def behaviour_page
       @behaviour_page ||= Adwaita::PreferencesPage.new.tap do |page|
-        page.title = "Behaviour"
+        page.title = _("Behaviour")
         page.name = "behaviour"
         page.icon_name = "preferences-other-symbolic"
       end
@@ -100,7 +103,7 @@ module Authenticator
 
     def backup_page
       @backup_page ||= Adwaita::PreferencesPage.new.tap do |page|
-        page.title = "Backup"
+        page.title = _("Backup")
         page.name = "backup"
         page.icon_name = "document-save-symbolic"
       end
@@ -112,8 +115,8 @@ module Authenticator
 
     def dark_theme_row
       @dark_theme_row ||= SwitchSettingsBox.new(
-        "Dark theme",
-        "Use a dark theme, if possible",
+        _("Dark theme"),
+        _("Use a dark theme, if possible"),
         "night-mode",
         on_changed: ->(state) { self.class.apply_dark_theme(state) },
       )
@@ -121,15 +124,15 @@ module Authenticator
 
     def clear_database_row
       @clear_database_row ||= ClickableSettingsBox.new(
-        "Clear the database",
-        "Erase existing accounts",
+        _("Clear the database"),
+        _("Erase existing accounts"),
         on_activated: ->(_row) { on_clear_database },
       )
     end
 
     def gpg_location_row
       @gpg_location_row ||= ClickableSettingsBox.new(
-        "GPG keys location",
+        _("GPG keys location"),
         Settings.default.gpg_location,
         on_activated: ->(row) { on_gpg_location(row) },
       )
@@ -137,7 +140,7 @@ module Authenticator
 
     def backup_password_row
       @backup_password_row ||= ClickableSettingsBox.new(
-        "Backup password",
+        _("Backup Password"),
         "Encrypt the password-protected backups",
         on_activated: ->(_row) { PasswordWindow.new(window).present },
       )
@@ -173,9 +176,9 @@ module Authenticator
       end
 
       def clear_toast
-        Adwaita::Toast.new("The existing accounts will be erased in 5 seconds").tap do |toast|
+        Adwaita::Toast.new(_("The existing accounts will be erased in 5 seconds")).tap do |toast|
           toast.timeout = CLEAR_TIMEOUT
-          toast.button_label = "Undo"
+          toast.button_label = _("Undo")
           toast.signal_connect("button-clicked") do
             @clear_cancelled = true
             toast.dismiss

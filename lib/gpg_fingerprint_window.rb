@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "adwaita"
+require "gettext"
 
 require_relative "clickable_settings_box"
 require_relative "gpg"
@@ -25,6 +26,8 @@ module Authenticator
   # raise. ClickableSettingsBox listens for Adwaita::ActionRow's `activated`
   # instead, so the keyboard reaches the keys too.
   class GpgFingerprintWindow
+    include GetText
+
     def initialize(parent, on_selected: nil)
       @parent = parent
       @on_selected = on_selected
@@ -61,7 +64,7 @@ module Authenticator
 
     def window
       @window ||= Adwaita::Window.new.tap do |win|
-        win.title = "GPG fingerprint"
+        win.title = _("GPG fingerprint")
         win.modal = true
         win.set_default_size(600, 600)
       end
@@ -73,13 +76,13 @@ module Authenticator
 
     def public_group
       @public_group ||= Adwaita::PreferencesGroup.new.tap do |group|
-        group.title = "Public keys"
+        group.title = _("Public keys")
       end
     end
 
     def private_group
       @private_group ||= Adwaita::PreferencesGroup.new.tap do |group|
-        group.title = "Private keys"
+        group.title = _("Private keys")
       end
     end
 

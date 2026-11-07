@@ -96,3 +96,32 @@ unverified by any check; four components (settings/password/GPG windows)
 fail the text axis across roughly two dozen strings. Neither failure is
 visible in the committed `.reports/component-inventory.md`, which reports
 only the widget/CSS/signal axes and calls the units "exists."
+
+## Update — Finding 1 closed; Finding 2 closed for the rows with a call site
+
+Both drive scripts now exercise the two previously-unverified components for
+real, through the production entry points rather than the backend model:
+
+- `test/drive_authenticator.rb` fires `settings_window.gpg_location_row`'s
+  actual `activated` signal (not a call to `on_gpg_location`) and asserts
+  `Settings.default.gpg_location` and the row's own subtitle both pick up
+  the chosen folder.
+- The same script activates the real `app.import_json` / `app.export_json`
+  / `app.import_pgp_json` / `app.export_pgp_json` actions — the same
+  `Gio::SimpleAction`s the primary menu's items invoke — and asserts both on
+  the `Gtk::FileFilter` name `FileChoosers` built (`"JSON files"` /
+  `"Encrypted GPG files"`) and on the chosen-path callback's effect (the
+  file written, the account count unchanged on a re-import, the GPG
+  fingerprint/restore window that callback opens).
+- Since there is no `xdg-desktop-portal` under Xvfb for `Gtk::FileDialog` to
+  talk to, `test/support/fake_file_dialog.rb` stands in only for that native
+  round trip (`open`/`save`/`select_folder` and their `_finish` calls); every
+  line of `FileChoosers`' and `ClickableSettingsBox`'s own code — filter
+  construction, signal wiring, `finish`'s `file.path` extraction — runs
+  unmodified. Both drive scripts were run live under `nix develop --command
+  xvfb-run -a ruby`: 64 + 51 = 115 checks, all passing.
+
+Finding 2's text-axis gap is closed for every row that had a port call
+site — see `.reports/translation-parity.md`'s update for the exact count
+(53/66 ported, 13 gap, down from 36) — leaving only the rows with no call
+site at all, which this report's Finding 2 did not claim to fix either.
