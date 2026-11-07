@@ -13,10 +13,12 @@ Survey facts that shape everything below:
   `Gtk.EntryCompletion`, `Gtk.FileChooserNative#run`, `Gdk.Screen` CSS,
   window-position restore and `Gtk.SearchBar#handle_event` are all gone in
   GTK4. See **Blockers**.
-- **The port now covers most of the app.** `lib/` holds 31 component and model
-  files (3,423 lines) plus `lib/authenticator.rb` and
-  `lib/authenticator/rb/version.rb`. What is left is one coherent slice: the
-  whole GPG/OpenPGP path, QR scanning, and the shell search provider.
+- **The port now covers the whole app.** `lib/` holds 39 component and model
+  files (4,654 lines) plus `lib/authenticator.rb` and
+  `lib/authenticator/rb/version.rb` (41 files, 4,689 lines total). The
+  GPG/OpenPGP path, QR scanning, the shell search provider and the `po/`
+  catalogue, called out below as the remaining slice in an earlier version of
+  this report, have all since landed — see **Totals**.
 - Naming follows the pilot (`gnome-contacts-rb`): components are flat
   `lib/<thing>.rb`, only the application class sits under
   `lib/authenticator/`.
@@ -38,7 +40,13 @@ are now `_()`/marked in their Ruby equivalents — `lib/application.rb`,
 `lib/about_dialog.rb`, `lib/primary_menu.rb`, `lib/add_account_window.rb`,
 `lib/edit_account_window.rb`, `lib/account_config.rb`, `lib/account_row.rb`,
 `lib/accounts_widget.rb`, `lib/empty_accounts_list.rb`, `lib/actions_bar.rb`
-and `lib/header_bar.rb` — with the domain bound once on `lib/i18n.rb`.
+and `lib/header_bar.rb` — with the domain bound once on `lib/i18n.rb`. A
+later commit carried the same marking into the GPG/settings/password windows
+and the file choosers, so `lib/gpg_fingerprint_window.rb`,
+`lib/gpg_restore_window.rb`, `lib/settings_window.rb`,
+`lib/password_window.rb`, `lib/file_choosers.rb` and `lib/account.rb` are
+marked too; `translation-parity` has the msgid-by-msgid census, this report
+only tracks that the files exist.
 `rake gettext:po:update`/`gettext:mo:update` (hand-written against
 `rxgettext`/`rmsgmerge`/`rmsgfmt`, since the gem's own `Task` class assumes a
 `po/<lang>/<domain>.po` layout upstream's flat one is not) regenerate the
@@ -452,7 +460,7 @@ gates the QR button on `XDG_CURRENT_DESKTOP == gnome`.
 | `data/style.css` | `data/style.css` + loader in `application.rb` | stylesheet | yes |
 | `data/data.json` | `data/data.json` | provider data | yes |
 | `data/…gresource.xml` + `data/icons/**` | `data/icons/**` loaded directly | assets | yes |
-| `po/` (14 languages, 58 msgids) | `po/` | i18n | no |
+| `po/` (14 languages, 56 msgids) | `po/` | i18n | yes |
 
 **GSettings keys**: `window-position` (`ai`, `[0,0]`) — **declared, dormant**:
 GTK4 cannot restore a window position, so `lib/window.rb` keeps the key and
