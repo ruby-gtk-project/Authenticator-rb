@@ -18,14 +18,16 @@ options = { debug: false, version: false }
 
 OptionParser.new do |parser|
   parser.program_name = "Authenticator"
-  parser.on("-d", "--debug", "Start in debug mode") { options[:debug] = true }
-  parser.on("-v", "--version", "Authenticator version number") { options[:version] = true }
+  parser.on("-d", "--debug", Authenticator._("Start in debug mode")) { options[:debug] = true }
+  parser.on("-v", "--version", Authenticator._("Authenticator version number")) { options[:version] = true }
 end.parse!(ARGV)
 
 Authenticator::Logger.level = options[:debug] ? :debug : :error
 
 if options[:version]
-  puts("Version : #{Authenticator::Rb::VERSION}")
+  # Upstream: `sys.exit("Version : " + str(VERSION))` — in Python,
+  # `sys.exit(<str>)` writes the string to stderr and exits with status 1.
+  abort("Version : #{Authenticator::Rb::VERSION}")
 else
   exit(Authenticator::Application.new.build.run(ARGV))
 end

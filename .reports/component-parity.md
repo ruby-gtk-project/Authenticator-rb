@@ -170,9 +170,23 @@ touches at all, in either direction.
 
 ## Verdict (current)
 
-Not clean. Findings 1 and 2 from the original pass are closed. Three
-findings remain open: the AppStream/desktop-file component is entirely
-unported (Finding 3, already disclosed elsewhere), the CLI help text is
-unmarked for translation with no substitution excuse (Finding 4), and the
-`--version` flag's exit code/stream changed from upstream with zero test
-coverage in either direction (Finding 5, newly found this pass).
+Not clean previously. Findings 1 and 2 from the original pass were already
+closed. This round closes the remaining three:
+
+- **Finding 3 closed.** `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in`
+  and `data/com.github.bilelmoussaoui.Authenticator.desktop.in` now exist,
+  byte-identical to `origin/master`.
+- **Finding 4 closed.** `exe/authenticator`'s `--debug`/`--version` help
+  strings now go through `Authenticator._(...)`.
+- **Finding 5 closed.** `exe/authenticator --version` now writes to stderr
+  and exits 1 (`abort("Version : ...")`), matching Python's
+  `sys.exit(<str>)` semantics. Confirmed live: `nix develop --command
+  xvfb-run -a ruby exe/authenticator --version` prints to stderr, exit
+  status 1.
+
+Still open and out of this round's scope: the remaining 11 unmarked msgids
+in `lib/settings_window.rb` / `lib/gpg_fingerprint_window.rb` /
+`lib/gpg_restore_window.rb` / `lib/password_window.rb` (Finding 2's
+no-call-site rows) and the `rake gettext:po:update`/`mo:update` re-run that
+has never been independently verified. Both drive scripts re-run live at
+this commit: 64 + 51 = 115 checks, 0 failed, `DRIVE OK` both times.

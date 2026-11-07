@@ -128,3 +128,24 @@ anything that runs.
 Not clean. 13 concrete missing msgids, 2 of which (`--debug`/`--version`
 help text) are a plain omission rather than an architectural substitution,
 and one whole upstream file (the AppStream metainfo) never ported at all.
+
+## Update — CLI help strings marked, AppStream metainfo ported
+
+`exe/authenticator`'s two `OptionParser#on` description strings now route
+through `Authenticator._(...)` (the module already carries the bound
+`Authenticator` text domain via `lib/i18n.rb`'s `extend GetText`, so no new
+`include` site was needed — `Authenticator._("Start in debug mode")` /
+`Authenticator._("Authenticator version number")` resolve against the same
+catalogue every widget's `_()` call does). This closes Finding 4 from
+`.reports/component-parity.md`; confirmed live:
+`nix develop --command xvfb-run -a ruby exe/authenticator --help` prints
+both description strings through the gettext call site.
+
+`data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` and
+`data/com.github.bilelmoussaoui.Authenticator.desktop.in` are now present,
+byte-identical to `origin/master`'s copies (same treatment as `data.json`
+and the provider icons) — closing Finding 3. This leaves 11 missing msgids
+(the 13 minus the 2 CLI strings just closed), all in
+`lib/settings_window.rb`, `lib/gpg_fingerprint_window.rb`,
+`lib/gpg_restore_window.rb` and `lib/password_window.rb` per Finding 2
+above — not touched this round.
