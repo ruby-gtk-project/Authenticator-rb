@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` (Python + PyGObject, GTK3, no `.ui`/`.blp`) |
-| Port | `ruby` @ `a1a4062` |
+| Port | `ruby` @ `5517c46` (re-checked for drift again; `7a96bc2`'s inventory refresh already corrected the Line 73 drift noted below, and `5517c46` added `exe/authenticator`'s CLI flags — see new item below) |
 
 This skill's own inventory was already produced and committed at
 `.reports/component-inventory.md` (first written at `f28b86c`, re-committed at
@@ -28,18 +28,24 @@ as it stood when it was written.
 
 ## What has drifted (stale, not re-verified since being written)
 
-1. **Line 73** — "`app.import_pgp_json` and `app.export_pgp_json` are
-   deliberately unregistered until the GPG model lands." The GPG model
-   landed two commits later (`fab3359`), and both actions are now
-   registered and wired (`lib/application.rb:49-50`, `on_import_pgp_json`
-   calling `FileChoosers.import_pgp_json`, `on_export_pgp_json` calling
-   `FileChoosers.export_pgp_json`). The sentence was never updated and now
-   describes a state the tree is no longer in. A reader trusting this line
-   today would believe two actions are missing when they are not — stale
-   documentation, filed under `accountability-ensurance` below because an
-   unreviewed claim in a committed report is exactly the failure mode that
-   skill exists to catch, even though the direction of the error (claiming
-   less than exists, not more) is the harmless direction.
+1. **Line 73 — already fixed.** The version of this report written against
+   `a1a4062` found a stale "deliberately unregistered until the GPG model
+   lands" claim at `component-inventory.md:73`. Re-read now: `7a96bc2`
+   (the next inventory refresh) rewrote that paragraph to state plainly
+   that `app.import_pgp_json`/`app.export_pgp_json` are registered today
+   and names the correction explicitly. Confirmed by reading
+   `component-inventory.md:79-85` at HEAD. No action needed.
+
+2. **New since `a1a4062` — `exe/authenticator` now has a component this
+   report's prior pass had no file to check.** `5517c46` ported
+   `authenticator.py.in`'s `--debug`/`--version` CLI into `exe/authenticator`
+   for the first time. Component-identified: an `OptionParser` with two
+   flags, matching upstream's `argparse` two flags one-for-one on
+   behaviour. Not re-exported to translation (see
+   `.reports/translation-parity.md`) and its `--version` exit
+   code/stream diverges from upstream (see `.reports/component-parity.md`
+   Finding 5) — both filed there, not repeated here, since this step only
+   owns identification, not the verdict.
 
 ## Gap this step cannot close by itself
 

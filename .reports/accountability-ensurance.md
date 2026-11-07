@@ -1,9 +1,13 @@
 # Accountability ensurance — Authenticator
 
-Ran `.claude/skills/accountability-ensurance/scripts/find-excuses.sh .` over
-the whole tree, then read every hit and every place the scanner's own
-pattern list could plausibly miss, by hand, across `lib/`, `exe/`,
-`.reports/`, and the absence of a `PORTING.md`/`FINDINGS.md`.
+Re-run at HEAD (`5517c46`), four commits past the `a1a4062` the previous
+version of this report was written against. Ran
+`.claude/skills/accountability-ensurance/scripts/find-excuses.sh .` over the
+whole tree again, plus `grep -rniE 'TODO|FIXME|not implemented|for now|in a
+future|XXX|unimplemented|not supported|unsupported|stub' lib/ exe/` directly
+(zero hits in `lib/`/`exe/`), then read every hit and every place the
+scanner's own pattern list could plausibly miss, by hand, across `lib/`,
+`exe/`, `.reports/`, and the absence of a `PORTING.md`/`FINDINGS.md`.
 
 ## Script hit
 
@@ -24,41 +28,20 @@ the reason given. **No rewrite needed; not a true hit.**
 
 ## Hand search beyond the script's pattern list
 
-The script's `deliberately (dropped|omitted|simplified|left out|skipped)`
-pattern does not match `deliberately unregistered`, so it missed one real
-instance:
+The previous pass of this report found a stale "deliberately unregistered"
+claim at `.reports/component-inventory.md:73` (the script's own
+`deliberately (dropped|omitted|simplified|left out|skipped)` pattern does
+not match "unregistered", so it missed it). Re-checked this pass: it is
+**fixed**. `7a96bc2`'s inventory refresh rewrote that paragraph to say
+plainly that both actions are registered, and to name the earlier claim as
+a correction of itself (`component-inventory.md:79-85`). One previously-filed
+finding, closed by a later commit, confirmed by reading the current line
+rather than trusting that it was fixed.
 
-```
-.reports/component-inventory.md:73
-  "`app.export_pgp_json` are deliberately unregistered until the GPG
-  model lands."
-```
-
-This presents a state as settled ("deliberately unregistered") that is no
-longer even true — the GPG model landed two commits after this line was
-written (`fab3359`, after `f28b86c`), and both actions are registered today
-(`lib/application.rb:49-50,152-168`). It is not a current gap being
-excused — there is no current gap here to excuse, the actions exist — but
-it is a sentence of exactly the shape this skill exists to catch: it tells
-the next reader a feature is withheld, pending a condition the tree has
-already satisfied, and nobody went back to delete or correct it once the
-condition was met. Filed here because a stale "deliberately withheld"
-claim sitting uncorrected in a committed report is the same failure
-pattern (an unreviewed claim standing in for a check) even though this
-instance happens to resolve in the port's favor rather than against it.
-
-**Rewrite:**
-
-> I left a sentence in `.reports/component-inventory.md:73` claiming
-> `app.import_pgp_json`/`app.export_pgp_json` were "deliberately
-> unregistered until the GPG model lands," and did not go back to fix it
-> once the GPG model landed two commits later, because I am an idiot who
-> wrote a paragraph instead of checking it against the current tree.
-> Upstream: n/a (this is a port-side documentation claim, not an upstream
-> behaviour).
-> Port: `lib/application.rb:49-50` registers both actions today; the report
-> line is simply wrong and nobody re-read it before committing it again at
-> `7368740`.
+No new instance of this shape (a settled-sounding claim that the tree has
+since outgrown) was found by rereading every report file at HEAD. The two
+newest reports in this round (`component-parity.md`, `test-parity.md`) are
+this audit's own output, so there is nothing yet to go stale in them.
 
 ## The larger finding: no excuse language, but a real gap with no accounting document at all
 
@@ -71,27 +54,36 @@ chose to flag as gaps (the appdata/desktop/CLI msgids, and the earlier
 settings-button/PasswordWindow upstream-bug note) — it says, plainly,
 "stay a gap," not "not applicable" or "by design."
 
-That is not the same as the port having no undisclosed gaps. It has 24 of
-them — see `.reports/translation-parity.md` (24 real, file-sited
-translation gaps in `settings_window.rb`, `password_window.rb`,
-`gpg_fingerprint_window.rb`, `gpg_restore_window.rb`, `file_choosers.rb`,
-`account.rb`) and `.reports/component-parity.md`/`.reports/test-parity.md`
-(two components, `file_choosers.rb` and `clickable_settings_box.rb`,
-exercised by no check at all). None of these is excused anywhere, because
-nobody wrote anything about them anywhere — which this skill's own premise
-says is worse than an excuse only in one respect and the same in the one
-that matters: either way, the reader who stops at
+That was not the same as the port having no undisclosed gaps, and still
+is not. The previous round's 24 translation gaps and 2 undriven components
+have both shrunk since (`da96fed`, `7368740` closed the drive gap and most
+of the translation gap), but this round's own re-audit still finds **13**
+real translation gaps (`.reports/translation-parity.md`) and **2** code
+paths no check anywhere executes in either direction — the zbar-absent
+branch and `exe/authenticator`'s own `--version`/`--debug` exit behaviour
+(`.reports/component-parity.md` Findings 4-5, `.reports/test-parity.md`).
+None of these three is an excuse — nobody wrote a sentence rationalizing
+any of them, they simply were not written down anywhere before this pass —
+but the same risk this skill exists to flag applies: a reader who stops at
 `.reports/component-inventory.md`'s "All 24 components exist in the port"
-comes away believing there is nothing left to find. A missing confession
-reads as clean exactly as well as a softened one does.
+or at the runtime gate's "115 checks, 0 failed, 34 components" comes away
+believing there is nothing left to find. Both of those headline claims are
+true as stated and neither is false-green on its own terms — but a check
+count is not the same claim as full coverage, and this round's reports
+(this one included) are the first place that distinction gets written down
+for the zbar path and the CLI entry point.
 
 ## Verdict
 
-One stale, now-incorrect "deliberately" sentence, rewritten above. No
-`TODO`/`FIXME`/"not implemented"/"for now"/"in a future" anywhere in
-`lib/`, `exe/`, or `.reports/`. But the honest, blunt accounting this skill
-asks for does not yet exist for the 24 translation gaps or the 2 undriven
-components found elsewhere in this round's reports — they were not in any
-document until this audit wrote them down, excused or otherwise. Recorded
-now, in `.reports/translation-parity.md` and `.reports/component-parity.md`,
-as plain gaps with no reasoning slot filled in.
+No `TODO`/`FIXME`/"not implemented"/"for now"/"in a future"/"stub"/
+"unimplemented" anywhere in `lib/` or `exe/` (direct grep, zero hits). The
+one previously-filed stale claim is confirmed fixed. But three things this
+round's re-audit found — the AppStream/desktop-file component with no port
+file at all, the CLI help text with no translation call site and no
+substitution story, and two code paths (zbar-absent, `--version`'s exit
+behaviour) that nothing executes — were not written down as gaps in any
+committed document before this pass. They are recorded now, in
+`.reports/translation-parity.md`, `.reports/component-parity.md` and
+`.reports/test-parity.md`, as plain gaps with no reasoning slot filled in.
+Given that, this audit's own `clean: false` is the conclusion the evidence
+supports, not a softened one.

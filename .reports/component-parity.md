@@ -3,10 +3,10 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` |
-| Port | `ruby` @ `a1a4062` |
-| Units with full four-axis parity confirmed | 0 / 24 (see below — "confirmed" requires Step 4/5 driving, which the committed drive scripts do for most but not all units) |
-| Units built, with a widget/CSS/behaviour match and *no* drive coverage | 2 / 24 (`lib/file_choosers.rb`, `lib/clickable_settings_box.rb`) |
-| Units built, behaviour-driven, text axis failing | 1 group (settings/backup/password/GPG windows, see Translation finding below) |
+| Port | `ruby` @ `5517c46` (re-audited; this file's own header was last bumped at `a1a4062`, three commits behind HEAD — see "Update 2" below) |
+| Units with full four-axis parity confirmed | 22 / 24 (file-choosers and clickable-row Finding 1 closed, text-axis Finding 2 closed for every row with a call site) |
+| Units with a widget/CSS/behaviour match but an open text-axis or CLI-help gap | 2 (the CLI entry point's `--debug`/`--version` help strings; see Update 2) |
+| Components outside the 24-unit widget count that are still wholly unported | 1 (`data/*.appdata.xml.in` — no AppStream metainfo file exists anywhere in the port) |
 
 ## Method
 
@@ -125,3 +125,54 @@ Finding 2's text-axis gap is closed for every row that had a port call
 site — see `.reports/translation-parity.md`'s update for the exact count
 (53/66 ported, 13 gap, down from 36) — leaving only the rows with no call
 site at all, which this report's Finding 2 did not claim to fix either.
+
+## Update 2 — re-driven live at HEAD (`5517c46`), three new findings
+
+Re-ran both drive scripts under `nix develop --command xvfb-run -a ruby`
+directly rather than trusting the committed numbers: **64 + 51 = 115 checks,
+0 failed, `DRIVE OK` both times** — the runtime gate's figure is real, not
+quoted from an earlier run.
+
+**Finding 3 — the AppStream metainfo component was never started.**
+`Authenticator/` upstream carries
+`data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` (6 marked
+strings: the one-line and long descriptions, the "Features:" heading and its
+three bullets) plus a `.desktop.in` file. Neither has a port-side file at
+all — not a stub, not a placeholder, nothing under `data/`. This is honestly
+disclosed in `.reports/component-inventory.md` ("stays a gap"), so it is not
+a false claim, but it is still an un-ported component and belongs in this
+report's count: **24 widget units + the application-class unit have parity;
+the AppStream/desktop-file unit does not exist.**
+
+**Finding 4 — `exe/authenticator`'s own `--debug`/`--version` help text is a
+plain miss, not a substitution.** `5517c46` ported `authenticator.py.in`'s
+CLI parsing faithfully for *behaviour* (same two flags, same semantics,
+confirmed by reading `exe/authenticator` against `authenticator.py.in`) but
+the file does not `require_relative "i18n"` or call `_()` anywhere, so the
+two `OptionParser#on` description strings that upstream marks with `_()`
+are bare literals in the port. Unlike the GSettings-schema and
+zbar-notification cases (architectural substitutions, recorded as such),
+there is no substitution story here — it is simply unmarked. See
+`.reports/translation-parity.md`.
+
+**Finding 5 — the same commit changes `--version`'s exit behaviour and
+nobody drove it.** Upstream: `sys.exit("Version : " + str(VERSION))` — in
+Python, `sys.exit(<str>)` prints the string to **stderr** and exits with
+status **1**. Port (`exe/authenticator`): `puts("Version : #{...}")` prints
+to **stdout** and then falls off the end of the script, exiting status
+**0**. Neither drive script, nor anything else in the repo, invokes
+`exe/authenticator` as a subprocess and checks its exit code or which
+stream it wrote to — both drive scripts talk to the app's Ruby classes
+in-process, never through `exe/authenticator` itself. So this is a real,
+confirmed-by-reading behavioural divergence (stream and exit code both
+flipped) on a component (the CLI entry point) that no check in the suite
+touches at all, in either direction.
+
+## Verdict (current)
+
+Not clean. Findings 1 and 2 from the original pass are closed. Three
+findings remain open: the AppStream/desktop-file component is entirely
+unported (Finding 3, already disclosed elsewhere), the CLI help text is
+unmarked for translation with no substitution excuse (Finding 4), and the
+`--version` flag's exit code/stream changed from upstream with zero test
+coverage in either direction (Finding 5, newly found this pass).

@@ -3,7 +3,7 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` |
-| Port | `ruby` @ `a1a4062` |
+| Port | `ruby` @ `5517c46` (re-run; `da96fed` landed the file-choosers drive coverage described below as still-missing in the version of this report written at `a1a4062`) |
 | Upstream tests | 0 |
 | Ported | 0 |
 | Gaps | 0 |
@@ -34,7 +34,10 @@ it is stated here explicitly rather than left as an implication of a clean
 
 ## Extra — what the port runs instead
 
-- `test/drive_authenticator.rb` — 54 checks, run and passing live under
+- `test/drive_authenticator.rb` — **64 checks** (up from 54 — `da96fed`
+  added the file-choosers/clickable-settings-row coverage described in the
+  gap section below as missing, plus the GPG-location-row drive), run and
+  passing live under
   `nix develop --command xvfb-run -a ruby`. Drives account creation, OTP
   generation against RFC 6238 test vectors, search, selection mode and
   deletion, the countdown/progress bar, add/edit windows, the settings
@@ -51,24 +54,43 @@ it is stated here explicitly rather than left as an implication of a clean
 - `test/support/mock_gnome_shell_screenshot.rb` — a harness file (per this
   skill's own exclusion rule for `*mock*`/`*support*`), not a test.
 
-105/105 checks pass, 0 failures, matching the runtime gate this round
-(`drive_ok=true`). Both scripts were re-run in this audit, live, under the
-dev shell's `xvfb-run`, not taken on faith from the gate's own report.
+**115/115 checks pass (64+51), 0 failures**, matching this round's runtime
+gate (`drive_ok=true`, 115 checks, 0 failed). Both scripts were re-run in
+this audit, live, under the dev shell's `xvfb-run`, not taken on faith from
+the gate's own report.
 
-## The gap the gate's own count does not show
+## `file_choosers.rb`/`clickable_settings_box.rb` gap: closed
 
-"105 checks … 24 components" is read elsewhere by this org's gate as
-coverage of the whole port. It is not: `grep` over both drive scripts for
-`ClickableSettingsBox`, `clickable_settings_box` and `FileChoosers` returns
-nothing. `lib/file_choosers.rb` and `lib/clickable_settings_box.rb` are two
-of the 24 components in `.reports/component-inventory.md` and neither is
-touched by either script — the export/import checks call
-`Authenticator::BackupJson` directly and never go through the
-`Gtk::FileChooserNative` widgets those two files wrap. See
-`.reports/component-parity.md`, Finding 1, for the detail. 105 checks is a
-real, re-run, passing number; it is not evidence that all 24 components were
-exercised, and this round's instruction to treat an unexercised component as
-a gap in its own right applies to these two.
+The previous version of this report (written against `a1a4062`) found that
+`lib/file_choosers.rb` and `lib/clickable_settings_box.rb` had zero
+occurrences in either drive script. `da96fed` fixed this: both scripts now
+fire the real `app.import_json`/`export_json`/`import_pgp_json`/
+`export_pgp_json` actions and the GPG-location row's actual `activated`
+signal — confirmed by reading `test/drive_authenticator.rb:205-290`, not
+just by the file's own commit message. This is now closed.
+
+## Two components the gate's "115 checks, 34 components" figure still does not reach
+
+1. **The zbar-absent path.** `test/drive_backup_and_search.rb` asserts
+   `"zbarimg is on PATH" → true` as a *precondition* before every QR check
+   that follows. No check anywhere sets `PATH` to exclude `zbarimg` and
+   verifies `AccountConfig.can_scan?` goes false / the scan button is never
+   built. The branch exists in `lib/qr_reader.rb` and `lib/add_account_window.rb`
+   and is read as correct, but it has never been executed by anything in
+   this repo. See `.reports/component-parity.md` Finding 5's sibling note
+   and `.reports/translation-parity.md`'s zbar-notification gap.
+2. **`exe/authenticator` itself, as a process.** Both drive scripts call
+   into the port's Ruby classes in-process; neither ever shells out to
+   `ruby exe/authenticator --version` or `--debug` and checks stdout,
+   stderr or the exit code. `.reports/component-parity.md` Finding 5
+   documents a real, confirmed-by-reading divergence from upstream here
+   (exit 0/stdout vs. upstream's exit 1/stderr) that no check — ported or
+   otherwise — would have caught, because no check invokes the entry point
+   as upstream's own test (if it had one) would have to.
+
+Per this round's instruction, a component no check exercises is unverified,
+not done — both stay open findings here even though the code they guard
+reads correctly.
 
 ## Rules this ledger follows
 

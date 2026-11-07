@@ -3,171 +3,128 @@
 | | |
 |---|---|
 | Upstream | `origin/master` @ `af7aed5` |
-| Port | `ruby` @ `a1a4062` |
+| Port | `ruby` @ `5517c46` (re-run after `5517c46`, `7a96bc2`, `29fe4ba`, `da96fed` landed on top of the `a1a4062` snapshot the previous version of this report was written against) |
 | Domain | `Authenticator` |
-| Upstream messages (source scan, not the stale `.pot`) | 66 |
-| Ported (marked, byte-identical, in the port's source) | 30 |
-| Gaps | 36 |
+| Upstream messages (source census, not the stale `.pot`) | **66** distinct `(msgctxt, msgid)` keys |
+| Ported (marked, byte-identical, in the port's source) | **53** |
+| Gaps | **13** |
 | Upstream languages | 14 `.po` files (`ar, da, de, es, fr, hu, id, nb_NO, nl, nl_BE, pl, sr, sr@latin, sv`) |
 | Languages shipped by the port | 14 (file list identical, `diff` clean) |
-| Build command | `rake gettext:po:update` / `gettext:mo:update` (per `.reports/component-inventory.md`; not independently re-run here — see **Unrun checks**) |
 
-## The committed `.pot` is stale — census from source, not from it
+## Method
 
-`po/Authenticator.pot` on `origin/master` has **POT-Creation-Date
-2018-09-10**; `Authenticator/application.py`, which it is supposed to
-cover, was last touched **2018-09-11** and contains six marked strings
-(`"Backup"`, `"Restore"`, and the four import/export submenu items) that are
-**absent from the committed `.pot` and every `.po` file**, including `de.po`
-(58 msgids, matching the stale `.pot` exactly). Comparing against the `.pot`
-would have reported those six as "extra in the port" — the inverse of the
-truth. The real upstream catalogue was built with
-`msgid-census.sh` against upstream *source* (`Authenticator/**/*.py`,
-`data/*.in`, `data/*.gschema.xml`), which returns **66** distinct
-`(msgctxt, msgid)` keys over 80 call sites, 0 unresolved. This is the number
-the rest of this report uses, and it is 10 messages larger than the figure
-the port's own catalogue-landing commit quoted.
+Ran `.claude/skills/translation-parity/scripts/msgid-census.sh` against an
+export of upstream's translatable source (`Authenticator/**/*.py`,
+`authenticator.py.in`, `data/*.in`, `data/*.gschema.xml` — 37 files pulled
+with `git show origin/master:<path>`) and against the port's `lib/` and
+`exe/`. The script's own regex **undercounts by 2**: it does not match
+`help=_("...")` inside `argparse.add_argument(...)` calls split across two
+lines, so `authenticator.py.in:49,51` ("Start in debug mode", "Authenticator
+version number") are invisible to it on *either* side. Caught only by
+grepping `authenticator.py.in` directly. The **66** figure above is the automated census (64) plus these 2, confirmed
+by hand. The committed `component-parity.md` (written at `a1a4062`, one
+commit after the translation work landed) already states "53/66 ported, 13
+gap" in passing — this report reproduces that number from a fresh census
+rather than trusting the quoted figure, and it holds up.
 
-## What `.reports/component-inventory.md` already disclosed, and still holds
+## The 13 real gaps
 
-Upstream's `.desktop.in`, `appdata.xml.in` and `.gschema.xml` have no
-counterpart in the port (confirmed: `data/` holds `style.css`, `data.json`,
-`icons/` and `search-provider/`, and nothing else). The 12 messages those
-three files carry — `Features:`, `Beautiful UI`,
-`Huge database of (290+) websites/applications`, `QR code scanner`,
-`Two-factor authentication`, `Two-factor authentication code generator`
-(no trailing period — a distinct key from the about-dialog's
-`"...generator."`, which **is** ported, correctly, in
-`lib/about_dialog.rb`), `Gnome;GTK;Verification;`, plus the four GSettings
-schema `<summary>`/`<description>` strings — are gaps the port cannot close
-without those three files existing, and that much was already written down
-honestly. These 12 are **not** the finding below.
+**6 — `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in` was
+never ported, so nothing in it has anywhere to be marked:**
 
-## The finding: 24 more messages, in files the port has already built, were never marked
+```
+Beautiful UI
+Features:
+Huge database of (290+) websites/applications
+QR code scanner
+Simple application that generates a two-factor authentication code, created for GNOME.
+Two-factor authentication code generator
+```
 
-`lib/settings_window.rb`, `lib/password_window.rb`,
-`lib/gpg_fingerprint_window.rb`, `lib/gpg_restore_window.rb`,
-`lib/file_choosers.rb` and `lib/account.rb` carry **zero** `_()`/`GetText`
-markers between them (`grep -q '_(' <file>` fails on every one), despite
-every one of them building upstream widgets that show upstream strings.
-These files were ported in `fab3359` and earlier; the translation catalogue
-commit `7368740` landed afterward and marked 11 other files but never
-touched these. No report says so until now.
+The port's `data/` has `style.css`, `data.json`, and the search-provider
+`.ini`/`.service.in` (all ported), but no `*.appdata.xml.in` / metainfo file
+at all — the GNOME Software "About this app" listing. `component-inventory.md`
+already names this as a known, carried-forward gap rather than a silent one,
+so it is not an *accountability* finding, but it is still an open parity
+gap: the AppStream description is real user-facing text and nobody has
+scheduled porting it.
 
-| # | msgid | Upstream site | Port site | State |
-|---|---|---|---|---|
-| 1 | `Appearance` | `widgets/settings.py` | `lib/settings_window.rb:87` | **gap** — bare literal |
-| 2 | `Behaviour` | `widgets/settings.py` | `lib/settings_window.rb:95` | **gap** — bare literal |
-| 3 | `Dark theme` | `widgets/settings.py` | `lib/settings_window.rb:115` | **gap** — bare literal |
-| 4 | `Use a dark theme, if possible` | `widgets/settings.py` | not found | **gap** — subtitle missing entirely |
-| 5 | `Night mode` | `widgets/settings.py` | not found as this string (port has no "Night mode" row at all under this exact label) | **gap** |
-| 6 | `Enable/disable night mode within the application` | `widgets/settings.py` | not found | **gap** |
-| 7 | `Default window postiton` *(upstream's own typo — carry it verbatim)* | `widgets/settings.py` | not found | **gap** |
-| 8 | `Default window maximized behaviour` | `widgets/settings.py` | not found | **gap** |
-| 9 | `Clear the database` | `widgets/settings.py` | `lib/settings_window.rb:124` | **gap** — bare literal |
-| 10 | `Erase existing accounts` | `widgets/settings.py` | not found | **gap** |
-| 11 | `The existing accounts will be erased in 5 seconds` | `widgets/settings.py` | not found | **gap** |
-| 12 | `Undo` | `widgets/settings.py` | not found | **gap** |
-| 13 | `GPG keys location` | `widgets/settings.py` | `lib/settings_window.rb:132` | **gap** — bare literal |
-| 14 | `Backup Password` | `widgets/settings.py` | `lib/settings_window.rb:140` as `"Backup password"` | **two gaps** — unmarked *and* reworded (lowercase `p`) |
-| 15 | `Backup Password` (window title) | `widgets/settings.py` | `lib/password_window.rb:65,78` | **gap** — bare literal (same msgid as #14, reused) |
-| 16 | `Old Password` | `widgets/settings.py` | `lib/password_window.rb:91` | **gap** — bare literal |
-| 17 | `Password` | `widgets/settings.py` | `lib/password_window.rb:99` | **gap** — bare literal |
-| 18 | `Repeat Password` | `widgets/settings.py` | `lib/password_window.rb:107` | **gap** — bare literal |
-| 19 | `Paraphrase` | `widgets/backup/gnupg.py` | `lib/gpg_restore_window.rb:99` | **gap** — bare literal |
-| 20 | `GPG fingerprint` | `widgets/backup/gnupg.py` | `lib/gpg_fingerprint_window.rb:64` | **gap** — bare literal |
-| 21 | `Public keys` | `widgets/backup/gnupg.py` | `lib/gpg_fingerprint_window.rb:76` | **gap** — bare literal |
-| 22 | `Private keys` | `widgets/backup/gnupg.py` | `lib/gpg_fingerprint_window.rb:82` | **gap** — bare literal |
-| 23 | `GPG paraphrase` | `widgets/backup/gnupg.py` | not found as this exact string | **gap** |
-| 24 | `There was an error during the import of the encrypted file.` | `widgets/backup/gnupg.py` | not found | **gap** |
-| 25 | `Default` | `models/account.py:72` | `lib/account.rb` | **gap** — bare literal |
-| 26 | `JSON files` | `widgets/utils.py` | `lib/file_choosers.rb` | **gap** — bare literal (file-filter label) |
-| 27 | `Encrypted GPG files` | `widgets/utils.py` | `lib/file_choosers.rb` | **gap** — bare literal (file-filter label) |
-| 28 | `zbar library is not found. QRCode scanner will be disabled` | `widgets/accounts/add.py` | not found | **gap** |
+**4 — GSettings key summaries, same root cause as the gschema substitution
+documented in `lib/settings.rb`:**
 
-(28 rows above; the remaining gaps to reach 36 are the 12 data-file-only
-rows already disclosed in `.reports/component-identification.md` — listed
-there, not repeated here to avoid double-counting.)
+```
+Default window maximized behaviour
+Default window postiton
+Enable/disable night mode within the application
+Night mode
+```
 
-## What is correctly ported
+`lib/settings.rb` deliberately backs these keys with a JSON file instead of
+a compiled `.gschema.xml` (no install step needed to run from a checkout —
+the same substitution the pilot port makes, and a legitimate one per
+`component-parity`'s "replaced by a newer equivalent, with the substitution
+recorded" case). But a JSON file has no `<summary>`/`<description>` slots,
+so these 4 strings have no home anywhere in the port, marked or not. They
+are not user-visible UI text (no GTK dialog shows a GSettings schema
+description), so the user-facing impact is close to zero — but they are
+real upstream msgids, and the gap is total, not partial.
 
-30 of 66 upstream messages are marked and byte-identical, across
-`lib/application.rb`, `lib/about_dialog.rb`, `lib/primary_menu.rb`,
-`lib/add_account_window.rb`, `lib/edit_account_window.rb`,
-`lib/account_config.rb`, `lib/account_row.rb`, `lib/accounts_widget.rb`,
-`lib/empty_accounts_list.rb`, `lib/actions_bar.rb`, `lib/header_bar.rb` —
-this matches `.reports/component-inventory.md`'s list of marked files
-exactly, which is why its count (29, against the stale `.pot`) and this
-report's recount (30, against source) are close: the inventory's own
-marked-file list was accurate for the files it covered, and the gap is
-entirely in files outside that list.
+**2 — the CLI's own `--debug`/`--version` help text is not marked at all,
+with no substitution excuse:**
 
-## Languages
+```
+Start in debug mode           authenticator.py.in:49  →  exe/authenticator:21 (`OptionParser#on`, plain string)
+Authenticator version number  authenticator.py.in:51  →  exe/authenticator:22 (`OptionParser#on`, plain string)
+```
 
-14 `.po` files on both sides, identical names
-(`diff <(ls po/*.po) <(git show origin/master --stat ...)` — file list
-matches). Upstream's `po/de.po` carries 58 msgids (its own stale snapshot);
-the port's `po/de.po` has been **regenerated down to 33 msgids** — it now
-holds fewer entries than even the stale upstream snapshot, because the
-regeneration tool emits only the keys reachable from the port's *current*
-source and the translators' work on the other 25 upstream strings (the ones
-already disclosed as data-file gaps) was dropped from the shipped `.po`
-rather than kept as untranslated rows. Translator work for strings the port
-hasn't built yet is not recoverable from this `.po` alone if upstream's own
-copy is ever lost — flagged as a process risk, not scored against parity
-(parity is about the key *set* the port's source currently emits, which
-these rows correctly reflect).
+`exe/authenticator` does not `require_relative "i18n"` or call `_()`
+anywhere — it has no gettext dependency at all. This is the one real gap in
+this report that is not inherited or architectural: the strings are present,
+visible (`--help` output), and simply never wrapped. Low severity (a CLI
+`--help` string, not a window), but it is a plain miss, not a substitution.
 
-## Unrun checks
+**1 — the zbar-missing notification:**
 
-- `msgfmt -c` / the gem's `rmsgfmt` were not run in this audit to confirm
-  the 14 `.mo` files actually compile from the current `.po` set — say so
-  rather than report it as done.
-- The app was not driven under `LANGUAGE=de LC_ALL=de_DE.UTF-8` to confirm a
-  known string renders in German on screen. Neither drive script sets a
-  non-English locale.
+```
+zbar library is not found. QRCode scanner will be disabled   Authenticator/widgets/accounts/add.py:264
+```
+
+Upstream shows this `Gd.Notification` when `ZBAR_FOUND` is false — i.e. when
+the *build* was configured with `ENABLE_QRSCANNER=true` but the `pyzbar`
+import nonetheless fails at runtime (an inconsistent-build state). The port's
+`QrReader.available?` collapses both of upstream's checks (the build flag and
+the runtime import) into one PATH probe for `zbarimg`, done once, with the
+scan button simply never built when it is false (`lib/add_account_window.rb`,
+`AccountConfig.can_scan?`). That is a reasonable unification — there is no
+separate "build enabled it but the runtime half is missing" state possible
+in the port — but it does mean the specific notification string, and the
+*visible-button-that-then-fails* path it guards, has no analogue to drive.
+**No drive script exercises the zbar-absent path at all** (the dev shell
+always has `zbarimg` on `PATH` — confirmed: `test/drive_backup_and_search.rb`
+asserts `"zbarimg is on PATH" → true` as a *precondition*, never a negative
+case). The behaviour for "zbar missing" is therefore asserted by this report
+to exist, by reading `lib/add_account_window.rb`, and not verified by
+anything that runs.
+
+## What is correct
+
+- The 53 ported msgids are byte-identical to upstream's, msgctxt included
+  (spot-checked 12 at random: `"Add a new account"`, `"Backup Password"`,
+  `"Clear the database"`, `"Click on items to select them"`,
+  `"Couldn't generate the secret code"`, `"Password protect your backup"`,
+  `"Restore"`, `"Delete"`, `"Edit"`, `"Select"`, `"Cancel"`, `"Done"` — all
+  exact).
+- All 14 `.po` files and `po/Authenticator.pot` are present with the same
+  filenames as upstream; `po/LINGUAS` matches. The catalogue was rebuilt in
+  the commits since the last report (`da96fed`, `7368740`) and every `.po`
+  diff in `a1a4062..HEAD` is additive (new msgids gaining translated
+  entries), not destructive.
+- `rake gettext:po:update`/`gettext:mo:update` were **not independently
+  re-run** in this pass either — same unrun-check caveat the previous report
+  carried forward. Still unverified, still worth closing.
 
 ## Verdict
 
-Not clean. 36/66 gap, up from the 12 (or "29 of 58" against the stale
-`.pot`) the existing report disclosed — two-thirds of the real gap was
-never written down anywhere before this audit, and it sits in four files
-(`settings_window.rb`, `password_window.rb`, `gpg_fingerprint_window.rb`,
-`gpg_restore_window.rb`) that are otherwise fully built and fully driven by
-the test suite. Component parity and translation parity really are
-separate claims here: these four windows work, look right, and are
-completely untranslatable.
-
-## Update — the 28 call-site rows above are now closed
-
-As of the commit after this audit, all 28 rows in the table above that had
-a port call site (everything marked "bare literal", "two gaps", or
-reworded) are wrapped in `_()` behind `include GetText`/`extend GetText` in
-`lib/settings_window.rb`, `lib/password_window.rb`,
-`lib/gpg_fingerprint_window.rb`, `lib/gpg_restore_window.rb`,
-`lib/file_choosers.rb` and `lib/account.rb`, transcribing upstream's msgid
-byte-for-byte — including row #14/#15's `"Backup Password"`, which the port
-had reworded to `"Backup password"` and now carries the capital P. `rake
-gettext:po:update` was re-run, which regenerated `po/Authenticator.pot` (56
-msgids, up from 33) and merged it into all 14 `po/*.po` files. Both drive
-scripts (`test/drive_authenticator.rb`, `test/drive_backup_and_search.rb`)
-were re-run afterward and still report `DRIVE OK`, including an updated
-assertion in `drive_authenticator.rb` for the corrected `"Backup Password"`
-casing.
-
-Re-running `msgid-census.sh` against the port's `lib/` and `exe/` after this
-change (same tool this report's original census used, restricted to the
-`Authenticator`-domain upstream files — `Authenticator/**/*.py`,
-`authenticator.py.in`, and the three `com.github.bilelmoussaoui.Authenticator`
-data files — to exclude the unrelated `binary` app that shares this
-checkout's `data/` and `po/` directories) now gives **53/66 ported, 13
-gap**, down from 36. The 13 remaining are exactly the rows with no Ruby call
-site at all: the 12 `.desktop.in`/`appdata.xml.in`/`.gschema.xml` strings
-already disclosed in `.reports/component-identification.md` (including the
-GSettings schema's own `"Night mode"` summary string, which is the inherited
-`.pot`'s stale `"Night Mode"` row's sibling, not the same key), plus row #28,
-`"zbar library is not found. QRCode scanner will be disabled"`, which has no
-port call site because the port's QR scanner has no such runtime-missing
-code path. Nothing in the port can `_()`-wrap a string with no call site, so
-these 13 remain this report's honestly-disclosed gap, not a defect of this
-round's change.
+Not clean. 13 concrete missing msgids, 2 of which (`--debug`/`--version`
+help text) are a plain omission rather than an architectural substitution,
+and one whole upstream file (the AppStream metainfo) never ported at all.
