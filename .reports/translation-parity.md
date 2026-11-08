@@ -167,3 +167,134 @@ so the claim was stale at the moment it was written, not merely overtaken
 later. See `.reports/component-parity.md`'s own correction for the full
 list of confirmed call sites. The true remaining total is **5 gaps**, listed
 above, not 11, and not in those four files.
+
+## Round audit at `c5b0f49` — the catalogue was never actually regenerated
+
+Re-ran this census against HEAD (`c5b0f49`, four commits past the `75684c0`
+this file's last "Update" was written against). Source-level marking is one
+claim; the **shipped catalogue** — `po/Authenticator.pot`, the 14 `po/*.po`
+files, and `locale/*/LC_MESSAGES/Authenticator.mo` — is a different one, and
+this round checked the second claim directly rather than re-trusting the
+first.
+
+**Finding — `po/Authenticator.pot` is stale and was never regenerated after
+either translation fix landed.** Running the Rakefile's own extraction
+command live:
+
+```
+$ nix develop --command rake gettext:pot:create
+$ git diff --stat po/Authenticator.pot
+ po/Authenticator.pot | 28 ++++++++++++++++++++++++++--
+```
+
+The committed `.pot` is missing all 6 strings this report and
+`component-parity.md` already call "ported": `"Start in debug mode"` /
+`"Authenticator version number"` (marked in `exe/authenticator` back at
+`5517c46`) and the 4 `N_()` GSettings-summary constants `lib/settings.rb`
+added at `c5b0f49` itself. `git checkout -- po/Authenticator.pot` restored
+the tree; the diff above is not committed, but it is reproducible by anyone
+who runs the task the Rakefile already ships.
+
+Because `rmsgmerge`/`rmsgfmt` (`gettext:po:update`/`gettext:mo:update`) only
+ever operate on `po/Authenticator.pot`, and the committed `.pot` has never
+carried these 6 keys, **none of the 14 `po/*.po` files or their compiled
+`.mo`s have ever had a slot for them either** — confirmed directly:
+
+```
+$ grep -rn 'Start in debug mode\|Default window postiton' po/*.po
+(no active entries — "Start in debug mode" appears only as an obsolete
+`#~` block inherited from upstream's own translations, predating this port
+entirely; the 4 GSettings strings appear in zero po/*.po files, upstream's
+or the port's)
+```
+
+So the previous rounds' "marked, byte-identical, ported" count (61/66) was
+true of the Ruby *source* and false of the *catalogue* — the artifact
+translators actually open and the artifact the running app actually loads
+at `locale/<lang>/LC_MESSAGES/Authenticator.mo`. `rake gettext:po:update`/
+`gettext:mo:update` have been flagged as "not independently re-run" by every
+round of this report since the first one; this round establishes that the
+caveat was underselling the gap. It is not a formality — running it live
+changes `po/Authenticator.pot` by 28 lines, meaning real keys are missing
+from the real deliverable, not just from an audit trail.
+
+**Second, structural finding — the 6 AppStream strings have no extraction
+path at all, not merely an unrun one.** `data/com.github.bilelmoussaoui.Authenticator.appdata.xml.in`
+ends with `<translation type="gettext">Authenticator</translation>` —
+upstream's meson build extracts `<name>`/`<summary>`/`<p>`/`<li>` text from
+this file (the standard AppStream `appstream-glib`/`itstool` convention) into
+the *same* `Authenticator` domain the `.py` sources feed. The Rakefile's own
+`GETTEXT_SOURCES` is:
+
+```ruby
+GETTEXT_SOURCES = Dir.glob("lib/**/*.rb") + Dir.glob("exe/*")
+```
+
+— `data/*.xml.in` is not in it, and `rxgettext` has no XML-extraction mode
+to add it to even if it were. So `rake gettext:pot:create` can be run as
+many times as anyone likes and these 6 strings will never appear in
+`po/Authenticator.pot`, because nothing in the port's build asks for them.
+Confirmed by running the task live (above): the resulting diff gains the
+CLI and GSettings strings but none of `"Beautiful UI"` /
+`"Huge database of (290+) websites/applications"` / etc. Every prior round
+of this report and `component-parity.md` recorded the appdata *file* as
+ported (correct — `diff` against upstream is clean) and treated that as
+closing the translation gap those 6 strings represent; it does not. The file
+existing and its strings reaching the catalogue are two different claims,
+and only the first is true.
+
+### Corrected count
+
+- **Ported, and present in the actual catalogue the app ships**: 53 (the
+  original census, confirmed still present in `po/Authenticator.pot` at
+  HEAD).
+- **Marked in Ruby source but absent from `po/Authenticator.pot`/every
+  `po/*.po`/every `.mo`**: 6 (`"Start in debug mode"`,
+  `"Authenticator version number"`, and the 4 GSettings-summary strings).
+  These were being counted as "ported" by every prior round; they are not —
+  no translator can ever translate a string that is not in the `.pot`, and
+  no running instance of the port can ever display a translated version of
+  one, in any of the 14 languages, regardless of what the Ruby source says.
+- **No extraction path exists for at all**: 6 (the AppStream strings) — a
+  structural gap, not a scheduling one. Running every gettext task in the
+  Rakefile to completion does not close this; the Rakefile itself would need
+  a new extraction step.
+- **Still not shown anywhere in the port, in any form**: 1 (the
+  zbar-absent notification — see below).
+
+**Corrected total: 66 upstream keys, 53 actually ported end-to-end, 13 real
+gaps** (6 + 6 + 1, with one overlap resolved: the 6 CLI/GSettings strings and
+the 6 appdata strings are disjoint sets) — not the "5" the previous "Update"
+section concluded, which counted a source-level `_()`/`N_()` call as
+sufficient and never ran the extraction task to check.
+
+**Finding, re-confirmed — the zbar-absent notification string still has no
+analogue anywhere in the port.** `c5b0f49` ("Close the gschema-summary,
+zbar-absent and CLI-subprocess test gaps") added a *test* — stubbing
+`AccountConfig.can_scan?` to `false` and asserting the scan button's
+memoized method is never built — but it did not add the notification
+string itself anywhere in `lib/`:
+
+```
+$ grep -rn "zbar library is not found" lib/ exe/
+(no output)
+```
+
+The commit's own message overstates what it closed: it closed a coverage
+gap for the *button-suppression* behaviour, not the translation gap for the
+upstream notification text, which this report's prior rounds already
+identified and which remains open, unchanged, after `c5b0f49`. No
+notification mechanism for this case exists in the port in any form — not a
+toast, not a label, nothing — so there is no call site to even consider
+marking.
+
+## Verdict (current)
+
+Not clean. 13 real gaps against the 66-key census: 6 strings marked in
+source but never regenerated into the shipped catalogue (a build-process
+gap, concrete and reproducible, not a hypothetical one), 6 AppStream strings
+with no extraction path in the Rakefile at all, and 1 notification string
+never ported in any form. The 14 `.po` files and `.mo`s are otherwise
+present and match upstream's `LINGUAS`, and the 53 keys that did make it
+into `po/Authenticator.pot` are byte-identical to upstream's — but "53 real,
+13 missing from the catalogue" is the honest count, not "61 ported, 5 gap."

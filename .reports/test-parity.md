@@ -102,3 +102,53 @@ way this ledger could misrepresent parity is by implying the drive scripts
 *are* ported upstream tests (they are not: they are extra, and they stay
 extra) or by letting their count stand in for full-app coverage (addressed
 above).
+
+## Round audit at `c5b0f49` — both previously-open gaps closed, reproduced live
+
+`c5b0f49` ("Close the gschema-summary, zbar-absent and CLI-subprocess test
+gaps") added `test/drive_cli.rb` and extended
+`test/drive_backup_and_search.rb`. Re-ran all three scripts live:
+
+```
+test/drive_authenticator.rb       64 checks, DRIVE OK
+test/drive_backup_and_search.rb   54 checks, DRIVE OK  (was 51; +3 for the
+                                   zbar-absent stub added this round)
+test/drive_cli.rb                 9 checks,  DRIVE OK  (new this round)
+```
+
+64 + 54 + 9 = **127 checks, 0 failures** — matches this round's runtime gate
+(`drive_ok=true`, 127 checks, 0 failed, 25 components) exactly, confirmed by
+running the commands myself rather than taking the committed total on
+faith.
+
+Both findings this file's previous round left open are closed:
+
+- **The zbar-absent path** is now driven: `AccountConfig.can_scan?` is
+  stubbed to `false`, `AddAccountWindow.new(nil).build` is asserted to still
+  succeed, and `@scan_button` is asserted never to have been memoized. This
+  is the control-flow half of the gap closed — see
+  `.reports/translation-parity.md` for the remaining half (the upstream
+  notification string itself still has no analogue anywhere in the port,
+  which this test correctly does not claim to cover; it tests that the
+  button is suppressed, not that a message is shown, because the port shows
+  none).
+- **`exe/authenticator` invoked as a process** is now driven:
+  `test/drive_cli.rb` shells out to it for real with `Open3.capture3` /
+  `Process.spawn`, checking exit codes and which stream each flag writes
+  to. This closes the "process itself is still never shelled out to" gap
+  the previous round left standing.
+
+Upstream still has 0 tests (unchanged — re-confirmed `git ls-tree -r
+--name-only origin/master | grep -i test` returns nothing). Parity remains
+0/0, met trivially; the 127 checks above are extra coverage the port
+carries for its own regression safety, not ported upstream tests, and this
+file does not claim otherwise.
+
+## Verdict (current)
+
+Both findings this ledger previously tracked are closed and confirmed live,
+not by commit message. No component is currently undriven by either
+direction's check. This file's clean status is about test/drive coverage
+specifically — it is not a claim about translation-catalogue completeness,
+which `.reports/translation-parity.md`'s own round finds still has 13 real
+gaps.

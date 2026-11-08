@@ -56,3 +56,21 @@ reachable from code... are now marked") turns out, once that census is run
 (see `.reports/translation-parity.md`), to undercount by roughly half. The
 component-identification step is not wrong here; it simply never claimed to
 carry the text axis, and the gap sat invisible until the dedicated census ran.
+
+## Round audit at `c5b0f49`
+
+No new upstream-facing component since the last pass — `c5b0f49` added
+test coverage (`test/drive_cli.rb`, the zbar-absent branch in
+`test/drive_backup_and_search.rb`) and 4 `N_()`-marked constants in
+`lib/settings.rb`, none of which are new widgets, CSS, signals or actions.
+The 24 widget units + the `exe/authenticator` CLI unit (25 total) identified
+by the previous rounds still match `lib/`/`exe/` one-for-one against
+`origin/master`.
+
+One correction that belongs at this step rather than in `component-parity.md`
+or `translation-parity.md`: the `N_()` constants `c5b0f49` added to
+`lib/settings.rb` are not attached to any widget this inventory tracks —
+they describe a GSettings schema the port does not install (the JSON-file
+substitution already recorded). They are source-level only; see
+`.reports/translation-parity.md` for why marking them in source did not, by
+itself, get them into the shipped catalogue.

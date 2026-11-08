@@ -233,3 +233,50 @@ notification string, never driven) — not 11, and not in these four files.
 Also still open: the `rake gettext:po:update`/`mo:update` re-run, never
 independently verified in any round. Both drive scripts re-run live at HEAD
 (`75684c0`): 64 + 51 = 115 checks, 0 failed, `DRIVE OK` both times.
+
+## Round audit at `c5b0f49` — runtime gate reproduced live, translation-count correction
+
+Re-ran all three drive scripts directly rather than trusting the committed
+gate figure:
+
+```
+$ nix develop --command xvfb-run -a ruby test/drive_authenticator.rb       # 64 checks, DRIVE OK
+$ nix develop --command xvfb-run -a ruby test/drive_backup_and_search.rb   # 54 checks, DRIVE OK
+$ nix develop --command xvfb-run -a ruby test/drive_cli.rb                 # 9 checks, DRIVE OK
+```
+
+64 + 54 + 9 = **127 checks, 0 failed** — matches this round's runtime gate
+exactly, reproduced live rather than quoted. `test/drive_cli.rb` (new at
+`c5b0f49`) is the component this file's own "Finding 5" and "Update 2"
+previously flagged as undriven — `exe/authenticator` invoked as a real
+subprocess rather than through the port's in-process classes — and it now
+is: `--version`'s exit-1/stderr behaviour, `--help`'s exit-0/stdout banner
+and both flags listed, and `--debug` actually starting the app rather than
+exiting early are all exercised for real. That specific gap (a process this
+suite never shelled out to) is closed.
+
+**The "5 translation gaps" figure this file's last "Correction" section
+settled on is itself now stale, for the same reason the correction it made
+was needed in the first place: nobody reran the extraction task before
+writing the number down.** See `.reports/translation-parity.md`'s new
+round — the real count is 13 gaps against the shipped catalogue, not 5
+against the source. This file is not the authority on that census (it never
+was — it correctly deferred to `translation-parity.md` throughout); it is
+corrected here only to stop pointing a reader at the stale "5."
+
+No new component-level gap found this round beyond what the prior rounds
+already closed. The zbar-absent code path (`lib/qr_reader.rb`,
+`lib/add_account_window.rb`) is now driven (`c5b0f49`'s addition to
+`test/drive_backup_and_search.rb`, confirmed in the 54-check run above) —
+closing the one component this file's "Update 2" left unverified. It is the
+*notification text* for that path, not the path's control flow, that
+remains a gap — see `translation-parity.md`.
+
+## Verdict (current)
+
+All 25 units (24 widget units + the CLI entry point) have working,
+driven behaviour matching upstream; the runtime gate's 127/0 figure is real
+and reproducible. Not clean overall only because of the translation-layer
+gaps `translation-parity.md` tracks (the catalogue itself is missing 13
+keys, 6 of which have no extraction path in this build at all) — none of
+which are a widget-behaviour gap this file's own axes would catch.
