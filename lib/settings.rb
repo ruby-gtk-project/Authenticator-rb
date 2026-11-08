@@ -2,6 +2,7 @@
 
 require "json"
 require "fileutils"
+require "gettext"
 
 require_relative "logger"
 
@@ -30,6 +31,25 @@ module Authenticator
   # never instantiated, so that read never runs. The port wires the window up,
   # so the key it needs is declared here.
   class Settings
+    extend GetText
+
+    # The JSON substitution above has no <summary>/<description> slots for
+    # gettext to pull from, which is where upstream's four schema summary
+    # strings would otherwise end up in po/Authenticator.pot. They are not
+    # read anywhere — there is no GSettings schema here for them to describe
+    # — but they are kept, byte-for-byte including upstream's "postiton"
+    # typo, so the msgids themselves still survive translation, in case a
+    # future round gives them a home (a `--dump-schema-strings` flag, a
+    # tooltip, whatever). Marked with `N_`, gettext's "note this string but
+    # do not look it up now" form, so `rake gettext:po:update` finds them
+    # without this class trying to translate dead keys at runtime.
+    GSCHEMA_SUMMARY_STRINGS = [
+      N_("Default window postiton"),
+      N_("Enable/disable night mode within the application"),
+      N_("Night mode"),
+      N_("Default window maximized behaviour"),
+    ].freeze
+
     DEFAULTS = {
       "window-position" => [0, 0],
       "night-mode"      => false,

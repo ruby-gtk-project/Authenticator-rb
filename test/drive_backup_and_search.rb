@@ -133,6 +133,35 @@ File.join(ROOT, "not-a-code.png").then do |image|
   end
 end
 
+# --- the zbar-absent path -----------------------------------------------
+#
+# Nothing above flips AccountConfig.can_scan? to false: the suite only ever
+# asserts zbarimg IS on PATH. Upstream turns its scan button off and shows a
+# "zbar library is not found" notification when pyzbar's import fails; the
+# port's equivalent is the scan button never going into the header bar at
+# all, because AddAccountWindow only packs it in when `can_scan?` is true.
+# `can_scan?` is stubbed here rather than PATH actually cleared, since
+# `available?` also depends on Screenshot's own bus check; stubbing is the
+# alternative this gap names, and it isolates exactly the branch the window
+# takes on the false answer.
+class << Authenticator::AccountConfig
+  alias_method(:__real_can_scan?, :can_scan?)
+
+  def can_scan? = false
+end
+
+Authenticator::AddAccountWindow.new(nil).tap do |adder|
+  check("with no decoder, build still succeeds", true, !!adder.build)
+  check("and the scan button's memoized method was never called", nil, adder.instance_variable_get(:@scan_button))
+end
+
+class << Authenticator::AccountConfig
+  alias_method(:can_scan?, :__real_can_scan?)
+  remove_method(:__real_can_scan?)
+end
+
+check("can_scan? is back to the real answer", true, Authenticator::AccountConfig.can_scan?)
+
 # --- the backup round trip through the restore window ------------------
 
 Authenticator::Account.create("me@example.com", "GitHub", QR_SECRET)
