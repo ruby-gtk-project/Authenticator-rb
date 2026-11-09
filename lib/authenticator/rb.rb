@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'rb/version'
-
 # The gem's conventional entry point, matching the "authenticator-rb" gem name.
 #
 # `require "authenticator"` (lib/authenticator.rb) loads the actual
@@ -16,6 +14,8 @@ require_relative 'rb/version'
 # initialise GTK. A spec that genuinely needs the application asks for
 # 'application' (or any other lib/*.rb file) itself; this file only has to
 # expose the gem's version.
+require_relative "rb/version"
+
 module Authenticator
   module Rb
   end
