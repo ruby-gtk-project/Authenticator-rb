@@ -14,6 +14,7 @@
 # initialise GTK. A spec that genuinely needs the application asks for
 # 'application' (or any other lib/*.rb file) itself; this file only has to
 # expose the gem's version.
+
 require_relative "rb/version"
 
 module Authenticator
